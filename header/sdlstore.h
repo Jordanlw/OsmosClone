@@ -1,0 +1,1 @@
+void *sdlStore(void *,int );
