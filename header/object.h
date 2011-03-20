@@ -1,9 +1,19 @@
+typedef struct _doubleRect
+{
+	double x;
+	double y;
+	double w;
+	double h;
+}doubleRect;
+
 typedef struct _object
 {
 	int type;
 	int player;
-	SDL_Rect vel;
-	SDL_Rect pos;
+	doubleRect vel;
+	doubleRect pos;
 	double mass;
-	double force;
+	doubleRect force;
 }object;
+
+

@@ -1,1 +1,1 @@
-int random(int ,int );
+int randomResult(int ,int );

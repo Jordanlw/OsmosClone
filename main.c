@@ -9,8 +9,9 @@ int main(int argc,char **args)
 		return 1;
 	}
 	
-	//can be replaced with more advance multiplayer
-	int player = 1;
+	//used for multiplayer and also ease of passing data
+	int player = 0;
+	sdlStore((void *)&player,64);
 	
 	if(initObjects())
 	{
@@ -34,14 +35,39 @@ int main(int argc,char **args)
 			//respond to user resize of window
 			if(event.type == SDL_VIDEORESIZE)
 			{
-				SDL_Screen *screen = sdlStore(NULL,8);
+				SDL_Surface *screen = sdlStore(NULL,8);
 				screen = SDL_SetVideoMode(event.resize.w,event.resize.h,32,SDL_SWSURFACE | SDL_RESIZABLE);
 				SDL_Rect *camera = sdlStore(NULL,4);
 				camera->w = event.resize.w;
 				camera->h = event.resize.h;
 			}
+			//move player based on mouse movement
 			movePlayer(player,event);
 		}
+		//move player from already gathered data
+		movePlayerFromData(player,event);
+		//for force reset
+		object *objects = objectStore(NULL,2);	
+		//debug
+		//debug(event,player);
 		
+		//move force into velocity, velocity into position
+		int i;
+		for(i = 0;i < OBJECTS;i++)
+		{
+			velIntoPos(i);
+			//if object is outside of boundary, move it inside
+			movementBoundCheck(i);
+			//reset force
+			objects[i].force.x = 0;
+			objects[i].force.y = 0;
+		}
+		//move camera to safe position for blit
+		moveCamera(player);
+		//blit background onto level
+		backgroundBlit();
+		//blit displayed part of level onto screen
+		blitLevel();
 	}
+	return 0;
 }

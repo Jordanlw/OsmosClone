@@ -14,14 +14,17 @@ void *objectStore(void *data,int options)
 	switch(options)
 	{
 		case 0: break;
+		case 2: return (void *)objects;break;
+		default:break;
 	}
+	//create objects
 	if(options == 1)
 	{
 		objects = malloc(sizeof(object) * OBJECTS);
 		if(!objects)
 		{
 			puts("DEBUG: objectStore() 1");
-			return 1;
+			return (void *)1;
 		}
 		int i;
 		for(i = 0;i < OBJECTS;i++)
@@ -36,13 +39,10 @@ void *objectStore(void *data,int options)
 			objects[i].pos.y = 0;
 			objects[i].pos.w = 0;
 			objects[i].pos.h = 0;
-			objects[i].mass = 0;
-			objects[i].force = 0;
+			objects[i].mass = 1;
+			objects[i].force.x = 0;
+			objects[i].force.y = 0;
 		}
-		return 0;
 	}
-	else if(options == 2)
-	{
-	
-	} 
+	return (void *)0;
 }

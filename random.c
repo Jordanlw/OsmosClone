@@ -1,4 +1,4 @@
-int random(int high,int low)
+int randomResult(int high,int low)
 {
 	struct timeval value;
 	gettimeofday(&value,NULL);
