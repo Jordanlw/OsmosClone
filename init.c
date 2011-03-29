@@ -86,9 +86,10 @@ static int findNumber(const char *string)
 
 int isFileExist(DIR *directory,const char *file)
 {
+	struct dirent entry = 1;
 	for(;entry != NULL;)
 	{
-		struct dirent entry = readdir(directory);
+		entry = readdir(directory);
 		if(!strcmp(file,entry.d_name))
 		{
 			return 1;
