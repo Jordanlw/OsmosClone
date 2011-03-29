@@ -28,7 +28,7 @@ int initSDL()
 	return 0;
 }
 
-static int initBackground(void)
+static int initBackground()
 {
 	DIR *directory = opendir(".");
 	if(!isFileExist(directory,"resource"))
@@ -57,10 +57,13 @@ static int initBackground(void)
 			bgs[amount].img = SDL_LoadBMP(new);
 			free(new);
 			bgs[amount].divBy = findNumber(entry.d_name);
+			bgs[amount].pos.x = 0;
+			bgs[amount].pos.y = 0;
 			amount++;			
 		}
 	}
 	sdlStore((void *)&amount,2048);
+	return 0;
 }
 
 static int findNumber(const char *string)
