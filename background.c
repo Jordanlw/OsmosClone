@@ -17,7 +17,21 @@ void backgroundBlit(void)
 		pos.y = camera->y;
 		while(moreToBlit(pos,i))
 		{
-			
+			//blit
+			SDL_Rect rect;
+			rect.x = (int)pos.x;
+			rect.y = (int)pos.y;
+			if(isBgVisible(pos))
+			{
+				SDL_BlitSurface(bgs[i].img,NULL,level,&rect);
+			}
+			//increment position
+			pos.x += bgs[i].img->w;
+			if(pos.x > camera->x + camera->w)
+			{
+				pos.x = camera->x;
+				pos.y += bgs[i].img->h;
+			}
 		}
 	}
 }
