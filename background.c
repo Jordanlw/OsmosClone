@@ -9,8 +9,8 @@ void backgroundBlit(void)
 	for(i = 0;i < amnt;i++)
 	{
 		//update pos
-		bgs[i].pos.x = camera.x / bgs[i].divBy;
-		bgs[i].pos.y = camera.y / bgs[i].divBy;
+		bgs[i].pos.x = camera->x / bgs[i].divBy;
+		bgs[i].pos.y = camera->y / bgs[i].divBy;
 		//blit to level
 		vector pos;
 		pos.x = 0;
