@@ -1,7 +1,8 @@
 void backgroundBlit(void)
 {
-	int amnt = *sdlStore(NULL,4096);
-	SDL_Rect camera = sdlStore(NULL,4);
+	int *tmp = sdlStore(NULL,4096);
+	int amnt = *tmp;
+	SDL_Rect *camera = sdlStore(NULL,4);
 	background *bgs = sdlStore(NULL,1024);
 	for(i = 0;i < amnt;i++)
 	{
