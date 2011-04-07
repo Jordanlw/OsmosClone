@@ -4,6 +4,8 @@ void backgroundBlit(void)
 	int amnt = *tmp;
 	SDL_Rect *camera = sdlStore(NULL,4);
 	background *bgs = sdlStore(NULL,1024);
+	SDL_Surface *level = sdlStore(NULL,32);
+	int i;
 	for(i = 0;i < amnt;i++)
 	{
 		//update pos
