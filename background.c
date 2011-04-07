@@ -13,9 +13,9 @@ void backgroundBlit(void)
 		bgs[i].pos.y = camera->y / bgs[i].divBy;
 		//blit to level
 		vector pos;
-		pos.x = 0;
-		pos.y = 0;
-		while(moreToBlit(pos))
+		pos.x = camera->x;
+		pos.y = camera->y;
+		while(moreToBlit(pos,i))
 		{
 			
 		}
