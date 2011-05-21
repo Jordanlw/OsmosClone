@@ -9,14 +9,14 @@ void blitLevel()
 void blitAtOffset(SDL_Surface *target,SDL_Surface *source,SDL_Rect *offset)
 {
 	int i;
-	for(i = offset->x;i < offset->w + offset->x;i++)
+	for(i = 0;i < offset->w;i++)
 	{
 		int j;
-		for(j = offset->y;j < offset->h + offset->y;j++)
+		for(j = 0;j < offset->h;j++)
 		{
-			Uint32 *ptr = (Uint32 *)source->pixels;
-			Uint32 pixel = ptr[(i * offset->h) + j];
-			setPixel32(pixel,i - offset->x,j - offset->y,target);
+			Uint32 *pixelPtr = (Unint32 *)source->pixels;
+			Uint32 pixel = pixelPtr[((j + offset.y) * offset->w) + (i + offset.x)];
+			setPixel32(pixel,i,j,target);
 		}
 	}
 }
