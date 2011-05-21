@@ -29,4 +29,5 @@ int initVarArray(varArray *array,unsigned int size)
 	}
 	array->used = 0;
 	array->data = tmp;
+	return 0;
 }

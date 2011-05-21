@@ -20,7 +20,7 @@ void *sdlStore(void *data,int option)
 			case 128:return (void *)&player;break;
 			case 256:backgrounds = (background *)data;break;
 			case 1024:return (void *)backgrounds;break;
-			case 2048:amntBackgrounds = (int)data;break;
+			case 2048:amntBackgrounds = (long)data;break;
 			case 4096:return &amntBackgrounds;break;
 			default:break;
 		}

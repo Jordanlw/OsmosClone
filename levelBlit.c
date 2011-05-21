@@ -14,8 +14,8 @@ void blitAtOffset(SDL_Surface *target,SDL_Surface *source,SDL_Rect *offset)
 		int j;
 		for(j = 0;j < offset->h;j++)
 		{
-			Uint32 *pixelPtr = (Unint32 *)source->pixels;
-			Uint32 pixel = pixelPtr[((j + offset.y) * offset->w) + (i + offset.x)];
+			Uint32 *pixelPtr = (Uint32 *)source->pixels;
+			Uint32 pixel = pixelPtr[((j + offset->y) * offset->w) + (i + offset->x)];
 			setPixel32(pixel,i,j,target);
 		}
 	}

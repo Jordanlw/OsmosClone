@@ -36,9 +36,8 @@ static int initBackground()
 		puts("DEBUG: initBackground() 1");
 		return 1;
 	}
-	free(directory);
 	directory = opendir("resource");
-	int amount = 0;
+	long amount = 0;
 	int init = BG_INIT_SIZE;
 	background *bgs = malloc(sizeof(background) * init);
 	if(!bgs)
@@ -46,42 +45,46 @@ static int initBackground()
 		puts("DEBUG: initBackground() 2");
 		return 1;
 	}
-	struct dirent *entry = (struct dirent *)1;
-	for(;entry != NULL;)	
+	struct dirent *entry;
+	do
 	{
 		entry = readdir(directory);
-		if(!strncmp(entry->d_name,"bg",2))
+		if(!strcmp(entry->d_name,"bg"))
 		{
 			int len = strlen("resource");
 			int lenE = strlen(entry->d_name);
-			char *new = malloc(len+lenE+1);
+			char new[len+lenE+1];
 			sprintf(new,"%s%s","resource",entry->d_name);
 			bgs[amount].img = SDL_LoadBMP(new);
-			free(new);
 			bgs[amount].divBy = findNumber(entry->d_name);
 			bgs[amount].pos.x = 0;
 			bgs[amount].pos.y = 0;
 			amount++;
-			if(amount > init)
+			if(amount >= init)
 			{
-				realloc(bgs,sizeof(background) * init * 2);
+				background *tmp = realloc(bgs,sizeof(background) * init * 2);
+				if(!tmp)
+				{
+					puts("DEBUG: initBackground() 4");
+					return 1;
+				}
+				free(bgs);
+				bgs = tmp;
 				init *= 2;
 			}			
 		}
-	}
+	}while(entry != NULL);
 	if(amount < init)
 	{
 		background *tmp = bgs;
-		bgs = malloc(sizeof(background) * amount);
-		int i;
-		for(i = 0;i < amount;i++)
+		tmp = realloc(bgs,amount);
+		if(!tmp) 
 		{
-			bgs[i].img = tmp[i].img;
-			bgs[i].pos.x = tmp[i].pos.x;
-			bgs[i].pos.y = tmp[i].pos.yl
-			bgs[i].divBy = tmp[i].dibBy;
-		}	
-		free(tmp);
+			puts("DEBUG: initBackground() 3");
+		 	return 1;
+	 	}
+		free(bgs);
+		bgs = tmp;
 	}
 	sdlStore((void *)bgs,256);
 	sdlStore((void *)amount,2048);
@@ -93,8 +96,13 @@ static int findNumber(const char *string)
 	int i = strlen(string);
 	i--;
 	char num = 0;
-	for(;string[i] != '.' && i >= 0;i--)
+	for(;string[i] != '.' && i;i--)
 	{
+	}
+	if(i <= 0)
+	{
+		puts("DEBUG: findNumber() 1");
+		return 1;
 	}
 	i--;
     char result[BG_INIT_MAX];
@@ -108,14 +116,14 @@ static int findNumber(const char *string)
 
 int isFileExist(DIR *directory,const char *file)
 {
-	struct dirent *entry = (struct dirent *)1;
-	for(;entry != NULL;)
+	struct dirent *entry;
+	do
 	{
 		entry = readdir(directory);
 		if(!strcmp(file,entry->d_name))
 		{
 			return 1;
 		}
-	}
+	}while(entry != NULL);
 	return 0;
 }
