@@ -4,3 +4,7 @@ typedef struct _background
 	vector pos;
 	int divBy;
 }background;
+
+int moreToBlit(vector ,int );
+int isBgVisible(vector );
+void backgroundBlit(void);

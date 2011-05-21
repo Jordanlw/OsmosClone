@@ -36,15 +36,25 @@ void backgroundBlit(void)
 	}
 }
 
-int moreToBlit(vector pos)
+int isBgVisible(vector pos)
 {
-	SDL_Surface *level = sdlStore(NULL,32);
-	if(pos.x > level.w)
+	SDL_Rect *camera = sdlStore(NULL,4);
+	if((int)pos.x > camera->x && (int)pos.x < camera->x + camera->w);
 	{
-		if(pos.y > level.h)
+		if((int)pos.y > camera->y && (int)pos.y < camera->y + camera->h)
 		{
-			return 0;
+			return 1;
 		}
+	}
+	return 0;
+}
+
+int moreToBlit(vector pos,int current)
+{
+	SDL_Rect *camera = sdlStore(NULL,4);
+	if((int)pos.y > camera->y)
+	{
+		return 0;
 	}
 	return 1;
 }

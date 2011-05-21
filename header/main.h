@@ -15,6 +15,7 @@
 #define LEVEL_HEIGHT 3000
 #define SPEED 10
 #define BG_INIT_MAX 100
+#define BG_INIT_SIZE 100
 
 #include "object.h"
 #include "vector.h"
