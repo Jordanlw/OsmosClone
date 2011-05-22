@@ -1,14 +1,8 @@
 void movePlayer(int player,SDL_Event event)
 {
 	int mouseDown = movePlayerStore(0,2);
-	if(event.type == SDL_MOUSEBUTTONDOWN)
-	{
-		mouseDown = 1;
-	}
-	else if(event.type == SDL_MOUSEBUTTONUP)
-	{
-		mouseDown = 0;
-	}
+	if(event.button.state == SDL_PRESSED && event.button.button == SDL_BUTTON_LEFT) mouseDown = 1;
+	if(event.button.state == SDL_RELEASED && event.button.button == SDL_BUTTON_LEFT) mouseDown = 0;
 	movePlayerStore(mouseDown,1);
 }
 
@@ -67,21 +61,8 @@ void moveCamera(int player)
 	camera->x = objects[player].pos.x - camera->w / 2;
 	camera->y = objects[player].pos.y - camera->h / 2;
 	//Adjust camera position so it isn't displaying anything outside of bounds
-	if(camera->x - camera->w / 2 < 0)
-	{
-		camera->x = 0;
-	}
-	if(camera->y - camera->h / 2 < 0)
-	{
-		camera->y = 0;
-	}
-	if(camera->x + camera->w / 2 > LEVEL_WIDTH)
-	{
-		camera->x = LEVEL_WIDTH - camera->w;
-	}
-	if(camera->y + camera->h / 2 > LEVEL_HEIGHT)
-	{
-		camera->y = LEVEL_HEIGHT - camera->h;
-	}
-	//printf("%d %d\n",camera->x,camera->y);
+	if(camera->x < 0) camera->x = 0;
+	if(camera->x + camera->w > LEVEL_WIDTH) camera->x = LEVEL_WIDTH - camera->w;
+	if(camera->y < 0) camera->y = 0;
+	if(camera->y > camera->h + LEVEL_HEIGHT) camera->y = LEVEL_WIDTH - camera->h;
 }

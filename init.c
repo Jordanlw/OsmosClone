@@ -46,15 +46,14 @@ static int initBackground()
 		return 1;
 	}
 	struct dirent *entry;
-	do
+	for(entry = readdir(directory);entry != NULL;entry = readdir(directory))
 	{
-		entry = readdir(directory);
-		if(!strcmp(entry->d_name,"bg"))
+		if(!strncmp(entry->d_name,"bg",2))
 		{
 			int len = strlen("resource");
 			int lenE = strlen(entry->d_name);
 			char new[len+lenE+1];
-			sprintf(new,"%s%s","resource",entry->d_name);
+			sprintf(new,"%s%s","resource/",entry->d_name);
 			bgs[amount].img = SDL_LoadBMP(new);
 			bgs[amount].divBy = findNumber(entry->d_name);
 			bgs[amount].pos.x = 0;
@@ -68,22 +67,21 @@ static int initBackground()
 					puts("DEBUG: initBackground() 4");
 					return 1;
 				}
-				free(bgs);
+				if(tmp != bgs) free(bgs);
 				bgs = tmp;
 				init *= 2;
-			}			
+			}
 		}
-	}while(entry != NULL);
+	}
 	if(amount < init)
 	{
 		background *tmp = bgs;
-		tmp = realloc(bgs,amount);
+		tmp = realloc(bgs,amount * sizeof(background));
 		if(!tmp) 
 		{
 			puts("DEBUG: initBackground() 3");
 		 	return 1;
 	 	}
-		free(bgs);
 		bgs = tmp;
 	}
 	sdlStore((void *)bgs,256);
@@ -93,25 +91,16 @@ static int initBackground()
 
 static int findNumber(const char *string)
 {
-	int i = strlen(string);
-	i--;
-	char num = 0;
-	for(;string[i] != '.' && i;i--)
-	{
-	}
-	if(i <= 0)
-	{
-		puts("DEBUG: findNumber() 1");
-		return 1;
-	}
-	i--;
-    char result[BG_INIT_MAX];
-	for(;i >= 0;i--)
-	{
-		num = string[i];
-		snprintf(result,BG_INIT_MAX,"%s%c",result,num);
-	}
-	return atoi(result);
+	char copy[5000];
+	strncpy(copy,string,sizeof(copy));
+	int i = strlen(copy);
+	for(;copy[i] < '0' || copy[i] > '9';i--);
+	i++;
+	copy[i] = '\0';
+	for(i = 0;copy[i] < '0' || copy[i] > '9';i++);
+	char tmp[5000];
+	strncpy(tmp,copy + i,sizeof(tmp));
+	return atoi(tmp);
 }
 
 int isFileExist(DIR *directory,const char *file)

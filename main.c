@@ -8,7 +8,6 @@ int main(int argc,char **args)
 		puts("DEBUG: main() 1");
 		return 1;
 	}
-	
 	//used for multiplayer and also ease of passing data
 	int player = 0;
 	sdlStore((void *)&player,64);
@@ -18,7 +17,6 @@ int main(int argc,char **args)
 		puts("DEBUG: main() 2");
 		return 1;
 	}
-	
 	//game loop
 	int quit = 0;
 	while(!quit)

@@ -5,6 +5,5 @@ typedef struct _background
 	int divBy;
 }background;
 
-int moreToBlit(vector ,int );
 int isBgVisible(vector );
 void backgroundBlit(void);

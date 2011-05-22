@@ -1,7 +1,6 @@
 void backgroundBlit(void)
 {
-	int *tmp = sdlStore(NULL,4096);
-	int amnt = *tmp;
+	int amnt = *((int *)sdlStore(NULL,4096));
 	SDL_Rect *camera = sdlStore(NULL,4);
 	background *bgs = sdlStore(NULL,1024);
 	SDL_Surface *level = sdlStore(NULL,32);
@@ -15,7 +14,7 @@ void backgroundBlit(void)
 		vector pos;
 		pos.x = camera->x;
 		pos.y = camera->y;
-		while(moreToBlit(pos,i))
+		while(1)
 		{
 			//blit
 			SDL_Rect rect;
@@ -31,6 +30,7 @@ void backgroundBlit(void)
 			{
 				pos.x = camera->x;
 				pos.y += bgs[i].img->h;
+				if(pos.y > camera->y + camera->h) break;
 			}
 		}
 	}
@@ -39,7 +39,7 @@ void backgroundBlit(void)
 int isBgVisible(vector pos)
 {
 	SDL_Rect *camera = sdlStore(NULL,4);
-	if((int)pos.x > camera->x && (int)pos.x < camera->x + camera->w);
+	if((int)pos.x >= camera->x && (int)pos.x < camera->x + camera->w);
 	{
 		if((int)pos.y > camera->y && (int)pos.y < camera->y + camera->h)
 		{
@@ -47,16 +47,6 @@ int isBgVisible(vector pos)
 		}
 	}
 	return 0;
-}
-
-int moreToBlit(vector pos,int current)
-{
-	SDL_Rect *camera = sdlStore(NULL,4);
-	if((int)pos.y > camera->y)
-	{
-		return 0;
-	}
-	return 1;
 }
 
 

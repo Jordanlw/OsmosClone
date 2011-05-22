@@ -6,6 +6,7 @@ void *sdlStore(void *data,int option)
 	static int player = 0;
 	static background *backgrounds = 0;
 	static int amntBackgrounds = 0;
+	
 	if(option)
 	{
 		switch(option)
