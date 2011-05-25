@@ -46,9 +46,6 @@ int main(int argc,char **args)
 		movePlayerFromData(player,event);
 		//for force reset
 		object *objects = objectStore(NULL,2);	
-		//debug
-		//debug(event,player);
-		
 		//move force into velocity, velocity into position
 		int i;
 		for(i = 0;i < OBJECTS;i++)
@@ -62,10 +59,17 @@ int main(int argc,char **args)
 		}
 		//move camera to safe position for blit
 		moveCamera(player);
-		//blit background onto level
-		backgroundBlit();
-		//blit displayed part of level onto screen
-		blitLevel();
+		//blit background onto screen
+		//backgroundBlit();
+		//blit objects
+		blitObject();
+		//DEBUG
+		object *obj = objectStore(NULL,2);
+		SDL_Rect *cam = sdlStore(NULL,4);
+		printf("X:%f, Y:%f, CX:%d, CY:%d\n",obj[player].pos.x,obj[player].pos.y,cam->x,cam->y);
+		SDL_Delay(100);		
+		
 	}
+	SDL_Quit();
 	return 0;
 }

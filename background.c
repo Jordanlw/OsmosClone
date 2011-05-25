@@ -3,7 +3,7 @@ void backgroundBlit(void)
 	int amnt = *((int *)sdlStore(NULL,4096));
 	SDL_Rect *camera = sdlStore(NULL,4);
 	background *bgs = sdlStore(NULL,1024);
-	SDL_Surface *level = sdlStore(NULL,32);
+	SDL_Surface *screen = sdlStore(NULL,8);
 	int i;
 	for(i = 0;i < amnt;i++)
 	{
@@ -17,12 +17,10 @@ void backgroundBlit(void)
 		while(1)
 		{
 			//blit
-			SDL_Rect rect;
-			rect.x = (int)pos.x;
-			rect.y = (int)pos.y;
+			SDL_Rect rect = {(int)pos.x - camera->x,(int)pos.y - camera->y};
 			if(isBgVisible(pos))
 			{
-				SDL_BlitSurface(bgs[i].img,NULL,level,&rect);
+				SDL_BlitSurface(bgs[i].img,NULL,screen,&rect);
 			}
 			//increment position
 			pos.x += bgs[i].img->w;

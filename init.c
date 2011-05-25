@@ -16,10 +16,8 @@ int initSDL()
 		puts("DEBUG: initSDL() 2");
 		return 1;
 	}
-	SDL_Surface *level = SDL_CreateRGBSurface(0,LEVEL_WIDTH,LEVEL_HEIGHT,32,0,0,0,0);
 	sdlStore(camera,1);
 	sdlStore(screen,2);
-	sdlStore(level,16);
 	if(initBackground())
 	{
 		puts("DEBUG: initSDL() 3");
@@ -55,6 +53,16 @@ static int initBackground()
 			char new[len+lenE+1];
 			sprintf(new,"%s%s","resource/",entry->d_name);
 			bgs[amount].img = SDL_LoadBMP(new);
+			if(SDL_SetColorKey(bgs[amount].img,SDL_SRCCOLORKEY,SDL_MapRGB(bgs[amount].img->format,0,255,0)))
+			{
+				puts("DEBUG: initBackground() 6");
+				return 1;
+			}
+			if(!bgs[amount].img)
+			{
+				puts("DEBUG: initBackground() 5");
+				return 1;
+			}
 			bgs[amount].divBy = findNumber(entry->d_name);
 			bgs[amount].pos.x = 0;
 			bgs[amount].pos.y = 0;

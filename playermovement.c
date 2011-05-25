@@ -58,11 +58,11 @@ void moveCamera(int player)
 	SDL_Rect *camera = sdlStore(NULL,4);
 	object *objects = objectStore(NULL,2);
 	//Set camera position to center of player object
-	camera->x = objects[player].pos.x - camera->w / 2;
-	camera->y = objects[player].pos.y - camera->h / 2;
+	camera->x = objects[player].pos.x - (camera->w / 2);
+	camera->y = objects[player].pos.y - (camera->h / 2);
 	//Adjust camera position so it isn't displaying anything outside of bounds
 	if(camera->x < 0) camera->x = 0;
-	if(camera->x + camera->w > LEVEL_WIDTH) camera->x = LEVEL_WIDTH - camera->w;
 	if(camera->y < 0) camera->y = 0;
-	if(camera->y > camera->h + LEVEL_HEIGHT) camera->y = LEVEL_WIDTH - camera->h;
+	if(camera->x + camera->w > LEVEL_WIDTH) camera->x = LEVEL_WIDTH - camera->w;
+	if(camera->y + camera->h > LEVEL_HEIGHT) camera->y = LEVEL_HEIGHT - camera->h;
 }
