@@ -17,6 +17,24 @@
 #define BG_INIT_MAX 100
 #define BG_INIT_SIZE 100
 
+#define SETPIXEL32(surface,x,y,pixel) if(x >= 0 && y >= 0 && x <= ((screen)->w) && y <= ((screen)->h)) \
+										 { ((Uint32 *)(surface->pixels))[(y) * ((surface)->w) + (x)] = (pixel); }
+
+enum
+{
+	SETCAMERA = 1,
+	SETSCREEN = 2,
+	GETOBJECT = 2,
+	GETCAMERA = 4,
+	GETSCREEN = 8,
+	SETPLAYER = 64,
+	GETPLAYER = 128,
+	SETBACKGROUND = 256,
+	GETBACKGROUND = 1024,
+	SETBACKGROUNDAMOUNT = 2048,
+	GETBACKGROUNDAMOUNT = 4096,
+};
+
 #include "object.h"
 #include "vector.h"
 #include "random.h"

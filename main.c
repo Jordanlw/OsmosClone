@@ -63,10 +63,7 @@ int main(int argc,char **args)
 		//backgroundBlit();
 		//blit objects
 		blitObject();
-		//DEBUG
-		object *obj = objectStore(NULL,2);
-		SDL_Rect *cam = sdlStore(NULL,4);
-		printf("X:%f, Y:%f, CX:%d, CY:%d\n",obj[player].pos.x,obj[player].pos.y,cam->x,cam->y);
+		//TEMP
 		SDL_Delay(100);		
 		
 	}

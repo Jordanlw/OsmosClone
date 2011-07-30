@@ -10,6 +10,7 @@ typedef struct _object
 {
 	int type;
 	int player;
+	int radius;
 	doubleRect vel;
 	doubleRect pos;
 	double mass;

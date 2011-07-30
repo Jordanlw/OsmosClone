@@ -15,7 +15,7 @@ void *objectStore(void *data,int options)
 	{
 		case 0: break;
 		case 2: return (void *)objects;break;
-		default:break;
+		default: break;
 	}
 	//create objects
 	if(options == 1)
@@ -31,6 +31,7 @@ void *objectStore(void *data,int options)
 		{
 			objects[i].type = 0;
 			objects[i].player = 0;
+			objects[i].radius = 50;
 			objects[i].vel.x = 0;
 			objects[i].vel.y = 0;
 			objects[i].vel.w = 0;
