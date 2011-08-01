@@ -52,6 +52,7 @@ int main(int argc,char **args)
 		int i;
 		for(i = 0;i < OBJECTS;i++)
 		{
+			if(objects[i].radius <= 0) continue;
 			velIntoPos(i);
 			//if object is outside of boundary, move it inside
 			movementBoundCheck(i);

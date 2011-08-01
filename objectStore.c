@@ -40,7 +40,6 @@ void *objectStore(void *data,int options)
 			objects[i].pos.y = 10;
 			objects[i].pos.w = 0;
 			objects[i].pos.h = 0;
-			objects[i].mass = 1;
 			objects[i].force.x = 0;
 			objects[i].force.y = 0;
 		}
