@@ -63,9 +63,7 @@ static int initBackground()
 				puts("DEBUG: initBackground() 5");
 				return 1;
 			}
-			bgs[amount].divBy = findNumber(entry->d_name);
-			bgs[amount].pos.x = 0;
-			bgs[amount].pos.y = 0;
+			bgs[amount].divBy = findNumber(entry->d_name) + 1;
 			amount++;
 			if(amount >= init)
 			{

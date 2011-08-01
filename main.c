@@ -21,6 +21,8 @@ int main(int argc,char **args)
 	int quit = 0;
 	while(!quit)
 	{
+		//For FPS limit
+		Uint32 ticks = SDL_GetTicks();
 		//event loop
 		SDL_Event event;
 		while(SDL_PollEvent(&event))
@@ -60,12 +62,13 @@ int main(int argc,char **args)
 		//move camera to safe position for blit
 		moveCamera(player);
 		//blit background onto screen
-		//backgroundBlit();
+		backgroundBlit();
 		//blit objects
 		blitObject();
-		//TEMP
-		SDL_Delay(100);		
-		
+		//For FPS limit
+		Uint32 laterTicks = SDL_GetTicks();
+		long delay = (1000 / FPS) - (int)(laterTicks - ticks);
+		if(delay > 0) SDL_Delay(delay);
 	}
 	SDL_Quit();
 	return 0;

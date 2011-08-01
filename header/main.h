@@ -16,6 +16,7 @@
 #define SPEED 10
 #define BG_INIT_MAX 100
 #define BG_INIT_SIZE 100
+#define FPS 60
 
 #define SETPIXEL32(surface,x,y,pixel) if(x >= 0 && y >= 0 && x <= ((screen)->w) && y <= ((screen)->h)) \
 										 { ((Uint32 *)(surface->pixels))[(y) * ((surface)->w) + (x)] = (pixel); }
