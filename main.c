@@ -70,6 +70,9 @@ int main(int argc,char **args)
 		Uint32 laterTicks = SDL_GetTicks();
 		long delay = (1000 / FPS) - (int)(laterTicks - ticks);
 		if(delay > 0) SDL_Delay(delay);
+		//store frame time
+		unsigned int frameTime = laterTicks - ticks;
+		sdlStore((void *)&frameTime,SETFRAMETIME);
 	}
 	SDL_Quit();
 	return 0;

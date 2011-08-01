@@ -5,6 +5,7 @@ void *sdlStore(void *data,int option)
 	static int player = 0;
 	static background *backgrounds = 0;
 	static int amntBackgrounds = 0;
+	static Uint32 frameTime = 0;
 	
 	if(option)
 	{
@@ -20,6 +21,8 @@ void *sdlStore(void *data,int option)
 			case 1024:return (void *)backgrounds;break;
 			case 2048:amntBackgrounds = (long)data;break;
 			case 4096:return &amntBackgrounds;break;
+			case 3:frameTime = *(Uint32 *)data;break;
+			case 5:return &frameTime;break;
 			default:break;
 		}
 	}
