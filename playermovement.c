@@ -4,9 +4,9 @@ void movePlayer(int player,SDL_Event event)
 	if(event.button.state == SDL_PRESSED && event.button.button == SDL_BUTTON_LEFT) mouseDown = 1;
 	if(event.button.state == SDL_RELEASED && event.button.button == SDL_BUTTON_LEFT) mouseDown = 0;
 	movePlayerStore(mouseDown,1);
-	/*if(mouseDown) puts("DOWN");
+	if(mouseDown) puts("DOWN");
 	if(!mouseDown) puts("UP");
-	puts("");*/
+	puts("");
 }
 
 int movePlayerStore(int data,int option)

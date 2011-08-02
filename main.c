@@ -33,7 +33,7 @@ int main(int argc,char **args)
 				quit = 1;
 			}
 			//respond to user resize of window
-			if(event.type == SDL_VIDEORESIZE)
+			else if(event.type == SDL_VIDEORESIZE)
 			{
 				SDL_Surface *screen = sdlStore(NULL,8);
 				screen = SDL_SetVideoMode(event.resize.w,event.resize.h,32,SDL_SWSURFACE | SDL_RESIZABLE);
@@ -42,7 +42,10 @@ int main(int argc,char **args)
 				camera->h = event.resize.h;
 			}
 			//move player based on mouse movement
-			movePlayer(player,event);
+			else if(event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP)
+			{
+				movePlayer(player,event);
+			}
 		}
 		//move player from already gathered data
 		movePlayerFromData(player,event);
@@ -67,7 +70,7 @@ int main(int argc,char **args)
 		//blit objects
 		blitObject();
 		//DEBUG
-		//SDL_Delay(1000);
+		SDL_Delay(550);
 		//For FPS limit
 		Uint32 laterTicks = SDL_GetTicks();
 		long delay = (1000 / FPS) - (int)(laterTicks - ticks);
