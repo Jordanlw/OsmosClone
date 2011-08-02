@@ -66,6 +66,8 @@ int main(int argc,char **args)
 		backgroundBlit();
 		//blit objects
 		blitObject();
+		//DEBUG
+		//SDL_Delay(1000);
 		//For FPS limit
 		Uint32 laterTicks = SDL_GetTicks();
 		long delay = (1000 / FPS) - (int)(laterTicks - ticks);
