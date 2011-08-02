@@ -1,8 +1,8 @@
-void movePlayer(int player,SDL_Event event)
+void movePlayer(int eventRun,SDL_Event event)
 {
 	int mouseDown = movePlayerStore(0,2);
 	if(event.button.state == SDL_PRESSED && event.button.button == SDL_BUTTON_LEFT) mouseDown = 1;
-	if(event.button.state == SDL_RELEASED && event.button.button == SDL_BUTTON_LEFT) mouseDown = 0;
+	if(event.button.state == SDL_RELEASED && event.button.button == SDL_BUTTON_LEFT && eventRun == 0) mouseDown = 0;
 	movePlayerStore(mouseDown,1);
 	if(mouseDown) puts("DOWN");
 	if(!mouseDown) puts("UP");

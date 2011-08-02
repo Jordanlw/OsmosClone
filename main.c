@@ -24,6 +24,7 @@ int main(int argc,char **args)
 		//For FPS limit
 		Uint32 ticks = SDL_GetTicks();
 		//event loop
+		int eventRun = 0;
 		SDL_Event event;
 		while(SDL_PollEvent(&event))
 		{
@@ -44,9 +45,11 @@ int main(int argc,char **args)
 			//move player based on mouse movement
 			else if(event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP)
 			{
-				movePlayer(player,event);
+				movePlayer(eventRun,event);
 			}
+			eventRun++;
 		}
+		eventRun = 0;
 		//move player from already gathered data
 		movePlayerFromData(player,event);
 		//for force reset
