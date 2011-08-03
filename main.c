@@ -46,8 +46,8 @@ int main(int argc,char **args)
 			else if(event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP)
 			{
 				movePlayer(eventRun,event);
+				eventRun++;
 			}
-			eventRun++;
 		}
 		eventRun = 0;
 		//move player from already gathered data
@@ -73,7 +73,7 @@ int main(int argc,char **args)
 		//blit objects
 		blitObject();
 		//DEBUG
-		SDL_Delay(550);
+		//SDL_Delay(550);
 		//For FPS limit
 		Uint32 laterTicks = SDL_GetTicks();
 		long delay = (1000 / FPS) - (int)(laterTicks - ticks);
