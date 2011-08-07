@@ -1,9 +1,15 @@
-void velIntoPos(int i)
+void velIntoPos()
 {
-	object *objects = (object *)objectStore(NULL,2);
-	Uint32 frameTime = *(Uint32 *)sdlStore(NULL,GETFRAMETIME);
-	objects[i].vel.x += FIXED_MULT_NORMAL((double)frameTime,(double)objects[i].force.x,1000) / objects[i].radius;
-	objects[i].vel.y += FIXED_MULT_NORMAL((double)frameTime,(double)objects[i].force.y,1000) / objects[i].radius;
-	objects[i].pos.x += FIXED_MULT_NORMAL((double)frameTime,(double)objects[i].vel.x,1000);
-	objects[i].pos.y += FIXED_MULT_NORMAL((double)frameTime,(double)objects[i].vel.y,1000);
+	int i;
+	for(i = 0;i < OBJECTS;i++)
+	{
+		object *objects = (object *)objectStore(NULL,GETOBJECT);
+		if(objects[i].radius <= 0) continue;
+		Uint32 frameTime = *(Uint32 *)sdlStore(NULL,GETFRAMETIME);
+		objects[i].vel.x += objects[i].force.x / objects[i].radius;
+		objects[i].vel.y += objects[i].force.y / objects[i].radius;
+		objects[i].force = (vector){0,0};
+		objects[i].pos.x += FIXED_MULT_NORMAL((double)frameTime,objects[i].vel.x,1000);
+		objects[i].pos.y += FIXED_MULT_NORMAL((double)frameTime,objects[i].vel.y,1000);
+	}
 }

@@ -34,12 +34,8 @@ void *objectStore(void *data,int options)
 			objects[i].radius = 50;
 			objects[i].vel.x = 0;
 			objects[i].vel.y = 0;
-			objects[i].vel.w = 0;
-			objects[i].vel.h = 0;
-			objects[i].pos.x = 10;
-			objects[i].pos.y = 10;
-			objects[i].pos.w = 0;
-			objects[i].pos.h = 0;
+			objects[i].pos.x = 0;
+			objects[i].pos.y = 0;
 			objects[i].force.x = 0;
 			objects[i].force.y = 0;
 		}

@@ -1,1 +1,1 @@
-void velIntoPos(int);
+void velIntoPos();

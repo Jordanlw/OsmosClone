@@ -1,1 +1,1 @@
-void movementBoundCheck(int );
+void movementBoundCheck();

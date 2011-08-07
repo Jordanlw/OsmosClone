@@ -10,7 +10,7 @@ int main(int argc,char **args)
 	}
 	//used for multiplayer and also ease of passing data
 	int player = 0;
-	sdlStore((void *)&player,64);
+	sdlStore((void *)&player,GETPLAYER);
 	
 	if(initObjects())
 	{
@@ -36,9 +36,10 @@ int main(int argc,char **args)
 			//respond to user resize of window
 			else if(event.type == SDL_VIDEORESIZE)
 			{
-				SDL_Surface *screen = sdlStore(NULL,8);
+				SDL_Surface *screen = sdlStore(NULL,GETSCREEN);
 				screen = SDL_SetVideoMode(event.resize.w,event.resize.h,32,SDL_SWSURFACE | SDL_RESIZABLE);
-				SDL_Rect *camera = sdlStore(NULL,4);
+				screen = screen;
+				SDL_Rect *camera = sdlStore(NULL,GETCAMERA);
 				camera->w = event.resize.w;
 				camera->h = event.resize.h;
 			}
@@ -52,34 +53,27 @@ int main(int argc,char **args)
 		eventRun = 0;
 		//move player from already gathered data
 		movePlayerFromData(player,event);
-		//for force reset
-		object *objects = objectStore(NULL,2);	
 		//move force into velocity, velocity into position
-		int i;
-		for(i = 0;i < OBJECTS;i++)
-		{
-			if(objects[i].radius <= 0) continue;
-			velIntoPos(i);
-			//if object is outside of boundary, move it inside
-			movementBoundCheck(i);
-			//reset force
-			objects[i].force.x = 0;
-			objects[i].force.y = 0;
-		}
+		velIntoPos();
+		//if object is outside of boundary, move it inside
+		movementBoundCheck();
+		//merge objects together when overlapped
+		mergeOverlapped();
+		//Move overlapped objects
+		underOverlap();
+		//if object is outside of boundary, move it inside
+		movementBoundCheck();
 		//move camera to safe position for blit
 		moveCamera(player);
 		//blit background onto screen
 		backgroundBlit();
 		//blit objects
 		blitObject();
-		//DEBUG
-		//SDL_Delay(550);
 		//For FPS limit
-		Uint32 laterTicks = SDL_GetTicks();
-		long delay = (1000 / FPS) - (int)(laterTicks - ticks);
+		long delay = (1000 / FPS) - (int)(SDL_GetTicks() - ticks);
 		if(delay > 0) SDL_Delay(delay);
 		//store frame time
-		unsigned int frameTime = laterTicks - ticks;
+		unsigned int frameTime = SDL_GetTicks() - ticks;
 		sdlStore((void *)&frameTime,SETFRAMETIME);
 	}
 	SDL_Quit();

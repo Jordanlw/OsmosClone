@@ -13,12 +13,14 @@
 #define OBJECTS 25
 #define LEVEL_WIDTH 3000
 #define LEVEL_HEIGHT 3000
-#define SPEED 99999
+#define SPEED 1500
 #define BG_INIT_MAX 100
 #define BG_INIT_SIZE 100
 #define FPS 60
+#define LEVEL_SIDES 4
+#define MERGE_DIVIDER 10
 
-#define SETPIXEL32(surface,x,y,pixel) if(x >= 0 && y >= 0 && x <= ((screen)->w) && y <= ((screen)->h)) \
+#define SETPIXEL32(surface,x,y,pixel) if(x >= 0 && y >= 0 && x < ((screen)->w) && y < ((screen)->h)) \
 										 { ((Uint32 *)(surface->pixels))[(y) * ((surface)->w) + (x)] = (pixel); }
 #define FIXED_MULT_NORMAL(fixed,normal,ratio) (((fixed) * (normal) * (ratio)) / ((ratio) * (ratio)))
 
@@ -39,8 +41,8 @@ enum
 	GETFRAMETIME = 5,
 };
 
-#include "object.h"
 #include "vector.h"
+#include "object.h"
 #include "random.h"
 #include "init.h"
 #include "sdlstore.h"
@@ -53,6 +55,8 @@ enum
 #include "debug.h"
 #include "varArray.h"
 #include "objectBlit.h"
+#include "undoOverlap.h"
+#include "mergeOverlapped.h"
 
 #include "../velIntoPos.c"
 #include "../random.c"
@@ -66,3 +70,5 @@ enum
 #include "../debug.c"
 #include "../varArray.c"
 #include "../objectBlit.c"
+#include "../undoOverlap.c"
+#include "../mergeOverlapped.c"
