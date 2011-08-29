@@ -1,3 +1,5 @@
+#include "vector.h"
+
 typedef struct _background
 {
 	SDL_Surface *img;

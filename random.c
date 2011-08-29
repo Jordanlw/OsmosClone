@@ -1,3 +1,8 @@
+#include <sys/time.h>
+#include <stdlib.h>
+
+#include "header/random.h"
+
 int randomResult(int high,int low)
 {
 	struct timeval value;

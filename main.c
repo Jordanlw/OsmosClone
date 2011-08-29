@@ -1,4 +1,16 @@
+#include <stdio.h>
+#include <SDL/SDL.h>
+
 #include "header/main.h"
+#include "header/init.h"
+#include "header/sdlstore.h"
+#include "header/playermovement.h"
+#include "header/velIntoPos.h"
+#include "header/movementBoundCheck.h"
+#include "header/mergeOverlapped.h"
+#include "header/background.h"
+#include "header/objectBlit.h"
+#include "header/objectStore.h"
 
 int main(int argc,char **args)
 {
@@ -17,6 +29,7 @@ int main(int argc,char **args)
 		puts("DEBUG: main() 2");
 		return 1;
 	}
+	initObjectPosAndSize();
 	//game loop
 	int quit = 0;
 	while(!quit)
@@ -60,7 +73,8 @@ int main(int argc,char **args)
 		//merge objects together when overlapped
 		mergeOverlapped();
 		//Move overlapped objects
-		underOverlap();
+		//Not needed, merging prevents need for underOverlapping
+		//underOverlap();
 		//if object is outside of boundary, move it inside
 		movementBoundCheck();
 		//move camera to safe position for blit

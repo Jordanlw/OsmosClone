@@ -1,3 +1,8 @@
+#include <SDL/SDL.h>
+
+#include "header/background.h"
+#include "header/sdlstore.h"
+
 void *sdlStore(void *data,int option)
 {
 	static SDL_Surface *screen = 0;

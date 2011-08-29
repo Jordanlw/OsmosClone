@@ -1,3 +1,10 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "header/objectStore.h"
+#include "header/object.h"
+#include "header/main.h"
+
 int initObjects()
 {
 	if(objectStore(NULL,1))
@@ -31,7 +38,7 @@ void *objectStore(void *data,int options)
 		{
 			objects[i].type = 0;
 			objects[i].player = 0;
-			objects[i].radius = 50;
+			objects[i].radius = 0;
 			objects[i].vel.x = 0;
 			objects[i].vel.y = 0;
 			objects[i].pos.x = 0;

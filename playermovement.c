@@ -1,3 +1,12 @@
+#include <SDL/SDL.h>
+
+#include "header/playermovement.h"
+#include "header/objectStore.h"
+#include "header/sdlstore.h"
+#include "header/object.h"
+#include "header/vectorMath.h"
+#include "header/main.h"
+
 void movePlayer(int eventRun,SDL_Event event)
 {
 	int mouseDown = movePlayerStore(0,2);

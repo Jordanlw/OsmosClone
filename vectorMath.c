@@ -1,3 +1,7 @@
+#include <math.h>
+
+#include "header/vectorMath.h"
+
 vector findRelativePos(vector A,vector B)
 {
 	vector C;

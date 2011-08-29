@@ -1,3 +1,7 @@
+#include "vector.h"
+
+#ifndef INCLUDE_OBJECT
+#define INCLUDE_OBJECT
 typedef struct _doubleRect
 {
 	double x;
@@ -15,5 +19,5 @@ typedef struct _object
 	vector pos;
 	vector force;
 }object;
-
+#endif
 

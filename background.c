@@ -1,3 +1,8 @@
+#include <SDL/SDL.h>
+
+#include "header/background.h"
+#include "header/sdlstore.h"
+
 void backgroundBlit(void)
 {
 	int amnt = *((int *)sdlStore(NULL,4096));

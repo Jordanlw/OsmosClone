@@ -1,4 +1,7 @@
+#include <dirent.h>
+
 int initSDL();
-static int initBackground();
+int initBackground();
+int findNumber(const char *);
 int isFileExist(DIR *,const char *);
-static int findNumber(const char *);
+void initObjectPosAndSize();

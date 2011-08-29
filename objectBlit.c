@@ -1,3 +1,13 @@
+#include <stdlib.h>
+#include <SDL/SDL.h>
+#include <math.h>
+
+#include "header/objectBlit.h"
+#include "header/objectStore.h"
+#include "header/sdlstore.h"
+#include "header/object.h"
+#include "header/main.h"
+
 void blitObject()
 {
 	object *obj = objectStore(NULL,GETOBJECT);
@@ -7,6 +17,7 @@ void blitObject()
 	for(i = 0;i < OBJECTS;i++)
 	{
 		if(obj[i].radius <= 0) continue;
+		int objX = obj[i].pos.x, objY = obj[i].pos.y;
 		int j;
 		for(j = 0;j < obj[i].radius;j++)
 		{
@@ -14,8 +25,8 @@ void blitObject()
 			int k;
 			for(k = 0;k < width;k++)
 			{
-				SETPIXEL32(screen,(int)(obj[i].pos.x - camera->x - (width / 2) + k),(int)(obj[i].pos.y - camera->y - (obj[i].radius - j) + 1),255);
-				SETPIXEL32(screen,(int)(obj[i].pos.x - camera->x - (width / 2) + k),(int)(obj[i].pos.y - camera->y + (obj[i].radius - j) - 1),255);
+				SETPIXEL32(screen,objX - camera->x - (width / 2) + k,objY - camera->y - (obj[i].radius - j) + 1,255);
+				SETPIXEL32(screen,objX - camera->x - (width / 2) + k,objY - camera->y + (obj[i].radius - j) - 1,255);
 			}
 		}
 	}

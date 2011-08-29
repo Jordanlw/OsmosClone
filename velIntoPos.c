@@ -1,3 +1,12 @@
+#include <stdlib.h>
+#include <SDL/SDL.h>
+
+#include "header/velIntoPos.h"
+#include "header/sdlstore.h"
+#include "header/objectStore.h"
+#include "header/object.h"
+#include "header/main.h"
+
 void velIntoPos()
 {
 	int i;

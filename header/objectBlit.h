@@ -1,1 +1,1 @@
-void blitobject();
+void blitObject();
