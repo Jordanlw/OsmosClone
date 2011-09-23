@@ -19,8 +19,8 @@ void mergeOverlapped()
 			if(obj[j].radius <= 0 || i == j) continue;
 			vector relativePos = {obj[i].pos.x - obj[j].pos.x, obj[i].pos.y - obj[j].pos.y};
 			if(obj[i].radius + obj[j].radius <= sqrt(relativePos.x * relativePos.x + relativePos.y * relativePos.y)) continue;
-			if(obj[j].radius <= obj[i].radius) obj[i].radius += (obj[j].radius / MERGE_DIVIDER), obj[j].radius = 0, printf("%d took %d\n",i,j);
-			else obj[j].radius += (obj[i].radius / MERGE_DIVIDER), obj[i].radius = 0, printf("%d took %d\n",j,i);
+			if(obj[j].radius <= obj[i].radius) obj[i].radius += (obj[j].radius / MERGE_DIVIDER), obj[j].radius = 0; //printf("%d took %d\n",i,j);
+			else obj[j].radius += (obj[i].radius / MERGE_DIVIDER), obj[i].radius = 0; //printf("%d took %d\n",j,i);
 		}
 	}
 }
