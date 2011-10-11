@@ -29,12 +29,12 @@ int movePlayerStore(int data,int option)
 
 void movePlayerFromData(int player,SDL_Event event)
 {
-	//retrieve data
-	object *objects = (object *)objectStore(NULL,2);
-	int mouseDown = movePlayerStore(0,2);
 	//only run if the mouse is being pressed down
+	int mouseDown = movePlayerStore(0,2);
 	if(mouseDown)
 	{
+		//retrieve data
+		object *objects = (object *)objectStore(NULL,2);	
 		//retrieve mouse position
 		vector mousePos;
 		mousePos.x = (double)event.motion.x;
