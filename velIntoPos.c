@@ -15,9 +15,8 @@ void velIntoPos()
 	for(i = 0;i < OBJECTS;i++)
 	{
 		if(objects[i].radius <= 0) continue;
-		Uint32 frameTime = *(Uint32 *)sdlStore(NULL,GETFRAMETIME);
-		objects[i].vel.x += objects[i].force.x / objects[i].radius;
-		objects[i].vel.y += objects[i].force.y / objects[i].radius;
+		objects[i].vel.x += FIXED_MULT_NORMAL(frameTime,objects[i].force.x / objects[i].radius,1000);
+		objects[i].vel.y += FIXED_MULT_NORMAL(frameTime,objects[i].force.y / objects[i].radius,1000);
 		objects[i].force = (vector){0,0};
 		objects[i].pos.x += FIXED_MULT_NORMAL((double)frameTime,objects[i].vel.x,1000);
 		objects[i].pos.y += FIXED_MULT_NORMAL((double)frameTime,objects[i].vel.y,1000);
