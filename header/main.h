@@ -1,9 +1,9 @@
 #define DEFAULT_WIDTH 500
 #define DEFAULT_HEIGHT 500
-#define OBJECTS 30
+#define OBJECTS 1
 #define LEVEL_WIDTH 3000
 #define LEVEL_HEIGHT 3000
-#define SPEED 1500
+#define SPEED 30000
 #define BG_INIT_MAX 100
 #define BG_INIT_SIZE 100
 #define FPS 60
