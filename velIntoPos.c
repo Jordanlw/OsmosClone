@@ -9,10 +9,11 @@
 
 void velIntoPos()
 {
+	object *objects = (object *)objectStore(NULL,GETOBJECT);
+	Uint32 frameTime = *(Uint32 *)sdlStore(NULL,GETFRAMETIME);
 	int i;
 	for(i = 0;i < OBJECTS;i++)
 	{
-		object *objects = (object *)objectStore(NULL,GETOBJECT);
 		if(objects[i].radius <= 0) continue;
 		Uint32 frameTime = *(Uint32 *)sdlStore(NULL,GETFRAMETIME);
 		objects[i].vel.x += objects[i].force.x / objects[i].radius;
