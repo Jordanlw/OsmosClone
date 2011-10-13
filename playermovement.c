@@ -51,8 +51,8 @@ void movePlayerFromData(int player,SDL_Event event)
 		vector relative;
 		FIND_REL_POS(mousePos,objectPos,relative);
 		//find opposing vector from origin of object
-		relative.x *= -1;
-		relative.y *= -1;
+		relative.x = -relative.x;
+		relative.y = -relative.y;
 		//divide components by length of vector
 		normalize(&relative);
 		//determine force, 
