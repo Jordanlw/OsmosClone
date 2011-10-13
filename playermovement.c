@@ -48,7 +48,8 @@ void movePlayerFromData(int player,SDL_Event event)
 		objectPos.x = objects[player].pos.x;
 		objectPos.y = objects[player].pos.y;
 		//subtract coordinates from one another
-		vector relative = findRelativePos(mousePos,objectPos);
+		vector relative;
+		FIND_REL_POS(mousePos,objectPos,relative);
 		//find opposing vector from origin of object
 		relative.x *= -1;
 		relative.y *= -1;
