@@ -10,7 +10,7 @@
 #include "header/background.h"
 
 #define SIDES_TO_CHECK 4
-#define STARTING_OBJECT_SPACING 10
+#define STARTING_OBJECT_SPACING 100
 #define STARTING_OBJECT_SPACING_INCREMENT 25
 
 typedef struct _randomSelector
