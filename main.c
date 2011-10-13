@@ -11,6 +11,7 @@
 #include "header/background.h"
 #include "header/objectBlit.h"
 #include "header/objectStore.h"
+#include "header/aimovement.h"
 
 int main(int argc,char **args)
 {
@@ -66,6 +67,8 @@ int main(int argc,char **args)
 		eventRun = 0;
 		//move player from already gathered data
 		movePlayerFromData(player,event);
+		//find target, apply force towards target
+		moveAiObjects();
 		//move force into velocity, velocity into position
 		velIntoPos();
 		//if object is outside of boundary, move it inside
@@ -83,6 +86,7 @@ int main(int argc,char **args)
 		backgroundBlit();
 		//blit objects
 		blitObject();
+		
 		//For FPS limit
 		long delay = (1000 / FPS) - (int)(SDL_GetTicks() - ticks);
 		if(delay > 0) SDL_Delay(delay);
