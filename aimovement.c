@@ -22,30 +22,25 @@ void moveAiObjects()
 	{
 		if(i == player || obj[i].radius <= 0) continue;
 		//Loop for objects to find target
-		int target = -1, bigPred = 0, bigPredSet = 0;
+		int selectedObj = -1, imPred = -1;
+		double prevDist = -1;
 		//Storage for value to determine prefence to targets for predator attacks
-		int targetPrefValue = -1;
 		vector relPos;
 		int j;
 		for(j = 0;j < OBJECTS;j++)
 		{
 			if(j == i || obj[j].radius <= 0) continue;
-			relPos.x = obj[j].pos.x - obj[i].pos.x;
-			relPos.y = obj[j].pos.y - obj[i].pos.y;
-			int prefValue = obj[j].radius * sqrt(relPos.x * relPos.x + relPos.y * relPos.y);
-			if((prefValue < targetPrefValue || targetPrefValue == -1) && obj[j].radius <= obj[i].radius)
-			{
-				targetPrefValue = prefValue;
-				target = j;
-			}
-			if(obj[j].radius >= obj[bigPred].radius) bigPred = j, bigPredSet = 1;
+			relPos = (vector){obj[j].pos.x - obj[i].pos.x, obj[j].pos.y - obj[i].pos.y};
+			double currentDist = sqrt(relPos.x * relPos.x + relPos.y * relPos.y);
+			if(prevDist == -1) prevDist = currentDist, selectedObj = j;
+			else if(currentDist < prevDist) prevDist = currentDist, selectedObj = j;
+			if(obj[selectedObj].radius > obj[i].radius) imPred = 0;
+			else imPred = 1;
 		}
 		//If target hasn't been found, skip the rest (movement to target)
-		if(target == -1 && bigPredSet == 0) continue;
-		if(bigPredSet == 1 && targetPrefValue == -1)
-		{
-			relPos = (vector){obj[i].pos.x - obj[bigPred].pos.x,obj[i].pos.y - obj[bigPred].pos.y};
-		}
+		if(selectedObj == -1) continue;
+		relPos = (vector){obj[selectedObj].pos.x - obj[i].pos.x, obj[selectedObj].pos.y - obj[i].pos.y};
+		if(imPred == 1) relPos = (vector){-relPos.x, -relPos.y};
 		vector heading = obj[i].vel;
 		relPos.x -= heading.x;
 		relPos.y -= heading.y;
