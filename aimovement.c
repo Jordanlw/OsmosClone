@@ -40,7 +40,7 @@ void moveAiObjects()
 		//If target hasn't been found, skip the rest (movement to target)
 		if(selectedObj == -1) continue;
 		relPos = (vector){obj[selectedObj].pos.x - obj[i].pos.x, obj[selectedObj].pos.y - obj[i].pos.y};
-		if(imPred == 1) relPos = (vector){-relPos.x, -relPos.y};
+		if(imPred == 0) relPos = (vector){-relPos.x, -relPos.y};
 		vector heading = obj[i].vel;
 		relPos.x -= heading.x;
 		relPos.y -= heading.y;
