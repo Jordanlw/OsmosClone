@@ -30,7 +30,7 @@ int movePlayerStore(int data,int option)
 void movePlayerFromData(int player,SDL_Event event)
 {
 	//only run if the mouse is being pressed down
-	int mouseDown = movePlayerStore(0,GETPLAYER);
+	int mouseDown = movePlayerStore(0,2);
 	if(mouseDown)
 	{
 		//retrieve data
