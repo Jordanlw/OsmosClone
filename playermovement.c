@@ -30,26 +30,26 @@ int movePlayerStore(int data,int option)
 void movePlayerFromData(int player,SDL_Event event)
 {
 	//only run if the mouse is being pressed down
-	int mouseDown = movePlayerStore(0,2);
+	int mouseDown = movePlayerStore(0,GETPLAYER);
 	if(mouseDown)
 	{
 		//retrieve data
-		object *objects = (object *)objectStore(NULL,2);	
+		object *obj = (object *)objectStore(NULL,GETOBJECT);	
 		//retrieve mouse position
 		vector mousePos;
 		mousePos.x = (double)event.motion.x;
 		mousePos.y = (double)event.motion.y;
 		//convert mousepos from relative to absolute
-		SDL_Rect *camera = (SDL_Rect *)sdlStore(NULL,4);
+		SDL_Rect *camera = (SDL_Rect *)sdlStore(NULL,GETCAMERA);
 		mousePos.x += (double)camera->x;
 		mousePos.y += (double)camera->y;
 		//Convert object data to vector
-		vector objectPos;
-		objectPos.x = objects[player].pos.x;
-		objectPos.y = objects[player].pos.y;
+		vector objPos;
+		objPos.x = obj[player].pos.x;
+		objPos.y = obj[player].pos.y;
 		//subtract coordinates from one another
 		vector relative;
-		FIND_REL_POS(mousePos,objectPos,relative);
+		FIND_REL_POS(mousePos,objPos,relative);
 		//find opposing vector from origin of object
 		relative.x = -relative.x;
 		relative.y = -relative.y;
@@ -57,8 +57,8 @@ void movePlayerFromData(int player,SDL_Event event)
 		normalize(&relative);
 		//determine force, 
 		//this should lead to a direction opposite of the mouse position relative the object
-		objects[player].force.x = (double)SPEED * relative.x;
-		objects[player].force.y = (double)SPEED * relative.y;
+		obj[player].force.x = (double)SPEED * relative.x;
+		obj[player].force.y = (double)SPEED * relative.y;
 	}
 }
 
