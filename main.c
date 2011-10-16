@@ -24,7 +24,6 @@ int main(int argc,char **args)
 	//used for multiplayer and also ease of passing data
 	int player = 0;
 	sdlStore((void *)&player,GETPLAYER);
-	
 	if(initObjects())
 	{
 		puts("DEBUG: main() 2");
@@ -33,6 +32,8 @@ int main(int argc,char **args)
 	initObjectPosAndSize();
 	//game loop
 	int quit = 0;
+	//if set, run through game changing functions only when n is pressed
+	int pauseStep = 0;
 	while(!quit)
 	{
 		//For FPS limit
@@ -40,6 +41,8 @@ int main(int argc,char **args)
 		//event loop
 		int eventRun = 0;
 		SDL_Event event;
+		//if set, allow a game changing frame to happen
+		int nextStep = 0;
 		while(SDL_PollEvent(&event))
 		{
 			//check whether user wants to exit
@@ -63,24 +66,36 @@ int main(int argc,char **args)
 				movePlayer(eventRun,event);
 				eventRun++;
 			}
+			else if(event.type == SDL_KEYDOWN)
+			{
+				if(event.key.keysym.sym == SDLK_n) nextStep = 1;
+				else if(event.key.keysym.sym == SDLK_p) 
+				{
+					if(pauseStep) pauseStep = 0;
+					else pauseStep = 1;
+				}
+			}
 		}
 		eventRun = 0;
-		//move player from already gathered data
-		movePlayerFromData(player,event);
-		//find target, apply force towards target
-		moveAiObjects();
-		//move force into velocity, velocity into position
-		velIntoPos();
-		//if object is outside of boundary, move it inside
-		movementBoundCheck();
-		//merge objects together when overlapped
-		mergeOverlapped();
-		//Move overlapped objects
-		//Not needed, merging prevents need for underOverlapping
-		//underOverlap();
-		//if object is outside of boundary, move it inside
-		movementBoundCheck();
-		//move camera to safe position for blit
+		if(!pauseStep || nextStep)
+		{
+			//move player from already gathered data
+			movePlayerFromData(player,event);
+			//find target, apply force towards target
+			moveAiObjects();
+			//move force into velocity, velocity into position
+			velIntoPos();
+			//if object is outside of boundary, move it inside
+			movementBoundCheck();
+			//merge objects together when overlapped
+			mergeOverlapped();
+			//Move overlapped objects
+			//Not needed, merging prevents need for underOverlapping
+			//underOverlap();
+			//if object is outside of boundary, move it inside
+			movementBoundCheck();
+			//move camera to safe position for blit
+		}
 		moveCamera(player);
 		//blit background onto screen
 		backgroundBlit();
