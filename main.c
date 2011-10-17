@@ -88,9 +88,6 @@ int main(int argc,char **args)
 			movementBoundCheck();
 			//merge objects together when overlapped
 			mergeOverlapped();
-			//Move overlapped objects
-			//Not needed, merging prevents need for underOverlapping
-			//underOverlap();
 			//if object is outside of boundary, move it inside
 			movementBoundCheck();
 			//move camera to safe position for blit
