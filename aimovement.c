@@ -41,9 +41,36 @@ void moveAiObjects()
 		relPos = (vector){obj[selectedObj].pos.x - obj[i].pos.x, obj[selectedObj].pos.y - obj[i].pos.y};
 		if(imPred == 0) relPos = (vector){-relPos.x, -relPos.y};
 		vector heading = obj[i].vel;
+		SDL_Rect sign;
+		if(relPos.x >= 0) sign.x = 1;
+		else sign.x = 0;
+		if(relPos.y >= 0) sign.y = 1;
+		else sign.y = 0;
 		relPos.x -= heading.x;
 		relPos.y -= heading.y;
+		if(!relPos.x == sign.x)
+		{
+			vector change;
+			change.x = (relPos.x - heading.x);
+			relPos.x -= (change.x + 1);
+		}
+		if(!relPos.y == sign.y)
+		{
+			vector change;
+			change.y = (relPos.y - heading.y);
+			relPos.y -= (change.y + 1);
+		}
+		/* //DEBUG
+		printf("obj: %d sobj: %d\n",i,selectedObj);
+		printf("rx: %f ry: %f\n",relPos.x,relPos.y);
+		*/
 		normalize(&relPos);
+		/* //DEBUG
+		printf("nrx: %f nry: %f\n",relPos.x,relPos.y);
+		printf("vx: %f vy: %f\n",obj[i].vel.x,obj[i].vel.y);
+		printf("dist: %f\n",sqrt(relPos.x * relPos.x + relPos.y * relPos.y));
+		puts("");
+		*/
 		obj[i].force.x += SPEED * relPos.x;
 		obj[i].force.y += SPEED * relPos.y;
 	}
