@@ -7,12 +7,12 @@
 #include "header/vectorMath.h"
 #include "header/main.h"
 
-void movePlayer(int eventRun,SDL_Event event)
+void movePlayer(SDL_Event event)
 {
-	int mouseDown = movePlayerStore(0,2);
+	int mouseDown = movePlayerStore(0,GET_PLAYER_STORE_MOUSE_DOWN);
 	if(event.button.state == SDL_PRESSED && event.button.button == SDL_BUTTON_LEFT) mouseDown = 1;
-	if(event.button.state == SDL_RELEASED && event.button.button == SDL_BUTTON_LEFT && eventRun == 0) mouseDown = 0;
-	movePlayerStore(mouseDown,1);
+	else if(event.button.state == SDL_RELEASED && event.button.button == SDL_BUTTON_LEFT) mouseDown = 0;
+	movePlayerStore(mouseDown,SET_PLAYER_STORE_MOUSE_DOWN);
 }
 
 int movePlayerStore(int data,int option)
