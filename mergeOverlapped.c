@@ -3,12 +3,11 @@
 
 #include "header/mergeOverlapped.h"
 #include "header/objectStore.h"
-#include "header/main.h"
 #include "header/object.h"
 
 void mergeOverlapped()
 {
-	object *obj = objectStore(NULL,GETOBJECT);
+	object *obj = objectStore(NULL,GET_OBJECT);
 	int i;
 	for(i = 0;i < OBJECTS;i++)
 	{

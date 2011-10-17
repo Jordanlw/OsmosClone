@@ -20,8 +20,8 @@ int movePlayerStore(int data,int option)
 	static int mouseDown = 0;
 	switch(option)
 	{
-		case 1: mouseDown = data;break;
-		case 2: return mouseDown;break;
+		case SET_PLAYER_STORE_MOUSE_DOWN: mouseDown = data;break;
+		case GET_PLAYER_STORE_MOUSE_DOWN: return mouseDown;break;
 		default:break;
 	}
 	return 0;
@@ -30,17 +30,17 @@ int movePlayerStore(int data,int option)
 void movePlayerFromData(int player,SDL_Event event)
 {
 	//only run if the mouse is being pressed down
-	int mouseDown = movePlayerStore(0,2);
+	int mouseDown = movePlayerStore(0,GET_PLAYER_STORE_MOUSE_DOWN);
 	if(mouseDown)
 	{
 		//retrieve data
-		object *obj = (object *)objectStore(NULL,GETOBJECT);	
+		object *obj = (object *)objectStore(NULL,GET_OBJECT);	
 		//retrieve mouse position
 		vector mousePos;
 		mousePos.x = (double)event.motion.x;
 		mousePos.y = (double)event.motion.y;
 		//convert mousepos from relative to absolute
-		SDL_Rect *camera = (SDL_Rect *)sdlStore(NULL,GETCAMERA);
+		SDL_Rect *camera = (SDL_Rect *)sdlStore(NULL,GET_CAMERA);
 		mousePos.x += (double)camera->x;
 		mousePos.y += (double)camera->y;
 		//Convert object data to vector
@@ -65,8 +65,8 @@ void movePlayerFromData(int player,SDL_Event event)
 void moveCamera(int player)
 {
 	//Get data
-	SDL_Rect *camera = sdlStore(NULL,4);
-	object *objects = objectStore(NULL,2);
+	SDL_Rect *camera = sdlStore(NULL,GET_CAMERA);
+	object *objects = objectStore(NULL,GET_OBJECT);
 	//Set camera position to center of player object
 	camera->x = (int)objects[player].pos.x - (camera->w / 2);
 	camera->y = (int)objects[player].pos.y - (camera->h / 2);

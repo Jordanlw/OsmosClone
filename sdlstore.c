@@ -16,18 +16,18 @@ void *sdlStore(void *data,int option)
 	{
 		switch(option)
 		{
-			case 1:camera = (SDL_Rect *)data;break;
-			case 2:screen = (SDL_Surface *)data;break;
-			case 4:return (void *)camera;break;
-			case 8:return (void *)screen;break;
-			case 64:player = *(int *)data;break;
-			case 128:return (void *)&player;break;
-			case 256:backgrounds = (background *)data;break;
-			case 1024:return (void *)backgrounds;break;
-			case 2048:amntBackgrounds = (long)data;break;
-			case 4096:return &amntBackgrounds;break;
-			case 3:frameTime = *(Uint32 *)data;break;
-			case 5:return &frameTime;break;
+			case SET_CAMERA:camera = (SDL_Rect *)data;break;
+			case SET_SCREEN:screen = (SDL_Surface *)data;break;
+			case GET_CAMERA:return (void *)camera;break;
+			case GET_SCREEN:return (void *)screen;break;
+			case SET_PLAYER:player = *(int *)data;break;
+			case GET_PLAYER:return (void *)&player;break;
+			case SET_BACKGROUND:backgrounds = (background *)data;break;
+			case GET_BACKGROUND:return (void *)backgrounds;break;
+			case SET_BACKGROUND_AMOUNT:amntBackgrounds = (long)data;break;
+			case GET_BACKGROUND_AMOUNT:return &amntBackgrounds;break;
+			case SET_FRAMETIME:frameTime = *(Uint32 *)data;break;
+			case GET_FRAMETIME:return &frameTime;break;
 			default:break;
 		}
 	}

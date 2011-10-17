@@ -3,11 +3,10 @@
 
 #include "header/objectStore.h"
 #include "header/object.h"
-#include "header/main.h"
 
 int initObjects()
 {
-	if(objectStore(NULL,1))
+	if(objectStore(NULL,CREATE_OBJECTS))
 	{
 		puts("DEBUG: initOjbects() 1");
 		return 1;
@@ -20,12 +19,11 @@ void *objectStore(void *data,int options)
 	static object *objects = 0;
 	switch(options)
 	{
-		case 0: break;
-		case 2: return (void *)objects;break;
+		case GET_OBJECT: return (void *)objects;break;
 		default: break;
 	}
 	//create objects
-	if(options == 1)
+	if(options == CREATE_OBJECTS)
 	{
 		objects = malloc(sizeof(object) * OBJECTS);
 		if(!objects)

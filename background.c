@@ -5,10 +5,10 @@
 
 void backgroundBlit(void)
 {
-	int amnt = *((int *)sdlStore(NULL,4096));
-	SDL_Rect *camera = sdlStore(NULL,4);
-	background *bgs = sdlStore(NULL,1024);
-	SDL_Surface *screen = sdlStore(NULL,8);
+	int amnt = *((int *)sdlStore(NULL,GET_BACKGROUND_AMOUNT));
+	SDL_Rect *camera = sdlStore(NULL,GET_CAMERA);
+	background *bgs = sdlStore(NULL,GET_BACKGROUND);
+	SDL_Surface *screen = sdlStore(NULL,GET_SCREEN);
 	int i;
 	for(i = 0;i < amnt;i++)
 	{
@@ -38,7 +38,7 @@ void backgroundBlit(void)
 
 int isBgVisible(vector pos)
 {
-	SDL_Rect *camera = sdlStore(NULL,4);
+	SDL_Rect *camera = sdlStore(NULL,GET_CAMERA);
 	if((int)pos.x >= camera->x && (int)pos.x <= camera->x + camera->w);
 	{
 		if((int)pos.y >= camera->y && (int)pos.y <= camera->y + camera->h)

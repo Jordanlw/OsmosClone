@@ -10,7 +10,7 @@ void movementBoundCheck()
 	int i;
 	for(i = 0;i < OBJECTS;i++)
 	{
-		object *obj = (object *)objectStore(NULL,2);
+		object *obj = (object *)objectStore(NULL,GET_OBJECT);
 		if(obj[i].radius <= 0) continue;
 		if(obj[i].pos.x - obj[i].radius < 0) obj[i].pos.x = obj[i].radius, obj[i].vel.x = 0;
 		if(obj[i].pos.x + obj[i].radius > LEVEL_WIDTH) obj[i].pos.x = LEVEL_WIDTH - obj[i].radius, obj[i].vel.x = 0;

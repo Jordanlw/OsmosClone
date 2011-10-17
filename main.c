@@ -23,7 +23,7 @@ int main(int argc,char **args)
 	}
 	//used for multiplayer and also ease of passing data
 	int player = 0;
-	sdlStore((void *)&player,GETPLAYER);
+	sdlStore((void *)&player,GET_PLAYER);
 	if(initObjects())
 	{
 		puts("DEBUG: main() 2");
@@ -107,7 +107,7 @@ int main(int argc,char **args)
 		if(delay > 0) SDL_Delay(delay);
 		//store frame time
 		unsigned int frameTime = SDL_GetTicks() - ticks;
-		sdlStore((void *)&frameTime,SETFRAMETIME);
+		sdlStore((void *)&frameTime,SET_FRAMETIME);
 	}
 	SDL_Quit();
 	return 0;

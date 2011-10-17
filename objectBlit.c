@@ -10,9 +10,9 @@
 
 void blitObject()
 {
-	object *obj = objectStore(NULL,GETOBJECT);
-	SDL_Rect *camera = sdlStore(NULL,GETCAMERA);
-	SDL_Surface *screen = sdlStore(NULL,GETSCREEN);
+	object *obj = objectStore(NULL,GET_OBJECT);
+	SDL_Rect *camera = sdlStore(NULL,GET_CAMERA);
+	SDL_Surface *screen = sdlStore(NULL,GET_SCREEN);
 	int i;
 	for(i = 0;i < OBJECTS;i++)
 	{

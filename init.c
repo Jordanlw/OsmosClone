@@ -21,8 +21,8 @@ typedef struct _randomSelector
 
 void initObjectPosAndSize()
 {
-	object *obj = objectStore(NULL,GETOBJECT);
-	int player = *(int *)sdlStore(NULL,GETPLAYER);
+	object *obj = objectStore(NULL,GET_OBJECT);
+	int player = *(int *)sdlStore(NULL,GET_PLAYER);
 	int i;
 	obj[player].radius = STARTING_PLAYER_OBJECT_SIZE;
 	obj[player].pos = (vector){LEVEL_WIDTH / 2,LEVEL_HEIGHT / 2};
@@ -142,8 +142,8 @@ int initSDL()
 		puts("DEBUG: initSDL() 2");
 		return 1;
 	}
-	sdlStore(camera,1);
-	sdlStore(screen,2);
+	sdlStore(camera,SET_CAMERA);
+	sdlStore(screen,SET_SCREEN);
 	if(initBackground())
 	{
 		puts("DEBUG: initSDL() 3");
@@ -216,8 +216,8 @@ int initBackground()
 	 	}
 		bgs = tmp;
 	}
-	sdlStore((void *)bgs,256);
-	sdlStore((void *)amount,2048);
+	sdlStore((void *)bgs,SET_BACKGROUND);
+	sdlStore((void *)amount,SET_BACKGROUND_AMOUNT);
 	return 0;
 }
 
