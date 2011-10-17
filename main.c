@@ -39,44 +39,43 @@ int main(int argc,char **args)
 		//For FPS limit
 		Uint32 ticks = SDL_GetTicks();
 		//event loop
-		int eventRun = 0;
 		SDL_Event event;
 		//if set, allow a game changing frame to happen
 		int nextStep = 0;
 		while(SDL_PollEvent(&event))
 		{
-			//check whether user wants to exit
-			if(event.type == SDL_QUIT)
+			switch(event.type)
 			{
-				quit = 1;
-			}
-			//respond to user resize of window
-			else if(event.type == SDL_VIDEORESIZE)
-			{
-				SDL_Surface *screen = sdlStore(NULL,GETSCREEN);
-				screen = SDL_SetVideoMode(event.resize.w,event.resize.h,32,SDL_SWSURFACE | SDL_RESIZABLE);
-				screen = screen;
-				SDL_Rect *camera = sdlStore(NULL,GETCAMERA);
-				camera->w = event.resize.w;
-				camera->h = event.resize.h;
-			}
-			//move player based on mouse movement
-			else if(event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP)
-			{
-				movePlayer(eventRun,event);
-				eventRun++;
-			}
-			else if(event.type == SDL_KEYDOWN)
-			{
-				if(event.key.keysym.sym == SDLK_n) nextStep = 1;
-				else if(event.key.keysym.sym == SDLK_p) 
-				{
-					if(pauseStep) pauseStep = 0;
-					else pauseStep = 1;
-				}
+				//Respond to user exiting the game
+				case SDL_QUIT: quit = 1; break;
+				//Respond to window being resized by user
+				case SDL_VIDEORESIZE:
+					{
+						SDL_Surface *screen = sdlStore(NULL,GET_SCREEN);
+						screen = SDL_SetVideoMode(event.resize.w,event.resize.h,32,SDL_SWSURFACE | SDL_RESIZABLE);
+						screen = screen;
+						SDL_Rect *camera = sdlStore(NULL,GET_CAMERA);
+						camera->w = event.resize.w;
+						camera->h = event.resize.h;
+						break;
+					}
+				//Move player base on mouse position and mouse button activity
+				case SDL_MOUSEBUTTONDOWN...SDL_MOUSEBUTTONUP:
+					movePlayer(event);
+					break;
+				//Respond to key presses
+				case SDL_KEYDOWN:
+					switch(event.key.keysym.sym)
+					{
+						case SDLK_n: nextStep = 1; break;
+						case SDLK_p: 
+							if(pauseStep) pauseStep = 0;
+							else pauseStep = 1;
+							break;
+						default: break;
+					}
 			}
 		}
-		eventRun = 0;
 		if(!pauseStep || nextStep)
 		{
 			//move player from already gathered data
