@@ -1,5 +1,6 @@
 #include <SDL/SDL.h>
 
+#include "header/main.h"
 #include "header/background.h"
 #include "header/sdlstore.h"
 

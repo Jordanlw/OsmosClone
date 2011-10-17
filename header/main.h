@@ -1,3 +1,6 @@
+#ifndef INCLUDE_MAIN
+#define INCLUDE_MAIN
+
 #define DEFAULT_WIDTH 500
 #define DEFAULT_HEIGHT 500
 #define OBJECTS 1

@@ -6,7 +6,6 @@
 #include "header/sdlstore.h"
 #include "header/collisionDetection.h"
 #include "header/random.h"
-#include "header/main.h"
 #include "header/background.h"
 
 #define SIDES_TO_CHECK 4

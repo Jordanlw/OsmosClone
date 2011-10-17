@@ -1,7 +1,6 @@
 #include <math.h>
 //DEBUG
 #include <SDL/SDL.h>
-//#include <stdio.h>
 
 #include "header/object.h"
 #include "header/objectStore.h"
