@@ -3,7 +3,7 @@
 
 #define DEFAULT_WIDTH 500
 #define DEFAULT_HEIGHT 500
-#define OBJECTS 1
+#define OBJECTS 2
 #define LEVEL_WIDTH 3000
 #define LEVEL_HEIGHT 3000
 #define SPEED 30000
@@ -12,10 +12,9 @@
 #define FPS 60
 #define LEVEL_SIDES 4
 #define MERGE_DIVIDER 10
-#define MAX_OBJECT_SIZE 100
-#define MIN_OBJECT_SIZE 35
-#define STARTING_PLAYER_OBJECT_SIZE 130
-
+#define MAX_OBJECT_SIZE 61
+#define MIN_OBJECT_SIZE 61
+#define STARTING_PLAYER_OBJECT_SIZE 60
 #define SETPIXEL32(surface,x,y,pixel) if(x >= 0 && y >= 0 && x < ((screen)->w) && y < ((screen)->h)) \
 										 { ((Uint32 *)(surface->pixels))[(y) * ((surface)->w) + (x)] = (pixel); }
 #define FIXED_MULT_NORMAL(fixed,normal,ratio) (((fixed) * (normal) * (ratio)) / ((ratio) * (ratio)))
