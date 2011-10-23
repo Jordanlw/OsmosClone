@@ -42,22 +42,29 @@ void moveAiObjects()
 		if(imPred == 0) relPos = (vector){-relPos.x, -relPos.y};
 		vector heading = obj[i].vel;
 		SDL_Rect sign;
+		//Set if positive
 		if(relPos.x >= 0) sign.x = 1;
+		//Set if negative
 		else sign.x = 0;
 		if(relPos.y >= 0) sign.y = 1;
 		else sign.y = 0;
+		//Relpos now equals vector between target and velocity
 		relPos.x -= heading.x;
 		relPos.y -= heading.y;
+		//If relPos is zero & sign is one then enter
+		//If relPos is one & sign is zero then enter
 		if(!relPos.x == sign.x)
 		{
 			vector change;
 			change.x = (relPos.x - heading.x);
+			printf("x: %f\n",change.x);
 			relPos.x -= (change.x + 1);
 		}
 		if(!relPos.y == sign.y)
 		{
 			vector change;
 			change.y = (relPos.y - heading.y);
+			printf("y: %f\n",change.y);
 			relPos.y -= (change.y + 1);
 		}
 		/* //DEBUG
