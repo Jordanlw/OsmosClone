@@ -1,1 +1,22 @@
-void debug(int);
+#include <stdio.h>
+#include <stdlib.h>
+
+struct debugMember
+{
+	int (*func)(void *);
+	void *data;
+	int when;
+};
+
+enum
+{
+	SET,
+	GET,
+	GET_CURRENT_INDEX,
+	
+	DEBUG_CALL_BEFORE_BLIT
+};
+
+int debugRegister(int ,int (*)(void *),void *);
+struct debugMember *debugStore(struct debugMember *,int );
+int debugCall(int);
