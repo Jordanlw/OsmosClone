@@ -1,7 +1,7 @@
 CC = gcc
 CCFLAGS = -Wall -g -lSDL
 SOURCES = $(wildcard *.c)
-SOURCES := $(filter-out debug.c varArray.c undoOverlap.c, $(SOURCES))
+SOURCES := $(filter-out varArray.c undoOverlap.c, $(SOURCES))
 OBJECTS = $(SOURCES:.c=.o)
 OUTEXE = xOsmosClone
 DEPSDIR = deps
