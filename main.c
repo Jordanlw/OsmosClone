@@ -12,6 +12,7 @@
 #include "header/objectBlit.h"
 #include "header/objectStore.h"
 #include "header/aimovement.h"
+#include "header/debug.h"
 
 int main(int argc,char **args)
 {
@@ -93,6 +94,7 @@ int main(int argc,char **args)
 			//move camera to safe position for blit
 		}
 		moveCamera(player);
+		debugCall(DEBUG_CALL_BEFORE_BLIT);
 		//blit background onto screen
 		backgroundBlit();
 		//blit objects
