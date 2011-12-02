@@ -28,16 +28,19 @@ void moveAiObjects()
 		int j;
 		for(j = 0;j < OBJECTS;j++)
 		{
+			//Find closest object to "i"
 			if(j == i || obj[j].radius <= 0) continue;
 			relPos = (vector){obj[j].pos.x - obj[i].pos.x, obj[j].pos.y - obj[i].pos.y};
 			double currentDist = sqrt(relPos.x * relPos.x + relPos.y * relPos.y);
 			if(prevDist == -1) prevDist = currentDist, selectedObj = j;
 			else if(currentDist < prevDist) prevDist = currentDist, selectedObj = j;
+			//Determine whether "j" is a predator or prey
 			if(obj[selectedObj].radius > obj[i].radius) imPred = 0;
 			else imPred = 1;
 		}
 		//If target hasn't been found, skip the rest (movement to target)
 		if(selectedObj == -1) continue;
+		//Get vector from predator "i" to selected object
 		relPos = (vector){obj[selectedObj].pos.x - obj[i].pos.x, obj[selectedObj].pos.y - obj[i].pos.y};
 		if(imPred == 0) relPos = (vector){-relPos.x, -relPos.y};
 		vector heading = obj[i].vel;
