@@ -41,47 +41,37 @@ void moveAiObjects()
 		//If target hasn't been found, skip the rest (movement to target)
 		if(selectedObj == -1) continue;
 		//Get vector from predator "i" to selected object
-		relPos = (vector){obj[selectedObj].pos.x - obj[i].pos.x, obj[selectedObj].pos.y - obj[i].pos.y};
+		relPos = (vector){(obj[selectedObj].pos.x + obj[selectedObj].vel.x) - obj[i].pos.x,
+		(obj[selectedObj].pos.y + obj[selectedObj].vel.y) - obj[i].pos.y};
 		if(imPred == 0) relPos = (vector){-relPos.x, -relPos.y};
 		vector heading = obj[i].vel;
-		SDL_Rect sign;
-		//Set if positive
-		if(relPos.x >= 0) sign.x = 1;
-		//Set if negative
-		else sign.x = 0;
-		if(relPos.y >= 0) sign.y = 1;
-		else sign.y = 0;
-		//Relpos now equals vector between target and velocity
 		relPos.x -= heading.x;
 		relPos.y -= heading.y;
-		//If relPos is zero & sign is one then enter
-		//If relPos is one & sign is zero then enter
-		if(!relPos.x == sign.x)
+		double velAngle = atan2(heading.y,heading.x);
+		double tarAngle = atan2(relPos.y,relPos.x);
+		double headAngle = tarAngle;
+		if(obj[i].vel.x != 0 && obj[i].vel.y != 0)
 		{
-			vector change;
-			change.x = (relPos.x - heading.x);
-			printf("x: %f\n",change.x);
-			relPos.x -= (change.x + 1);
+ 			headAngle = (tarAngle - velAngle) + tarAngle;
 		}
-		if(!relPos.y == sign.y)
+		heading = (vector){cos(headAngle),sin(headAngle)};
+		if(!headAngle)
 		{
-			vector change;
-			change.y = (relPos.y - heading.y);
-			printf("y: %f\n",change.y);
-			relPos.y -= (change.y + 1);
+			heading = (vector){relPos.x,relPos.y};
+			normalize(&heading);
 		}
-		/* //DEBUG
-		printf("obj: %d sobj: %d\n",i,selectedObj);
-		printf("rx: %f ry: %f\n",relPos.x,relPos.y);
-		*/
-		normalize(&relPos);
-		/* //DEBUG
+		//DEBUG
+		//debugRegister(DEBUG_CALL_BEFORE_BLIT,debugFillRect,(struct debugFillRectData){heading.x * 10,heading.y * 10,10,10,256<<8});
+		//printf("i %d, s %d, isPred %d, velAng %.3f, tarAng %.3f, headAng %.3f, headX %.3f, headY %.3f, velX %.1f, velY %.1f\n\n"
+		//,i,selectedObj,imPred,velAngle,tarAngle,headAngle,heading.x,heading.y,obj[i].vel.x,obj[i].vel.y);
+		/* 
+		//DEBUG
 		printf("nrx: %f nry: %f\n",relPos.x,relPos.y);
 		printf("vx: %f vy: %f\n",obj[i].vel.x,obj[i].vel.y);
 		printf("dist: %f\n",sqrt(relPos.x * relPos.x + relPos.y * relPos.y));
 		puts("");
 		*/
-		obj[i].force.x += SPEED * relPos.x;
-		obj[i].force.y += SPEED * relPos.y;
+		obj[i].force.x += SPEED * heading.x;
+		obj[i].force.y += SPEED * heading.y;
 	}
 }
