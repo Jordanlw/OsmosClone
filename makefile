@@ -1,5 +1,5 @@
 CC = gcc
-CCFLAGS = -Wall -g -lSDL
+CCFLAGS = -Wall -g -lSDL -lm
 SOURCES = $(wildcard *.c)
 SOURCES := $(filter-out varArray.c undoOverlap.c, $(SOURCES))
 OBJECTS = $(SOURCES:.c=.o)
