@@ -8,6 +8,11 @@ struct debugMember
 	int when;
 };
 
+struct debugFillRectData
+{
+	unsigned int x,y,w,h,color;
+};
+
 enum
 {
 	SET,
@@ -20,3 +25,4 @@ enum
 int debugRegister(int ,int (*)(void *),void *);
 struct debugMember *debugStore(struct debugMember *,int );
 int debugCall(int);
+int debugFillRect(void *);

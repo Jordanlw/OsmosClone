@@ -7,6 +7,7 @@
 #include "header/main.h"
 #include "header/sdlstore.h"
 #include "header/vectorMath.h"
+#include "header/debug.h"
 
 void moveAiObjects()
 {

@@ -1,4 +1,7 @@
+#include <SDL/SDL.h>
+
 #include "header/debug.h"
+#include "header/sdlstore.h"
 
 int debugRegister(int when,int (*func)(void *),void *data)
 {
@@ -42,5 +45,13 @@ int debugCall(int when)
 		if(members[i].when != when) continue;
 		if(members[i].func(members[i].data)) puts("DEBUG: debugCall() 1"); return -1;
 	}
+	return 0;
+}
+
+int debugFillRect(void *data)
+{
+	SDL_Surface *screen = sdlStore(NULL,GET_SCREEN);
+	struct debugFillRectData extractData = *(struct debugFillRectData *)data;
+	SDL_FillRect(screen,&(SDL_Rect){extractData.x,extractData.y,extractData.w,extractData.h},extractData.color);
 	return 0;
 }
