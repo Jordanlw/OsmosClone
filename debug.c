@@ -21,6 +21,7 @@ struct debugMember *debugStore(struct debugMember *data,int options)
 	{
 		array = malloc(arraySize * sizeof(struct debugMember));
 		if(!array) puts("DEBUG: debugStore() 2"); return (struct debugMember *)-1;
+		currentIndex = 1;
 	}
 	switch(options)
 	{
