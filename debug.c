@@ -5,7 +5,11 @@
 
 int debugRegister(int when,int (*func)(void *),void *data)
 {
-	if(debugStore(&(struct debugMember){func,data,when},SET)) puts("DEBUG: debugRegister() 1"); return -1;
+	if(debugStore(&(struct debugMember){func,data,when},SET))
+	{
+		puts("DEBUG: debugRegister() 1");
+		return 1;
+	}
 	return 0;
 }
 
@@ -18,12 +22,20 @@ struct debugMember *debugStore(struct debugMember *data,int options)
 	{
 		arraySize *= 2;
 		array= realloc(array,arraySize * sizeof(struct debugMember));
-		if(!array) puts("DEBUG: debugStore() 1"); return (struct debugMember *)-1;
+		if(!array) 
+		{
+			puts("DEBUG: debugStore() 1"); 
+			return (struct debugMember *)1;
+		}
 	}
 	if(!array)
 	{
 		array = malloc(arraySize * sizeof(struct debugMember));
-		if(!array) puts("DEBUG: debugStore() 2"); return (struct debugMember *)-1;
+		if(!array) 
+		{
+			puts("DEBUG: debugStore() 2"); 
+			return (struct debugMember *)1;
+		}
 		currentIndex = 1;
 	}
 	switch(options)
@@ -43,7 +55,11 @@ int debugCall(int when)
 	for(i = 0;i < currentIndex;i++)
 	{
 		if(members[i].when != when) continue;
-		if(members[i].func(members[i].data)) puts("DEBUG: debugCall() 1"); return -1;
+		if(members[i].func(members[i].data))
+		{
+			puts("DEBUG: debugCall() 1"); 
+			return 1;
+		}
 	}
 	return 0;
 }
