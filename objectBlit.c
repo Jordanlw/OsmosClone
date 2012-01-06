@@ -7,29 +7,42 @@
 #include "header/sdlstore.h"
 #include "header/object.h"
 #include "header/main.h"
+#include "header/blitCircle.h"
 
-void blitObject()
+int blitObject()
 {
 	object *obj = objectStore(NULL,GET_OBJECT);
+	if(obj == 0)
+	{
+		puts("DEBUG: blitObject() 2");
+		return 1;
+	}
 	SDL_Rect *camera = sdlStore(NULL,GET_CAMERA);
+	if(camera == 0)
+	{
+		puts("DEBUG: blitObject() 3");
+		return 1;
+	}
 	SDL_Surface *screen = sdlStore(NULL,GET_SCREEN);
+	if(screen == 0)
+	{
+		puts("DEBUG: blitObject() 4");
+		return 1;
+	}
+	int player = *(int *)sdlStore(NULL,GET_PLAYER);
 	int i;
 	for(i = 0;i < OBJECTS;i++)
 	{
 		if(obj[i].radius <= 0) continue;
-		int objX = obj[i].pos.x, objY = obj[i].pos.y;
-		int j;
-		for(j = 0;j < obj[i].radius;j++)
+		SDL_Color color = {0,0,255};
+		if(i == player) color = (SDL_Color){255,0,0};
+		if(blitCircle(obj[i].radius,screen,(SDL_Rect){obj[i].pos.x - camera->x,obj[i].pos.y - camera->y,0,0},color))
 		{
-			unsigned int width = (unsigned int)sqrt(8 * obj[i].radius * j - 4 * j * j);
-			int k;
-			for(k = 0;k < width;k++)
-			{
-				SETPIXEL32(screen,objX - camera->x - (width / 2) + k,objY - camera->y - (obj[i].radius - j) + 1,255);
-				SETPIXEL32(screen,objX - camera->x - (width / 2) + k,objY - camera->y + (obj[i].radius - j) - 1,255);
-			}
+			puts("DEBUG: blitObject() 1");
+			return 1;
 		}
 	}
 	SDL_Flip(screen);
 	SDL_FillRect(screen,NULL,0);
+	return 0;
 }

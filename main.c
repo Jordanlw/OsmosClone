@@ -98,7 +98,11 @@ int main(int argc,char **args)
 		//blit background onto screen
 		backgroundBlit();
 		//blit objects
-		blitObject();
+		if(blitObject())
+		{
+			puts("DEBUG: main() 3");
+			return 1;
+		}
 		
 		//For FPS limit
 		long delay = (1000 / FPS) - (int)(SDL_GetTicks() - ticks);
