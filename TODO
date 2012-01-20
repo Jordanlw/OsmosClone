@@ -1,2 +1,5 @@
-* Add collision avoidance to ai objects.
+TODO:
 * Change over background from image loading to blitCircle().
+
+WONTFIX
+* Add collision avoidance to ai objects.
