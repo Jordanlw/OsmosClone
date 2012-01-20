@@ -9,7 +9,7 @@
 #include "header/background.h"
 
 #define SIDES_TO_CHECK 4
-#define STARTING_OBJECT_SPACING 100
+#define STARTING_OBJECT_SPACING 50
 #define STARTING_OBJECT_SPACING_INCREMENT 25
 
 typedef struct _randomSelector
@@ -84,7 +84,12 @@ void initObjectPosAndSize()
 				//Checking to see whether new found position collides with other objects
 				for(j = 0;j < OBJECTS;j++)
 				{
-					if(isCollidedVectorAndRadius(newPos,obj[j].pos,obj[j].radius + obj[i].radius)) found = 0;
+					if(isCollidedVectorAndRadius(newPos,obj[j].pos,obj[j].radius + obj[i].radius))
+					{
+						found = 0;
+					}
+					//DEBUG
+					//printf("r %lu x %f y %f x2 %f y2 %f\n",obj[j].radius + obj[i].radius,newPos.x,newPos.y,obj[j].pos.x,obj[j].pos.y);
 				}
 				if(found) break;
 			}
