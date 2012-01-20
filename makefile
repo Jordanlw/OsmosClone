@@ -2,18 +2,22 @@ CC = gcc
 CCFLAGS = -Wall -g -lSDL -lm
 SOURCES = $(wildcard *.c)
 SOURCES := $(filter-out varArray.c undoOverlap.c, $(SOURCES))
-OBJECTS = $(SOURCES:.c=.o)
+OBJSDIR = objs
+OBJECTS = $(addprefix $(OBJSDIR)/, $(SOURCES:.c=.o))
 OUTEXE = xOsmosClone
 DEPSDIR = deps
+DEPS = $(addprefix $(DEPSDIR)/, $(SOURCES:.c=.d))
+DEPSCUR = $(DEPSDIR)/$(<:.c=.d)
 
 $(OUTEXE) : $(OBJECTS)
 	$(CC) $(CCFLAGS) $(OBJECTS) -o $(OUTEXE)
 
--include $(addprefix $(DEPSDIR)/, $(SOURCES:.c=.d))
+-include $(DEPS)
 
-%.o : %.c
-	$(CC) $(CCFLAGS) -c $< -o $@
-	$(CC) -MM $< > $(addprefix $(DEPSDIR)/, $(@:.o=.d))
+$(OBJSDIR)/%.o : %.c
+	$(CC) $(CCFLAGS) -MM $< > $(DEPSDIR)/$(<:.c=.d.tmp)
+	sed -e 's&^$(notdir $@)&$@&' < $(DEPSDIR)/$(<:.c=.d.tmp) > $(DEPSDIR)/$(<:.c=.d)
+	$(CC) $(CCFLAGS) -c -o $@ $<
 
 .PHONY : clean
 
