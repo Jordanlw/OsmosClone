@@ -21,12 +21,18 @@ int blitCircle(unsigned int radius,SDL_Surface *surface,SDL_Rect offset,SDL_Colo
 	
 	for(i = 0;i < radius;i++)
 	{
-		unsigned int width = (unsigned int)sqrt(8 * radius * i - 4 * i * i);
+		unsigned int width = (unsigned int)sqrt((8 * radius * i) - (4 * i * i));
 		int j;
 		for(j = 0;j < width;j++)
 		{
-			SETPIXEL32(surface,offset.x - (width / 2) + j,offset.y - (radius - i),pixelColor);
-			SETPIXEL32(surface,offset.x - (width / 2) + j,offset.y + (radius - i),pixelColor);
+			//Top Right Quarter
+			SETPIXEL32(surface,offset.x + (j / 2),offset.y - radius + i,pixelColor);
+			//Top Left Quarter
+			SETPIXEL32(surface,offset.x - (j / 2),offset.y - radius + i,pixelColor);
+			//Bottom Right Quarter
+			SETPIXEL32(surface,offset.x + (j / 2),offset.y + radius - i,pixelColor);
+			//Bottom Left Quarter
+			SETPIXEL32(surface,offset.x - (j / 2),offset.y + radius - i,pixelColor);
 		}
 	}
 	return 0;
