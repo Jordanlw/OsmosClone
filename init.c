@@ -21,8 +21,8 @@ typedef struct _randomSelector
 int initBackground()
 {
 	
-	bgData *initStorage = malloc(sizeof(bgData));
-	if(bgData == 0)
+	bgData *initStorage = malloc(sizeof(bgData) * (BG_INIT_W_SIZE / BG_INIT_MAX_SPACING) * 
+	(BG_INIT_H_SIZE / BG_INIT_MAX_SPACING) * BG_AMOUNT);
 	{
 		puts("DEBUG: initBackground() 1");
 		return 1;
