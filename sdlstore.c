@@ -9,6 +9,7 @@ void *sdlStore(void *data,int option)
 	static SDL_Rect *camera = 0;
 	static int player = 0;
 	static Uint32 frameTime = 0;
+	static bgData *background = 0;
 	
 	if(option)
 	{
@@ -22,6 +23,8 @@ void *sdlStore(void *data,int option)
 			case GET_PLAYER:return (void *)&player;break;
 			case SET_FRAMETIME:frameTime = *(Uint32 *)data;break;
 			case GET_FRAMETIME:return &frameTime;break;
+			case SET_BACKGROUND: background = (bgData *)data;break;
+			case GET_BACKGROUND: return &background;break;
 			default:break;
 		}
 	}

@@ -31,6 +31,11 @@ int main(int argc,char **args)
 		return 1;
 	}
 	initObjectPosAndSize();
+	if(initBackground())
+	{
+		puts("DEBUG: main() 4");
+		return 1;
+	}
 	//game loop
 	int quit = 0;
 	//if set, run through game changing functions only when n is pressed

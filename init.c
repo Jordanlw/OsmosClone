@@ -18,6 +18,31 @@ typedef struct _randomSelector
 	int checked;
 }randomSelector;
 
+int initBackground()
+{
+	
+	bgData *initStorage = malloc(sizeof(bgData));
+	if(bgData == 0)
+	{
+		puts("DEBUG: initBackground() 1");
+		return 1;
+	}
+	sdlStore((void *)initStorage,SET_BACKGROUND);
+	SDL_Rect *camera = sdlStore(NULL,GET_CAMERA);
+	int i;
+	for(i = 0;i < camera->w;i += BG_INIT_MAX_SPACING)
+	{
+		int j;
+		for(j = 0;j < camera->h;j += BG_INIT_MAX_SPACING)
+		{
+			vector tmpPos = (vector){randomResult(BG_INIT_MAX_SPACING,BG_INIT_MIN_SPACING),
+			randomResult(BG_INIT_MAX_SPACING,BG_INIT_MIN_SPACING)};
+			initStorage[((j * i) + j) / BG_INIT_MAX_SPACING].pos = (vector){((i - 1) * BG_INIT_MAX_SPACING) + tmpPos.x,
+			((j - 1) * BG_INIT_MAX_SPACING) + tmpPos.y};
+		}
+	}
+}
+
 void initObjectPosAndSize()
 {
 	object *obj = objectStore(NULL,GET_OBJECT);

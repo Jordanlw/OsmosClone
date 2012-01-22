@@ -2,3 +2,4 @@
 
 int initSDL();
 void initObjectPosAndSize();
+int initBackground();
