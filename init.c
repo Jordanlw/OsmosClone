@@ -23,6 +23,7 @@ int initBackground()
 	
 	bgData *initStorage = malloc(sizeof(bgData) * (BG_INIT_W_SIZE / BG_INIT_MAX_SPACING) * 
 	(BG_INIT_H_SIZE / BG_INIT_MAX_SPACING) * BG_AMOUNT);
+	if(initStorage == 0)
 	{
 		puts("DEBUG: initBackground() 1");
 		return 1;
