@@ -11,15 +11,13 @@ void backgroundBlit(void)
 {
 	SDL_Rect *camera = sdlStore(NULL,GET_CAMERA);
 	SDL_Surface *screen = sdlStore(NULL,GET_SCREEN);
-	int maxCol = camera->w / BG_INIT_MAX_SPACING;
-	int maxRow = camera->h / BG_INIT_MAX_SPACING;
 	int col;
-	for(col = 0;col < maxCol;col++)
+	for(col = 0;col < camera->w;col += BG_INIT_MAX_SPACING)
 	{
 		int row;
-		for(row = 0;row < maxRow;row++)
+		for(row = 0;row < camera->h;row += BG_INIT_MAX_SPACING)
 		{
-			SDL_Rect pos = {(col * maxCol) + BG_OFFSET,(row * maxRow) + BG_OFFSET,0,0};
+			SDL_Rect pos = {col + BG_OFFSET,row + BG_OFFSET,0,0};
 			blitCircle(BG_CIRCLE_RADIUS,screen,pos,(SDL_Color){255,255,255});
 		}
 	}
