@@ -29,19 +29,23 @@ int initBackground()
 		return 1;
 	}
 	sdlStore((void *)initStorage,SET_BACKGROUND);
-	SDL_Rect *camera = sdlStore(NULL,GET_CAMERA);
-	int i;
-	for(i = 0;i < camera->w;i += BG_INIT_MAX_SPACING)
+	int o;
+	for(o = 0;o < BG_AMOUNT;o++)
 	{
-		int j;
-		for(j = 0;j < camera->h;j += BG_INIT_MAX_SPACING)
+		int i;
+		for(i = 0;i < BG_INIT_W_SIZE / BG_INIT_MAX_SPACING;i++)
 		{
-			vector tmpPos = (vector){randomResult(BG_INIT_MAX_SPACING,BG_INIT_MIN_SPACING),
-			randomResult(BG_INIT_MAX_SPACING,BG_INIT_MIN_SPACING)};
-			initStorage[((j * i) + j) / BG_INIT_MAX_SPACING].pos = (vector){((i - 1) * BG_INIT_MAX_SPACING) + tmpPos.x,
-			((j - 1) * BG_INIT_MAX_SPACING) + tmpPos.y};
-		}
+			int j;
+			for(j = 0;j < BG_INIT_H_SIZE / BG_INIT_MAX_SPACING;j++)
+			{
+				vector tmpPos = (vector){randomResult(BG_INIT_MAX_SPACING,BG_INIT_MIN_SPACING),
+				randomResult(BG_INIT_MAX_SPACING,BG_INIT_MIN_SPACING)};
+				initStorage[(j * i) + j].pos = (vector){((i - 1) * BG_INIT_MAX_SPACING) + tmpPos.x,
+				((j - 1) * BG_INIT_MAX_SPACING) + tmpPos.y};
+			}
+		}	
 	}
+	return 0;
 }
 
 void initObjectPosAndSize()
