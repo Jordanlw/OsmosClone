@@ -1,5 +1,16 @@
 TODO:
 * Change over background from image loading to blitCircle().
+	- Add tiling
+	- Add shifting background
+	
+* Add start screen to prevent game from starting when not ready, also removes advantage a player might have over the AI
+regarding a early start.
+
+IDEAS:
+* Change over to adding energy to objects rather than force
+
+* When accelerating you should eject the mass that accelerates you, out, the ejected mass should become
+another object just like any other one, also with AI.
 
 WONTFIX
 * Add collision avoidance to ai objects.
