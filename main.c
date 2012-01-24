@@ -56,17 +56,24 @@ int main(int argc,char **args)
 				case SDL_QUIT: quit = 1; break;
 				//Respond to window being resized by user
 				case SDL_VIDEORESIZE:
-					{
-						SDL_Surface *screen = sdlStore(NULL,GET_SCREEN);
-						screen = SDL_SetVideoMode(event.resize.w,event.resize.h,32,SDL_SWSURFACE | SDL_RESIZABLE);
-						screen = screen;
-						SDL_Rect *camera = sdlStore(NULL,GET_CAMERA);
-						camera->w = event.resize.w;
-						camera->h = event.resize.h;
-						break;
-					}
+				{
+					SDL_Surface *screen = sdlStore(NULL,GET_SCREEN);
+					screen = SDL_SetVideoMode(event.resize.w,event.resize.h,32,SDL_SWSURFACE | SDL_RESIZABLE);
+					screen = screen;
+					SDL_Rect *camera = sdlStore(NULL,GET_CAMERA);
+					camera->w = event.resize.w;
+					camera->h = event.resize.h;
+					//DEBUG
+					//printf("video: event %d\n",event.type);
+				}
+				break;
 				//Move player base on mouse position and mouse button activity
-				case SDL_MOUSEBUTTONDOWN...SDL_MOUSEBUTTONUP:
+				case SDL_MOUSEBUTTONDOWN:
+					;
+				case SDL_MOUSEBUTTONUP:
+					//DEBUG
+					//printf("mouse: event %d down %d up %d\n",event.type,SDL_MOUSEBUTTONDOWN,SDL_MOUSEBUTTONUP);
+					
 					movePlayer(event);
 					break;
 				//Respond to key presses
@@ -80,6 +87,14 @@ int main(int argc,char **args)
 							break;
 						default: break;
 					}
+					//DEBUG
+					//printf("keydown: event %d\n",event.type);
+					
+					break;
+				default: 
+					//DEBUG
+					//printf("default: event %d\n",event.type);
+					break;
 			}
 		}
 		if(!pauseStep || nextStep)
