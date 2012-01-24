@@ -17,6 +17,7 @@
 										 { ((Uint32 *)(surface->pixels))[((y) * ((surface)->w)) + (x)] = (pixel); }
 #define FIXED_MULT_NORMAL(fixed,normal,ratio) (((fixed) * (normal) * (ratio)) / ((ratio) * (ratio)))
 #define FIND_REL_POS(inputA,inputB,output) (((output).x) = ((inputA).x) - ((inputB).x)); (((output).y) = ((inputA).y) - ((inputB).y))
+#define MIN_INT(a,b) ((a) < (b) ? (a) : (b))
 
 enum
 {
@@ -27,11 +28,11 @@ enum
 	GET_FRAMETIME,
 	GET_PLAYER_STORE_MOUSE_DOWN,
 	GET_PLAYER, 
-	GET_BACKGROUND_AMOUNT,
 	GET_BACKGROUND,
+	GET_BG_SIZE,
 	 
 	SET_BACKGROUND,
-	SET_BACKGROUND_AMOUNT,
+	SET_BG_SIZE,
 	SET_FRAMETIME,
 	SET_PLAYER,	
 	SET_PLAYER_STORE_MOUSE_DOWN,

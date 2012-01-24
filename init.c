@@ -29,22 +29,50 @@ int initBackground()
 		return 1;
 	}
 	sdlStore((void *)initStorage,SET_BACKGROUND);
+	int *bgSizes = malloc(sizeof(int) * BG_AMOUNT);
+	if(bgSizes == 0)
+	{
+		puts("DEBUG: initBackground() 1");
+		return 1;
+	}
+	bgSizes[0] = 3;
+	bgSizes[1] = 5;
+	bgSizes[2] = 7;
+	sdlStore((void *)bgSizes,SET_BG_SIZE);
+	
 	int o;
-	for(o = 0;o < BG_AMOUNT;o++)
+	for(o = 1;o <= BG_AMOUNT;o++)
 	{
 		int i;
-		for(i = 0;i < BG_INIT_W_SIZE / BG_INIT_MAX_SPACING;i++)
+		for(i = 0;i < BG_INIT_H_SIZE / BG_INIT_MAX_SPACING;i++)
 		{
 			int j;
-			for(j = 0;j < BG_INIT_H_SIZE / BG_INIT_MAX_SPACING;j++)
+			for(j = 0;j < BG_INIT_W_SIZE / BG_INIT_MAX_SPACING;j++)
 			{
 				vector tmpPos = (vector){randomResult(BG_INIT_MAX_SPACING,BG_INIT_MIN_SPACING),
 				randomResult(BG_INIT_MAX_SPACING,BG_INIT_MIN_SPACING)};
-				initStorage[(j * i) + j].pos = (vector){((i - 1) * BG_INIT_MAX_SPACING) + tmpPos.x,
-				((j - 1) * BG_INIT_MAX_SPACING) + tmpPos.y};
+				//DEBUG
+				//printf("tmp x %f tmp y %f max %d min %d\n",tmpPos.x,tmpPos.y,BG_INIT_MAX_SPACING,BG_INIT_MIN_SPACING);
+				
+				initStorage[((i * (BG_INIT_W_SIZE / BG_INIT_MAX_SPACING)) + j) * o].pos = 
+				(vector){(j * BG_INIT_MAX_SPACING) + tmpPos.x,
+				(i * BG_INIT_MAX_SPACING) + tmpPos.y};
+				//DEBUG
+				/*
+				printf("init: x %f y %f\n",initStorage[(i * (BG_INIT_W_SIZE / BG_INIT_MAX_SPACING)) + j].pos.x,
+				initStorage[(i * (BG_INIT_W_SIZE / BG_INIT_MAX_SPACING)) + j].pos.y);
+				*/
+				//DEBUG
+				//printf("o %d i %d j %d\n\n",o,i,j);
 			}
 		}	
 	}
+	//DEBUG
+	/*
+	bgData *tmpBg = sdlStore(NULL,GET_BACKGROUND);
+	printf("ret %f %f\n",tmpBg[0].pos.x,tmpBg[0].pos.y);
+	*/
+	
 	return 0;
 }
 

@@ -10,6 +10,10 @@ void *sdlStore(void *data,int option)
 	static int player = 0;
 	static Uint32 frameTime = 0;
 	static bgData *background = 0;
+	static int *bgSizes = 0;
+	
+	//DEBUG
+	//printf("store: %p\n",bgSizes);
 	
 	if(option)
 	{
@@ -24,9 +28,16 @@ void *sdlStore(void *data,int option)
 			case SET_FRAMETIME:frameTime = *(Uint32 *)data;break;
 			case GET_FRAMETIME:return &frameTime;break;
 			case SET_BACKGROUND: background = (bgData *)data;break;
-			case GET_BACKGROUND: return &background;break;
+			case GET_BACKGROUND: return (void *)background;break;
+			case SET_BG_SIZE: bgSizes = (int *)data;break;
+			case GET_BG_SIZE: return (void *)bgSizes;break;
 			default:break;
 		}
+	}
+	else
+	{
+		puts("DEBUG: sdlStore() 2");
+		return (void *)1;
 	}
 	return 0;
 }
