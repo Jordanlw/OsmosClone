@@ -15,8 +15,11 @@
 
 #define SETPIXEL32(surface,x,y,pixel) if(x >= 0 && y >= 0 && x < ((surface)->w) && y < ((surface)->h)) \
 										 { ((Uint32 *)(surface->pixels))[((y) * ((surface)->w)) + (x)] = (pixel); }
+										 
 #define FIXED_MULT_NORMAL(fixed,normal,ratio) (((fixed) * (normal) * (ratio)) / ((ratio) * (ratio)))
+
 #define FIND_REL_POS(inputA,inputB,output) (((output).x) = ((inputA).x) - ((inputB).x)); (((output).y) = ((inputA).y) - ((inputB).y))
+
 #define MIN_INT(a,b) ((a) < (b) ? (a) : (b))
 
 enum
