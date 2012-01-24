@@ -31,13 +31,13 @@ void *sdlStore(void *data,int option)
 			case GET_BACKGROUND: return (void *)background;break;
 			case SET_BG_SIZE: bgSizes = (int *)data;break;
 			case GET_BG_SIZE: return (void *)bgSizes;break;
-			default:break;
+			default: puts("DEBUG: sdlStore() 1"); return (void *)0;break;
 		}
 	}
 	else
 	{
 		puts("DEBUG: sdlStore() 2");
-		return (void *)1;
+		return (void *)0;
 	}
 	return 0;
 }
