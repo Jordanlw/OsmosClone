@@ -1,10 +1,15 @@
 TODO:
 * Change over background from image loading to blitCircle().
 	- Add tiling
+	
 	- Add shifting background
 	
 * Add start screen to prevent game from starting when not ready, also removes advantage a player might have over the AI
 regarding a early start.
+	- Font are needed and a way to load and manage them, an idea is to have a sdlStore/objectStore like function which can 
+	be called with the name of the font (including extension) and the font size, if the font isn't loaded then the store
+	function should load it then return with the details to use it, if it is loaded then skip the loading part (as it's 
+	already done) and return as normal.
 
 IDEAS:
 * Change over to adding energy to objects rather than force
