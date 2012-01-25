@@ -12,6 +12,9 @@
 #define FPS 60
 #define LEVEL_SIDES 4
 #define MERGE_DIVIDER 10
+#define MAX_OBJECT_SIZE 150
+#define MIN_OBJECT_SIZE 50
+#define STARTING_PLAYER_OBJECT_SIZE 100
 
 #define SETPIXEL32(surface,x,y,pixel) if(x >= 0 && y >= 0 && x < ((surface)->w) && y < ((surface)->h)) \
 										 { ((Uint32 *)(surface->pixels))[((y) * ((surface)->w)) + (x)] = (pixel); }
