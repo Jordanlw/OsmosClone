@@ -1,4 +1,4 @@
-CC = gcc
+CC = colorgcc
 CCFLAGS = -Wall -g -lSDL -lm
 SOURCES = $(wildcard *.c)
 SOURCES := $(filter-out varArray.c undoOverlap.c, $(SOURCES))
@@ -16,7 +16,7 @@ $(OUTEXE) : $(OBJECTS)
 
 $(OBJSDIR)/%.o : %.c
 	$(CC) $(CCFLAGS) -MM $< > $(DEPSDIR)/$(<:.c=.d.tmp)
-	sed -e 's&^$(notdir $@)&$@&' < $(DEPSDIR)/$(<:.c=.d.tmp) > $(DEPSDIR)/$(<:.c=.d)
+	@sed -e 's&^$(notdir $@)&$@&' < $(DEPSDIR)/$(<:.c=.d.tmp) > $(DEPSDIR)/$(<:.c=.d)
 	$(CC) $(CCFLAGS) -c -o $@ $<
 
 .PHONY : clean
