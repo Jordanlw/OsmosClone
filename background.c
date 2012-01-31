@@ -37,7 +37,7 @@ void backgroundBlit(void)
 	}
 	
 	//Iterate over background layers
-	for(i = 1;i <= BG_AMOUNT;i++)
+	for(i = 0;i < BG_AMOUNT;i++)
 	{
 		//For tiling
 		int mw;
