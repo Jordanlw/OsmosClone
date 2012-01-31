@@ -27,7 +27,9 @@ void backgroundBlit(void)
 	int i;
 	for(i = 0;i < BG_AMOUNT;i++)
 	{
+		int mult = (camera->x) * bgSizes[i];
 		bgOffset[i][0] = mult % camera->w;
+		mult = (camera->y) * bgSizes[i];
 		bgOffset[i][1] = mult % camera->h;
 		//DEBUG
 		//printf("cx %d s %d o-b %d m %d\n",camera->x,bgSizes[i],bgOffset[i],mult);
