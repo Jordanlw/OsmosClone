@@ -1,7 +1,6 @@
 TODO:
 * Change over background from image loading to blitCircle().
-	-[DONE] Add tiling
-	
+
 	- Add shifting (parallax) background
 	
 * Add start screen to prevent game from starting when not ready, also removes advantage a player might have over the AI
