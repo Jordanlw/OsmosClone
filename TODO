@@ -19,5 +19,10 @@ IDEAS:
 * When accelerating you should eject the mass that accelerates you, out, the ejected mass should become
 another object just like any other one, also with AI.
 
+* The background jumps around because BG_INIT_W_SIZE isn't at a ratio (multiple or division) of DEFAULT_WIDTH,
+I should make sure whenever the window size changes BG_INIT_W_SIZE also changes, I'll need to regenerate the BgData,
+I'll need to save the random seed to allow regeneration.
+Or I could copy paste the contents of BgData into a larger or smaller BgData array.
+
 WONTFIX
 * Add collision avoidance to ai objects.
