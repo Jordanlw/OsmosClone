@@ -12,7 +12,7 @@
 void moveAiObjects()
 {
 	//DEBUG
-	if(SDL_GetTicks() < 5000) return;
+	//if(SDL_GetTicks() < 5000) return;
 
 	object *obj = objectStore(NULL,GET_OBJECT);
 	int player = *(int *)sdlStore(NULL,GET_PLAYER);
