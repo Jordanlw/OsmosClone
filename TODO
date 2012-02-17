@@ -1,10 +1,5 @@
 TODO:
-* Change over background from image loading to blitCircle().
 
-	-[DONE] Add shifting (parallax) background
-	
-	-[DONE] Add tiling support
-	
 * Add start screen to prevent game from starting when not ready, also removes advantage a player might have over the AI
 regarding a early start.
 
@@ -14,6 +9,7 @@ regarding a early start.
 	already done) and return as normal.
 
 IDEAS:
+
 * Change over to adding energy to objects rather than force
 
 * When accelerating you should eject the mass that accelerates you, out, the ejected mass should become
@@ -24,5 +20,15 @@ I should make sure whenever the window size changes BG_INIT_W_SIZE also changes,
 I'll need to save the random seed to allow regeneration.
 Or I could copy paste the contents of BgData into a larger or smaller BgData array.
 
-WONTFIX
+WONTFIX:
+
 * Add collision avoidance to ai objects.
+
+DONE:
+
+* Change over background from image loading to blitCircle().
+
+	-[DONE] Add shifting (parallax) background
+	
+	-[DONE] Add tiling support
+
