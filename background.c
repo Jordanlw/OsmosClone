@@ -10,12 +10,32 @@
 #define COORDS 2
 #define BG_MULT 3
 
-void backgroundBlit(void)
+int backgroundBlit(void)
 {
 	SDL_Rect *camera = sdlStore(NULL,GET_CAMERA);
+	if(camera == 0)
+	{
+		puts("DEBUG: backgroundBlit() 1");
+		return -1;
+	}
 	SDL_Surface *screen = sdlStore(NULL,GET_SCREEN);
+	if(screen == 0)
+	{
+		puts("DEBUG: backgroundBlit() 2");
+		return -1;
+	}
 	struct bgData *initData = sdlStore(NULL,GET_BACKGROUND);
+	if(initData == 0)
+	{
+		puts("DEBUG: backgroundBlit() 3");
+		return -1;
+	}
 	int *bgSizes = (int *)sdlStore(NULL,GET_BG_SIZE);
+	if(bgSizes == 0)
+	{
+		puts("DEBUG: backgroundBlit() 4");
+		return -1;
+	}
 	int bgOffset[BG_AMOUNT][COORDS];
 	int i;
 	for(i = 0;i < BG_AMOUNT;i++)
@@ -52,6 +72,7 @@ void backgroundBlit(void)
 			}
 		}
 	}
+	return 0;
 }
 
 

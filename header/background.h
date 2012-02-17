@@ -14,6 +14,6 @@ struct bgData
 	SDL_Rect pos;
 };
 
-void backgroundBlit(void);
+int backgroundBlit(void);
 
 #endif

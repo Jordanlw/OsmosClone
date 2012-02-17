@@ -116,7 +116,11 @@ int main(int argc,char **args)
 		moveCamera(player);
 		//debugCall(DEBUG_CALL_BEFORE_BLIT);
 		//blit background onto screen
-		backgroundBlit();
+		if(backgroundBlit())
+		{
+			puts("DEBUG: main() 5");
+			return 1;
+		}
 		//blit objects
 		if(blitObject())
 		{
