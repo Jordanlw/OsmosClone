@@ -1,5 +1,5 @@
 CC = colorgcc
-CCFLAGS = -Wall -g -lSDL -lm
+CCFLAGS = -Wall -g -lSDL -lSDL_ttf -lm
 SOURCES = $(wildcard *.c)
 SOURCES := $(filter-out varArray.c undoOverlap.c, $(SOURCES))
 OBJSDIR = objs

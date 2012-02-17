@@ -49,7 +49,5 @@ int blitObject()
 			return 1;
 		}
 	}
-	SDL_Flip(screen);
-	SDL_FillRect(screen,NULL,0);
 	return 0;
 }

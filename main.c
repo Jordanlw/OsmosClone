@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <SDL/SDL.h>
+#include <SDL/SDL_ttf.h>
 
 #include "header/main.h"
 #include "header/init.h"
@@ -13,13 +14,20 @@
 #include "header/objectStore.h"
 #include "header/aimovement.h"
 #include "header/debug.h"
+#include "header/blit.h"
 
 int main(int argc,char **args)
 {
-	//Initate SDL
+	//Initiate SDL
 	if(initSDL())
 	{
 		puts("DEBUG: main() 1");
+		return 1;
+	}
+	//Initiate SDL_TTF
+	if(TTF_Init())
+	{
+		puts("DEBUG: main() 6");
 		return 1;
 	}
 	//used for multiplayer and also ease of passing data
@@ -39,7 +47,7 @@ int main(int argc,char **args)
 	//game loop
 	int quit = 0;
 	//if set, run through game changing functions only when n is pressed
-	int pauseStep = 0;
+	int pauseStep = INIT_PAUSE;
 	while(!quit)
 	{
 		//For FPS limit
@@ -127,6 +135,19 @@ int main(int argc,char **args)
 			puts("DEBUG: main() 3");
 			return 1;
 		}
+		//blit inital unpause screen
+		if(pauseStep == INIT_PAUSE)
+		{
+			if(blitPause())
+			{
+				puts("DEBUG: main() 7");
+				return 1;
+			}
+		}
+		//flip and erase screen
+		SDL_Surface *screen = sdlStore(NULL,GET_SCREEN);
+		SDL_Flip(screen);
+		SDL_FillRect(screen,NULL,0);
 		
 		//For FPS limit
 		long delay = (1000 / FPS) - (int)(SDL_GetTicks() - ticks);
