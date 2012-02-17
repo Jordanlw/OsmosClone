@@ -8,6 +8,8 @@ regarding a early start.
 	function should load it then return with the details to use it, if it is loaded then skip the loading part (as it's 
 	already done) and return as normal.
 
+* Add different colors to predators and prey, so they can be easily seen
+
 IDEAS:
 
 * Change over to adding energy to objects rather than force
