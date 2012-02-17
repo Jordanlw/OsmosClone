@@ -9,7 +9,7 @@ void *sdlStore(void *data,int option)
 	static SDL_Rect *camera = 0;
 	static int player = 0;
 	static Uint32 frameTime = 0;
-	static bgData *background = 0;
+	static struct bgData *background = 0;
 	static int *bgSizes = 0;
 	
 	//DEBUG
@@ -27,7 +27,7 @@ void *sdlStore(void *data,int option)
 			case GET_PLAYER:return (void *)&player;break;
 			case SET_FRAMETIME:frameTime = *(Uint32 *)data;break;
 			case GET_FRAMETIME:return &frameTime;break;
-			case SET_BACKGROUND: background = (bgData *)data;break;
+			case SET_BACKGROUND: background = (struct bgData *)data;break;
 			case GET_BACKGROUND: return (void *)background;break;
 			case SET_BG_SIZE: bgSizes = (int *)data;break;
 			case GET_BG_SIZE: return (void *)bgSizes;break;

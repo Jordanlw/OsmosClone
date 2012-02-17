@@ -9,10 +9,10 @@
 #define BG_INIT_W_SIZE 300
 #define BG_INIT_H_SIZE 300
 
-typedef struct _bgData
+struct bgData
 {
-	vector pos;
-}bgData;
+	SDL_Rect pos;
+};
 
 void backgroundBlit(void);
 

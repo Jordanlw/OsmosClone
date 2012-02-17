@@ -9,68 +9,48 @@
 
 #define COORDS 2
 
-#define GET_INIT_DATA(x,y,layer,initSize,array) (array[(((y) * ((initSize) / (BG_INIT_MAX_SPACING)) + (x)) * ((layer) + 1))])
-
-#define INIT_PLACEHOLDER(initSize) (GET_INIT_DATA(k,j,i,initSize,initData).pos)
-
 void backgroundBlit(void)
 {
 	SDL_Rect *camera = sdlStore(NULL,GET_CAMERA);
 	SDL_Surface *screen = sdlStore(NULL,GET_SCREEN);
-	bgData *initData = sdlStore(NULL,GET_BACKGROUND);
+	struct bgData *initData = sdlStore(NULL,GET_BACKGROUND);
 	int *bgSizes = (int *)sdlStore(NULL,GET_BG_SIZE);
-	//DEBUG
-	//printf("cw / initw %d\n",camera->w / BG_INIT_W_SIZE);
-	//printf("bg: %p\n",bgSizes);
-	
 	int bgOffset[BG_AMOUNT][COORDS];
 	int i;
 	for(i = 0;i < BG_AMOUNT;i++)
 	{
-		int mult = (camera->x) * bgSizes[i];
-		bgOffset[i][0] = mult % camera->w;
-		mult = (camera->y) * bgSizes[i];
-		bgOffset[i][1] = mult % camera->h;
-		//DEBUG
-		//printf("cx %d s %d o-b %d m %d\n",camera->x,bgSizes[i],bgOffset[i],mult);
-		printf("bg %d\n",bgOffset[i]);
+		bgOffset[i][0] = (camera->x / bgSizes[i]) % camera->w;
+		bgOffset[i][1] = (camera->y / bgSizes[i]) % camera->h;
 	}
+	//DEBUG
+	printf("bg0: x %d y %d cam: x %d y %d\n",bgOffset[0][0],bgOffset[0][1],camera->x,camera->y);
 	
 	//Iterate over background layers
 	for(i = 0;i < BG_AMOUNT;i++)
 	{
 		//For tiling
 		int mw;
-		for(mw = 0;mw < camera->w + bgOffset[i][0];mw += BG_INIT_W_SIZE)
+		for(mw = 0;mw < (camera->w * 2);mw += BG_INIT_W_SIZE)
 		{
 			int mh;
-			for(mh = 0;mh < camera->h + bgOffset[i][1];mh += BG_INIT_H_SIZE)
+			for(mh = 0;mh < (camera->h * 2);mh += BG_INIT_H_SIZE)
 			{
-				int j;
-				for(j = 0;j < MIN_INT(BG_INIT_H_SIZE,camera->h) / BG_INIT_MAX_SPACING;j++)
+				int k;
+				for(k = 0;k < (MIN_INT(BG_INIT_W_SIZE,camera->w) * MIN_INT(BG_INIT_H_SIZE,camera->h)) / 
+				(BG_INIT_MAX_SPACING * BG_INIT_MAX_SPACING);k++)
 				{
-					int k;
-					for(k = 0;k < MIN_INT(BG_INIT_W_SIZE,camera->w) / BG_INIT_MAX_SPACING;k++)
-					{
-						int ix = INIT_PLACEHOLDER(BG_INIT_W_SIZE).x + mw - bgOffset[i][0];
-						int iy = INIT_PLACEHOLDER(BG_INIT_H_SIZE).y + mh - bgOffset[i][1];
-						SDL_Rect tmpRect = (SDL_Rect){ix,iy};
-						//DEBUG
-						//printf("blit: x %d y %d i %d j %d k %d mw %d\n",tmpRect.x,tmpRect.y,i,j,k,mw);
-				
-						blitCircle(bgSizes[i],screen,tmpRect,(SDL_Color){200,100,0});
-						//DEBUG
-						//printf("r %d x %d y %d\n",bgSizes[i],tmpRect.x,tmpRect.y);
-						//printf("bg-amnt %d\n",i);
-					}
+					int index = k * (i + 1);
+					SDL_Rect tmpRect;
+					tmpRect.x = initData[index].pos.x + mw - bgOffset[i][0];
+					tmpRect.y = initData[index].pos.y + mh - bgOffset[i][1];
+					//DEBUG
+					//printf("x %5d y %5d w %5d h %5d\n",tmpRect.x,tmpRect.y,tmpRect.w,tmpRect.h);
+					
+					blitCircle(bgSizes[i],screen,tmpRect,(SDL_Color){200,100,0});
 				}
 			}
 		}
 	}
-	//DEBUG
-	//puts("");
-	//puts("DEBUG: calling exit() in background.c");
-	//exit(0);
 }
 
 

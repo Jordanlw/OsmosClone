@@ -21,7 +21,7 @@ typedef struct _randomSelector
 int initBackground()
 {
 	
-	bgData *initStorage = malloc(sizeof(bgData) * (BG_INIT_W_SIZE / BG_INIT_MAX_SPACING) * 
+	struct bgData *initStorage = malloc(sizeof(struct bgData) * (BG_INIT_W_SIZE / BG_INIT_MAX_SPACING) * 
 	(BG_INIT_H_SIZE / BG_INIT_MAX_SPACING) * BG_AMOUNT);
 	if(initStorage == 0)
 	{
@@ -40,39 +40,24 @@ int initBackground()
 	bgSizes[2] = 7;
 	sdlStore((void *)bgSizes,SET_BG_SIZE);
 	
-	int o;
-	for(o = 1;o <= BG_AMOUNT;o++)
+	int i;
+	for(i = 1;i <= BG_AMOUNT;i++)
 	{
-		int i;
-		for(i = 0;i < BG_INIT_H_SIZE / BG_INIT_MAX_SPACING;i++)
+		int j;
+		for(j = 0;j < BG_INIT_H_SIZE / BG_INIT_MAX_SPACING;j++)
 		{
-			int j;
-			for(j = 0;j < BG_INIT_W_SIZE / BG_INIT_MAX_SPACING;j++)
+			int k;
+			for(k = 0;k < BG_INIT_W_SIZE / BG_INIT_MAX_SPACING;k++)
 			{
-				vector tmpPos = (vector){randomResult(BG_INIT_MAX_SPACING,BG_INIT_MIN_SPACING),
-				randomResult(BG_INIT_MAX_SPACING,BG_INIT_MIN_SPACING)};
-				//DEBUG
-				//printf("tmp x %f tmp y %f max %d min %d\n",tmpPos.x,tmpPos.y,BG_INIT_MAX_SPACING,BG_INIT_MIN_SPACING);
+				int index = ((j * (BG_INIT_W_SIZE / BG_INIT_MAX_SPACING)) + k) * i;
+				initStorage[index].pos.x = randomResult(BG_INIT_MAX_SPACING,BG_INIT_MIN_SPACING);
+				initStorage[index].pos.x += k * BG_INIT_MAX_SPACING;
 				
-				initStorage[((i * (BG_INIT_W_SIZE / BG_INIT_MAX_SPACING)) + j) * o].pos = 
-				(vector){(j * BG_INIT_MAX_SPACING) + tmpPos.x,
-				(i * BG_INIT_MAX_SPACING) + tmpPos.y};
-				//DEBUG
-				/*
-				printf("init: x %f y %f\n",initStorage[(i * (BG_INIT_W_SIZE / BG_INIT_MAX_SPACING)) + j].pos.x,
-				initStorage[(i * (BG_INIT_W_SIZE / BG_INIT_MAX_SPACING)) + j].pos.y);
-				*/
-				//DEBUG
-				//printf("o %d i %d j %d\n\n",o,i,j);
+				initStorage[index].pos.y = randomResult(BG_INIT_MAX_SPACING,BG_INIT_MIN_SPACING);
+				initStorage[index].pos.y += j * BG_INIT_MAX_SPACING;
 			}
-		}	
+		}
 	}
-	//DEBUG
-	/*
-	bgData *tmpBg = sdlStore(NULL,GET_BACKGROUND);
-	printf("ret %f %f\n",tmpBg[0].pos.x,tmpBg[0].pos.y);
-	*/
-	
 	return 0;
 }
 
