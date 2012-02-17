@@ -19,11 +19,11 @@ void backgroundBlit(void)
 	int i;
 	for(i = 0;i < BG_AMOUNT;i++)
 	{
-		bgOffset[i][0] = (camera->x / bgSizes[i]) % camera->w;
-		bgOffset[i][1] = (camera->y / bgSizes[i]) % camera->h;
+		bgOffset[i][0] = ((camera->x * 3) / bgSizes[i]) % camera->w;
+		bgOffset[i][1] = ((camera->y * 3) / bgSizes[i]) % camera->h;
 	}
 	//DEBUG
-	printf("bg0: x %d y %d cam: x %d y %d\n",bgOffset[0][0],bgOffset[0][1],camera->x,camera->y);
+	//printf("bg0: x %d y %d cam: x %d y %d\n",bgOffset[0][0],bgOffset[0][1],camera->x,camera->y);
 	
 	//Iterate over background layers
 	for(i = 0;i < BG_AMOUNT;i++)
