@@ -2,6 +2,7 @@ TODO:
 
 * Determine if smaller objects go faster than larger ones, if not change it so it is that way.
 
+* Only the overlapping part of a prey object should be gobbled up, not all of it.
 
 IDEAS:
 
