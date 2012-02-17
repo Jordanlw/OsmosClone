@@ -34,8 +34,15 @@ int blitObject()
 	for(i = 0;i < OBJECTS;i++)
 	{
 		if(obj[i].radius <= 0) continue;
-		SDL_Color color = {0,0,255};
-		if(i == player) color = (SDL_Color){255,0,0};
+		SDL_Color color = {255,0,0};
+		if(i == player)
+		{
+			color = (SDL_Color){0,0,255};
+	 	}
+		if(obj[i].radius < obj[player].radius)
+		{
+			color = (SDL_Color){0,255,0};
+		}
 		if(blitCircle(obj[i].radius,screen,(SDL_Rect){obj[i].pos.x - camera->x,obj[i].pos.y - camera->y,0,0},color))
 		{
 			puts("DEBUG: blitObject() 1");
