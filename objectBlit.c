@@ -30,8 +30,9 @@ int blitObject()
 		return 1;
 	}
 	int player = *(int *)sdlStore(NULL,GET_PLAYER);
+	int objCount = *(int *)objectStore(NULL,GET_OBJ_COUNT);
 	int i;
-	for(i = 0;i < OBJECTS;i++)
+	for(i = 0;i < objCount;i++)
 	{
 		if(obj[i].radius <= 0) continue;
 		SDL_Color color = {255,0,0};

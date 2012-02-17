@@ -11,28 +11,33 @@ int initObjects()
 		puts("DEBUG: initOjbects() 1");
 		return 1;
 	}
+	int initObjs = INIT_OBJS;
+	objectStore((void *)&initObjs,SET_OBJ_COUNT);
 	return 0;
 }
 
 void *objectStore(void *data,int options)
 {
 	static object *objects = 0;
+	static int objCount = 0;
 	switch(options)
 	{
 		case GET_OBJECT: return (void *)objects;break;
+		case GET_OBJ_COUNT: return (void *)&objCount;break;
+		case SET_OBJ_COUNT: objCount = *(int *)data;break;
 		default: break;
 	}
 	//create objects
 	if(options == CREATE_OBJECTS)
 	{
-		objects = malloc(sizeof(object) * OBJECTS);
+		objects = malloc(sizeof(object) * INIT_OBJS);
 		if(!objects)
 		{
 			puts("DEBUG: objectStore() 1");
 			return (void *)1;
 		}
 		int i;
-		for(i = 0;i < OBJECTS;i++)
+		for(i = 0;i < INIT_OBJS;i++)
 		{
 			objects[i].type = 0;
 			objects[i].player = 0;

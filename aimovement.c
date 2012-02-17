@@ -13,12 +13,13 @@ void moveAiObjects()
 {
 	//DEBUG
 	//if(SDL_GetTicks() < 5000) return;
-
+	
+	int objCount = *(int *)objectStore(NULL,GET_OBJ_COUNT);
 	object *obj = objectStore(NULL,GET_OBJECT);
 	int player = *(int *)sdlStore(NULL,GET_PLAYER);
 	//Loop through predators objects
 	int i;
-	for(i = 0;i < OBJECTS;i++)
+	for(i = 0;i < objCount;i++)
 	{
 		if(i == player || obj[i].radius <= 0) continue;
 		//Loop for objects to find target
@@ -27,7 +28,7 @@ void moveAiObjects()
 		//Storage for value to determine prefence to targets for predator attacks
 		vector relPos;
 		int j;
-		for(j = 0;j < OBJECTS;j++)
+		for(j = 0;j < objCount;j++)
 		{
 			//Find closest object to "i"
 			if(j == i || obj[j].radius <= 0) continue;

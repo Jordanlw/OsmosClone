@@ -9,10 +9,11 @@
 
 void velIntoPos()
 {
+	int objCount = *(int *)objectStore(NULL,GET_OBJ_COUNT);
 	object *objects = (object *)objectStore(NULL,GET_OBJECT);
 	Uint32 frameTime = *(Uint32 *)sdlStore(NULL,GET_FRAMETIME);
 	int i;
-	for(i = 0;i < OBJECTS;i++)
+	for(i = 0;i < objCount;i++)
 	{
 		if(objects[i].radius <= 0) continue;
 		objects[i].vel.x += FIXED_MULT_NORMAL(frameTime,objects[i].force.x / objects[i].radius,1000);

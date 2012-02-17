@@ -7,8 +7,9 @@
 
 void movementBoundCheck()
 {
+	int objCount = *(int *)objectStore(NULL,GET_OBJ_COUNT);
 	int i;
-	for(i = 0;i < OBJECTS;i++)
+	for(i = 0;i < objCount;i++)
 	{
 		object *obj = (object *)objectStore(NULL,GET_OBJECT);
 		if(obj[i].radius <= 0) continue;

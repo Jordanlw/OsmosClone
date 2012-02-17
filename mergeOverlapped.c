@@ -7,13 +7,14 @@
 
 void mergeOverlapped()
 {
+	int objCount = *(int *)objectStore(NULL,GET_OBJ_COUNT);
 	object *obj = objectStore(NULL,GET_OBJECT);
 	int i;
-	for(i = 0;i < OBJECTS;i++)
+	for(i = 0;i < objCount;i++)
 	{
 		if(obj[i].radius <= 0) continue;
 		int j;
-		for(j = 0;j < OBJECTS;j++)
+		for(j = 0;j < objCount;j++)
 		{
 			if(obj[j].radius <= 0 || i == j) continue;
 			vector relativePos = {obj[i].pos.x - obj[j].pos.x, obj[i].pos.y - obj[j].pos.y};

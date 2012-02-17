@@ -65,11 +65,12 @@ void initObjectPosAndSize()
 {
 	object *obj = objectStore(NULL,GET_OBJECT);
 	int player = *(int *)sdlStore(NULL,GET_PLAYER);
+	int objCount = *(int *)objectStore(NULL,GET_OBJ_COUNT);
 	int i;
 	obj[player].radius = STARTING_PLAYER_OBJECT_SIZE;
 	obj[player].pos = (vector){LEVEL_WIDTH / 2,LEVEL_HEIGHT / 2};
 	//Object being moved
-	for(i = 0;i < OBJECTS;i++)
+	for(i = 0;i < objCount;i++)
 	{
 		if(i == player) continue;
 		obj[i].radius = randomResult(MAX_OBJECT_SIZE,MIN_OBJECT_SIZE);
@@ -125,7 +126,7 @@ void initObjectPosAndSize()
 				}
 				sidesLeft--;
 				//Checking to see whether new found position collides with other objects
-				for(j = 0;j < OBJECTS;j++)
+				for(j = 0;j < objCount;j++)
 				{
 					if(isCollidedVectorAndRadius(newPos,obj[j].pos,obj[j].radius + obj[i].radius))
 					{
