@@ -8,6 +8,7 @@
 #include "header/objectStore.h"
 
 #define COORDS 2
+#define BG_MULT 3
 
 void backgroundBlit(void)
 {
@@ -19,8 +20,8 @@ void backgroundBlit(void)
 	int i;
 	for(i = 0;i < BG_AMOUNT;i++)
 	{
-		bgOffset[i][0] = ((camera->x * 3) / bgSizes[i]) % camera->w;
-		bgOffset[i][1] = ((camera->y * 3) / bgSizes[i]) % camera->h;
+		bgOffset[i][0] = ((camera->x * BG_MULT) / bgSizes[i]) % camera->w;
+		bgOffset[i][1] = ((camera->y * BG_MULT) / bgSizes[i]) % camera->h;
 	}
 	//DEBUG
 	//printf("bg0: x %d y %d cam: x %d y %d\n",bgOffset[0][0],bgOffset[0][1],camera->x,camera->y);
