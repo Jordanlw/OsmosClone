@@ -30,5 +30,7 @@ int blitPause()
 	SDL_Surface *textSur2 = TTF_RenderText_Solid(font,"press it now to play.",(SDL_Color){255,255,255});
 	SDL_BlitSurface(textSur2,NULL,screen,&(SDL_Rect){(screen->w / 2) - (textSur2->w / 2),(screen->h / 2) - (textSur2->h / 2) \
 		+ (textSur->h + LINE_SPACING)});
+	SDL_FreeSurface(textSur);
+	SDL_FreeSurface(textSur2);
 	return 0;
 }
