@@ -4,6 +4,8 @@ TODO:
 
 * Only the overlapping part of a prey object should be gobbled up, not all of it.
 
+* Allow spectating other object, center on objects and switch between selected one.
+
 IDEAS:
 
 * Change over to adding energy to objects rather than force
