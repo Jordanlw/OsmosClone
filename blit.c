@@ -7,8 +7,11 @@
 
 int blitPause()
 {
-	TTF_Font *font = 0;
-	font = TTF_OpenFont("resources/fonts/WHITRABT.TTF",15);
+	static TTF_Font *font = 0;
+	if(font == 0)
+	{
+		font = TTF_OpenFont("resources/fonts/WHITRABT.TTF",15);
+	}
 	if(font == 0)
 	{
 		printf("DEBUG: blitPause() 1 - ");
