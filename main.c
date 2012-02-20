@@ -56,6 +56,8 @@ int main(int argc,char **args)
 		SDL_Event event;
 		//if set, allow a game changing frame to happen
 		int nextStep = 0;
+		//Store left arrow or right arrow pressed state
+		int keyboardArrow = 0;
 		while(SDL_PollEvent(&event))
 		{
 			switch(event.type)
@@ -93,6 +95,12 @@ int main(int argc,char **args)
 							if(pauseStep) pauseStep = 0;
 							else pauseStep = 1;
 							break;
+						case SDLK_LEFT:
+							keyboardArrow = KEYBOARD_LEFT;
+							break;
+						case SDLK_RIGHT:
+							keyboardArrow = KEYBOARD_RIGHT;
+							break;
 						default: break;
 					}
 					//DEBUG
@@ -119,9 +127,9 @@ int main(int argc,char **args)
 			mergeOverlapped();
 			//if object is outside of boundary, move it inside
 			movementBoundCheck();
-			//move camera to safe position for blit
 		}
-		moveCamera(player);
+		updateSelectedObj(keyboardArrow);
+		//move camera to safe position for blit
 		//debugCall(DEBUG_CALL_BEFORE_BLIT);
 		//blit background onto screen
 		if(backgroundBlit())

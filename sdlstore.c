@@ -11,6 +11,7 @@ void *sdlStore(void *data,int option)
 	static Uint32 frameTime = 0;
 	static struct bgData *background = 0;
 	static int *bgSizes = 0;
+	static int selObj = 0;
 	
 	//DEBUG
 	//printf("store: %p\n",bgSizes);
@@ -31,6 +32,8 @@ void *sdlStore(void *data,int option)
 			case GET_BACKGROUND: return (void *)background;break;
 			case SET_BG_SIZE: bgSizes = (int *)data;break;
 			case GET_BG_SIZE: return (void *)bgSizes;break;
+			case GET_SELECTED_OBJECT: return (void *)&selObj;break;
+			case SET_SELECTED_OBJECT: selObj = *(int *)data;break;
 			default: puts("DEBUG: sdlStore() 1"); return (void *)0;break;
 		}
 	}
@@ -39,5 +42,8 @@ void *sdlStore(void *data,int option)
 		puts("DEBUG: sdlStore() 2");
 		return (void *)0;
 	}
+	//DEBUG
+	//printf("selObj %d player %d\n",selObj,player);
+	
 	return 0;
 }

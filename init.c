@@ -190,6 +190,8 @@ int initSDL()
 		puts("DEBUG: initSDL() 2");
 		return 1;
 	}
+	int player = *(int *)sdlStore(NULL,GET_PLAYER);
+	sdlStore((void *)&player,SET_SELECTED_OBJECT);
 	sdlStore(camera,SET_CAMERA);
 	sdlStore(screen,SET_SCREEN);
 	return 0;

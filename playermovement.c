@@ -62,17 +62,69 @@ void movePlayerFromData(int player,SDL_Event event)
 	}
 }
 
-void moveCamera(int player)
+void moveCamera()
 {
 	//Get data
 	SDL_Rect *camera = sdlStore(NULL,GET_CAMERA);
 	object *objects = objectStore(NULL,GET_OBJECT);
+	int selObj = *(int *)sdlStore(NULL,GET_SELECTED_OBJECT);
 	//Set camera position to center of player object
-	camera->x = (int)objects[player].pos.x - (camera->w / 2);
-	camera->y = (int)objects[player].pos.y - (camera->h / 2);
+	camera->x = (int)objects[selObj].pos.x - (camera->w / 2);
+	camera->y = (int)objects[selObj].pos.y - (camera->h / 2);
 	//Adjust camera position so it isn't displaying anything outside of bounds
 	if(camera->x < 0) camera->x = 0;
 	if(camera->y < 0) camera->y = 0;
 	if(camera->x + camera->w > LEVEL_WIDTH) camera->x = LEVEL_WIDTH - camera->w;
 	if(camera->y + camera->h > LEVEL_HEIGHT) camera->y = LEVEL_HEIGHT - camera->h;
+}
+
+void updateSelectedObj(int keyboard)
+{
+	object *obj = objectStore(NULL,GET_OBJECT);
+	int player = *(int *)sdlStore(NULL,GET_PLAYER);
+	if(obj[player].radius != 0)
+	{
+		return;
+	}
+	int selObj = *(int *)sdlStore(NULL,GET_SELECTED_OBJECT);
+	switch(keyboard)
+	{
+		case KEYBOARD_LEFT:
+			selObj--;
+			break;
+		case KEYBOARD_RIGHT:
+			selObj++;
+			break;
+	}
+	printf("selObj: %d\n",selObj);
+	int objCount = *(int *)objectStore(NULL,GET_OBJ_COUNT);
+	if(selObj >= objCount)
+	{
+		selObj = 0;
+	}
+	if(selObj < 0)
+	{
+		selObj = objCount - 1;
+		puts("REDUCED");
+	}
+	if(obj[selObj].radius == 0)
+	{
+		int i;
+		for(i = selObj + 1;;i++)
+		{
+			if(obj[i].radius > 0)
+			{
+				selObj = i;
+				break;
+			}
+			else if(i > objCount - 1)
+			{
+				i = 0;
+			}
+		}
+	}
+	//DEBUG
+	//printf("selObj: %d selObj-radius: %lu\n\n",selObj,obj[selObj].radius);
+	
+	sdlStore((void *)&selObj,SET_SELECTED_OBJECT);
 }
