@@ -60,6 +60,12 @@ int main(int argc,char **args)
 		int keyboardArrow = 0;
 		while(SDL_PollEvent(&event))
 		{
+			//DEBUG
+			if(event.type == SDL_VIDEORESIZE)
+			{
+				puts("RESIZE");
+			}
+			
 			switch(event.type)
 			{
 				//Respond to user exiting the game
@@ -74,6 +80,7 @@ int main(int argc,char **args)
 					camera->w = event.resize.w;
 					camera->h = event.resize.h;
 					//DEBUG
+					//printf("resize: w %d h %d\n",camera->w,camera->h);
 					//printf("video: event %d\n",event.type);
 				}
 				break;
