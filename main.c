@@ -130,6 +130,7 @@ int main(int argc,char **args)
 		}
 		updateSelectedObj(keyboardArrow);
 		//move camera to safe position for blit
+		moveCamera();
 		//debugCall(DEBUG_CALL_BEFORE_BLIT);
 		//blit background onto screen
 		if(backgroundBlit())
