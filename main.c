@@ -61,10 +61,12 @@ int main(int argc,char **args)
 		while(SDL_PollEvent(&event))
 		{
 			//DEBUG
+			/*
 			if(event.type == SDL_VIDEORESIZE)
 			{
 				puts("RESIZE");
 			}
+			*/
 			
 			switch(event.type)
 			{
