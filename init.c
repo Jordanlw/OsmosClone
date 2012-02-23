@@ -174,7 +174,7 @@ void initObjectPosAndSize()
 
 int initSDL()
 {
-	if(SDL_Init(SDL_INIT_EVERYTHING))
+	if(SDL_Init(SDL_INIT_TIMER | SDL_INIT_VIDEO))
 	{
 		puts("DEBUG: initSDL() 1");
 		return 1;
