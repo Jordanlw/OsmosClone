@@ -87,16 +87,19 @@ void updateSelectedObj(int keyboard)
 		return;
 	}
 	int selObj = *(int *)sdlStore(NULL,GET_SELECTED_OBJECT);
+	int down = 0;
+	int up = 0;
 	switch(keyboard)
 	{
 		case KEYBOARD_LEFT:
 			selObj--;
+			down = 1;
 			break;
 		case KEYBOARD_RIGHT:
 			selObj++;
+			up = 1;
 			break;
 	}
-	printf("selObj: %d\n",selObj);
 	int objCount = *(int *)objectStore(NULL,GET_OBJ_COUNT);
 	if(selObj >= objCount)
 	{
@@ -105,21 +108,39 @@ void updateSelectedObj(int keyboard)
 	if(selObj < 0)
 	{
 		selObj = objCount - 1;
-		puts("REDUCED");
 	}
 	if(obj[selObj].radius == 0)
 	{
-		int i;
-		for(i = selObj + 1;;i++)
+		if(up)
 		{
-			if(obj[i].radius > 0)
+			int i;
+			for(i = selObj;;i++)
 			{
-				selObj = i;
-				break;
+				if(i >= objCount)
+				{
+					i = 0;
+				}	
+				if(obj[i].radius > 0)
+				{
+					selObj = i;
+					break;
+				}
 			}
-			else if(i > objCount - 1)
+		}
+		if(down)
+		{
+			int i;
+			for(i = selObj;;i--)
 			{
-				i = 0;
+				if(i < 0)
+				{
+					i = objCount - 1;
+				}
+				if(obj[i].radius > 0)
+				{
+					selObj = i;
+					break;
+				}
 			}
 		}
 	}
