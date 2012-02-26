@@ -4,6 +4,8 @@ TODO:
 
 * Only the overlapping part of a prey object should be gobbled up, not all of it.
 
+* Remove MERGE_DIVIDER, replace it with surface area calculations in place of radius.
+
 IDEAS:
 
 * Change over to adding energy to objects rather than force
