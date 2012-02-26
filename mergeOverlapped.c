@@ -29,26 +29,26 @@ void mergeOverlapped()
 			*/
 			if(obj[j].radius <= obj[i].radius)
 			{
-				obj[i].radius += overlap ;// MERGE_DIVIDER;
+				obj[i].radius += overlap / MERGE_DIVIDER;
 				if(overlap > obj[j].radius)
 				{
 					obj[j].radius = 0;
 				}
 				else
 				{
-					obj[j].radius -= overlap ;// MERGE_DIVIDER;
+					obj[j].radius -= overlap / MERGE_DIVIDER;
 				}
 			}
 			else
 			{
-				obj[j].radius += overlap ;// MERGE_DIVIDER;
+				obj[j].radius += overlap / MERGE_DIVIDER;
 				if(overlap > obj[i].radius)
 				{
 					obj[i].radius = 0;
 				}
 				else
 				{
-					obj[i].radius -= overlap ;// MERGE_DIVIDER;
+					obj[i].radius -= overlap / MERGE_DIVIDER;
 				}
 			}
 			//DEBUG
