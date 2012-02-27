@@ -2,9 +2,9 @@ TODO:
 
 * Determine if smaller objects go faster than larger ones, if not change it so it is that way.
 
-* Add anti-aliasing to the objects & background.
-
 IDEAS:
+
+* Add anti-aliasing to the objects & background.
 
 * Change over to adding energy to objects rather than force
 
