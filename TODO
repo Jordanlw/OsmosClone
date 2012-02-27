@@ -2,10 +2,6 @@ TODO:
 
 * Determine if smaller objects go faster than larger ones, if not change it so it is that way.
 
-* Only the overlapping part of a prey object should be gobbled up, not all of it.
-
-* Remove MERGE_DIVIDER, replace it with surface area calculations in place of radius.
-
 IDEAS:
 
 * Change over to adding energy to objects rather than force
@@ -23,6 +19,10 @@ WONTFIX:
 * Add collision avoidance to ai objects.
 
 DONE:
+
+* Only the overlapping part of a prey object should be gobbled up, not all of it.
+
+* Remove MERGE_DIVIDER, replace it with surface area calculations in place of radius.
 
 * Allow spectating other object, center on objects and switch between selected one.
 
