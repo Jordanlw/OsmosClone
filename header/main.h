@@ -3,7 +3,7 @@
 
 #define DEFAULT_WIDTH 500
 #define DEFAULT_HEIGHT 500
-#define INIT_OBJS 10
+#define INIT_OBJS 100
 #define LEVEL_WIDTH 3000
 #define LEVEL_HEIGHT 3000
 #define SPEED 25000
