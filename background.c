@@ -67,7 +67,7 @@ int backgroundBlit(void)
 					//DEBUG
 					//printf("x %5d y %5d w %5d h %5d\n",tmpRect.x,tmpRect.y,tmpRect.w,tmpRect.h);
 					
-					blitCircle(bgSizes[i],screen,tmpRect,(SDL_Color){200,100,0});
+					blitCircle(bgSizes[i],screen,tmpRect,(SDL_Color){255,255,255});
 				}
 			}
 		}

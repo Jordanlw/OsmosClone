@@ -35,14 +35,14 @@ int blitObject()
 	for(i = 0;i < objCount;i++)
 	{
 		if(obj[i].radius <= 0) continue;
-		SDL_Color color = {255,0,0};
+		SDL_Color color = {179,0,21};
 		if(i == player)
 		{
-			color = (SDL_Color){0,0,255};
+			color = (SDL_Color){179,95,71};
 	 	}
 		if(obj[i].radius < obj[player].radius)
 		{
-			color = (SDL_Color){0,255,0};
+			color = (SDL_Color){255,135,102};
 		}
 		if(blitCircle(obj[i].radius,screen,(SDL_Rect){obj[i].pos.x - camera->x,obj[i].pos.y - camera->y,0,0},color))
 		{
