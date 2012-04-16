@@ -10,7 +10,7 @@ static void internalMacro(int,int,object *,int);
 void mergeOverlapped()
 {
 	int objCount = *(int *)objectStore(NULL,GET_OBJ_COUNT);
-	object *obj = objectStore(NULL,GET_OBJECT);
+	object *obj = (object *)objectStore(NULL,GET_OBJECT);
 	int i;
 	for(i = 0;i < objCount;i++)
 	{

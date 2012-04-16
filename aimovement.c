@@ -15,7 +15,7 @@ void moveAiObjects()
 	//if(SDL_GetTicks() < 5000) return;
 	
 	int objCount = *(int *)objectStore(NULL,GET_OBJ_COUNT);
-	object *obj = objectStore(NULL,GET_OBJECT);
+	object *obj = (object *)objectStore(NULL,GET_OBJECT);
 	int player = *(int *)sdlStore(NULL,GET_PLAYER);
 	//Loop through predators objects
 	int i;

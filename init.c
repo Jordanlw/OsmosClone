@@ -21,7 +21,7 @@ typedef struct _randomSelector
 int initBackground()
 {
 	
-	struct bgData *initStorage = malloc(sizeof(struct bgData) * (BG_INIT_W_SIZE / BG_INIT_MAX_SPACING) * \
+	struct bgData *initStorage = (struct bgData *)malloc(sizeof(struct bgData) * (BG_INIT_W_SIZE / BG_INIT_MAX_SPACING) * \
 	(BG_INIT_H_SIZE / BG_INIT_MAX_SPACING) * BG_AMOUNT);
 	if(initStorage == 0)
 	{
@@ -29,7 +29,7 @@ int initBackground()
 		return 1;
 	}
 	sdlStore((void *)initStorage,SET_BACKGROUND);
-	int *bgSizes = malloc(sizeof(int) * BG_AMOUNT);
+	int *bgSizes = (int *)malloc(sizeof(int) * BG_AMOUNT);
 	if(bgSizes == 0)
 	{
 		puts("DEBUG: initBackground() 1");
@@ -63,7 +63,7 @@ int initBackground()
 
 void initObjectPosAndSize()
 {
-	object *obj = objectStore(NULL,GET_OBJECT);
+	object *obj = (object *)objectStore(NULL,GET_OBJECT);
 	int player = *(int *)sdlStore(NULL,GET_PLAYER);
 	int objCount = *(int *)objectStore(NULL,GET_OBJ_COUNT);
 	int i;
@@ -179,7 +179,7 @@ int initSDL()
 		puts("DEBUG: initSDL() 1");
 		return 1;
 	}
-	SDL_Rect *camera = malloc(sizeof(SDL_Rect));
+	SDL_Rect *camera = (SDL_Rect *)malloc(sizeof(SDL_Rect));
 	camera->x = 0;
 	camera->y = 0;
 	camera->w = DEFAULT_WIDTH;

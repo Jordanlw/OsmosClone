@@ -75,10 +75,10 @@ int main(int argc,char **args)
 				//Respond to window being resized by user
 				case SDL_VIDEORESIZE:
 				{
-					SDL_Surface *screen = sdlStore(NULL,GET_SCREEN);
+					SDL_Surface *screen = (SDL_Surface *)sdlStore(NULL,GET_SCREEN);
 					screen = SDL_SetVideoMode(event.resize.w,event.resize.h,32,SDL_SWSURFACE | SDL_RESIZABLE);
 					screen = screen;
-					SDL_Rect *camera = sdlStore(NULL,GET_CAMERA);
+					SDL_Rect *camera = (SDL_Rect *)sdlStore(NULL,GET_CAMERA);
 					camera->w = event.resize.w;
 					camera->h = event.resize.h;
 					//DEBUG
@@ -162,8 +162,9 @@ int main(int argc,char **args)
 				return 1;
 			}
 		}
+		*/
 		//flip and erase screen
-		SDL_Surface *screen = sdlStore(NULL,GET_SCREEN);
+		SDL_Surface *screen = (SDL_Surface *)sdlStore(NULL,GET_SCREEN);
 		SDL_Flip(screen);
 		SDL_FillRect(screen,NULL,0);
 		

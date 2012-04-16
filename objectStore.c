@@ -30,7 +30,7 @@ void *objectStore(void *data,int options)
 	//create objects
 	if(options == CREATE_OBJECTS)
 	{
-		objects = malloc(sizeof(object) * INIT_OBJS);
+		objects = (object *)malloc(sizeof(object) * INIT_OBJS);
 		if(!objects)
 		{
 			puts("DEBUG: objectStore() 1");

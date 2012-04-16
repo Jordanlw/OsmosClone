@@ -11,19 +11,19 @@
 
 int blitObject()
 {
-	object *obj = objectStore(NULL,GET_OBJECT);
+	object *obj = (object *)objectStore(NULL,GET_OBJECT);
 	if(obj == 0)
 	{
 		puts("DEBUG: blitObject() 2");
 		return 1;
 	}
-	SDL_Rect *camera = sdlStore(NULL,GET_CAMERA);
+	SDL_Rect *camera = (SDL_Rect *)sdlStore(NULL,GET_CAMERA);
 	if(camera == 0)
 	{
 		puts("DEBUG: blitObject() 3");
 		return 1;
 	}
-	SDL_Surface *screen = sdlStore(NULL,GET_SCREEN);
+	SDL_Surface *screen = (SDL_Surface *)sdlStore(NULL,GET_SCREEN);
 	if(screen == 0)
 	{
 		puts("DEBUG: blitObject() 4");

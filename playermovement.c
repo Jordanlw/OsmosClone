@@ -65,8 +65,8 @@ void movePlayerFromData(int player,SDL_Event event)
 void moveCamera()
 {
 	//Get data
-	SDL_Rect *camera = sdlStore(NULL,GET_CAMERA);
-	object *objects = objectStore(NULL,GET_OBJECT);
+	SDL_Rect *camera = (SDL_Rect *)sdlStore(NULL,GET_CAMERA);
+	object *objects = (object *)objectStore(NULL,GET_OBJECT);
 	int selObj = *(int *)sdlStore(NULL,GET_SELECTED_OBJECT);
 	//Set camera position to center of player object
 	camera->x = (int)objects[selObj].pos.x - (camera->w / 2);
@@ -80,7 +80,7 @@ void moveCamera()
 
 void updateSelectedObj(int keyboard)
 {
-	object *obj = objectStore(NULL,GET_OBJECT);
+	object *obj = (object *)objectStore(NULL,GET_OBJECT);
 	int player = *(int *)sdlStore(NULL,GET_PLAYER);
 	if(obj[player].radius != 0)
 	{

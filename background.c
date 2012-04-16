@@ -12,19 +12,19 @@
 
 int backgroundBlit(void)
 {
-	SDL_Rect *camera = sdlStore(NULL,GET_CAMERA);
+	SDL_Rect *camera = (SDL_Rect *)sdlStore(NULL,GET_CAMERA);
 	if(camera == 0)
 	{
 		puts("DEBUG: backgroundBlit() 1");
 		return -1;
 	}
-	SDL_Surface *screen = sdlStore(NULL,GET_SCREEN);
+	SDL_Surface *screen = (SDL_Surface *)sdlStore(NULL,GET_SCREEN);
 	if(screen == 0)
 	{
 		puts("DEBUG: backgroundBlit() 2");
 		return -1;
 	}
-	struct bgData *initData = sdlStore(NULL,GET_BACKGROUND);
+	struct bgData *initData = (struct bgData *)sdlStore(NULL,GET_BACKGROUND);
 	if(initData == 0)
 	{
 		puts("DEBUG: backgroundBlit() 3");
