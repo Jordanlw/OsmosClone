@@ -1,23 +1,27 @@
+#CC = $(NACL_SDK_ROOT)/toolchain/linux_x86_newlib/bin/i686-nacl-gcc
 CC = colorgcc
-CCFLAGS = -Wall -g -lSDL -lSDL_ttf -lm
+CCARCH = -m64
+CCFLAGS = -Wall -I $(NACL_SDK_ROOT)/toolchain/linux_x86_newlib/x86_64-nacl/usr/include \
+-L $(NACL_SDK_ROOT)/toolchain/linux_x86_newlib/x86_64-nacl \
+-lm -lppapi
+
 SOURCES = $(wildcard *.c)
-SOURCES := $(filter-out varArray.c undoOverlap.c, $(SOURCES))
+SOURCES := $(filter-out varArray.c undoOverlap.c blit.c debug.c, $(SOURCES))
 OBJSDIR = objs
 OBJECTS = $(addprefix $(OBJSDIR)/, $(SOURCES:.c=.o))
-OUTEXE = xOsmosClone
+OUTEXE = xOsmosClone.nexe
 DEPSDIR = deps
 DEPS = $(addprefix $(DEPSDIR)/, $(SOURCES:.c=.d))
-DEPSCUR = $(DEPSDIR)/$(<:.c=.d)
 
 $(OUTEXE) : $(OBJECTS)
-	$(CC) $(CCFLAGS) $(OBJECTS) -o $(OUTEXE)
+	$(CC) $(CCARCH) $(OBJECTS) $(CCFLAGS) -o $(OUTEXE)
 
 -include $(DEPS)
 
 $(OBJSDIR)/%.o : %.c
-	$(CC) $(CCFLAGS) -MM $< > $(DEPSDIR)/$(<:.c=.d.tmp)
+	$(CC) -MM $< > $(DEPSDIR)/$(<:.c=.d.tmp)
 	@sed -e 's&^$(notdir $@)&$@&' < $(DEPSDIR)/$(<:.c=.d.tmp) > $(DEPSDIR)/$(<:.c=.d)
-	$(CC) $(CCFLAGS) -c -o $@ $<
+	$(CC) $(CCARCH) -c -o $@ $<
 
 .PHONY : clean
 
