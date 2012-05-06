@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <SDL/SDL.h>
 #include <math.h>
 
 #include "header/objectBlit.h"

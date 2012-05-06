@@ -1,4 +1,3 @@
-#include <SDL/SDL.h>
 
 #include "header/playermovement.h"
 #include "header/objectStore.h"

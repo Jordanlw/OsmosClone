@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <SDL/SDL.h>
-#include <SDL/SDL_ttf.h>
 
 #include "header/main.h"
 #include "header/init.h"

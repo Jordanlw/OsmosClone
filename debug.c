@@ -1,5 +1,3 @@
-#include <SDL/SDL.h>
-
 #include "header/debug.h"
 #include "header/sdlstore.h"
 

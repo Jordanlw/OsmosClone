@@ -1,4 +1,3 @@
-#include <SDL/SDL.h>
 
 #include "header/main.h"
 #include "header/sdlstore.h"

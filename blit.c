@@ -1,6 +1,3 @@
-#include <SDL/SDL.h>
-#include <SDL/SDL_ttf.h>
-
 #include "header/sdlstore.h"
 
 #define LINE_SPACING 5

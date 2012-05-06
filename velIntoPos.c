@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <SDL/SDL.h>
 
 #include "header/velIntoPos.h"
 #include "header/sdlstore.h"

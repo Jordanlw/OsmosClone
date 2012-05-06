@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <SDL/SDL.h>
 
 #include "header/init.h"
 #include "header/objectStore.h"
