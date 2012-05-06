@@ -1,4 +1,13 @@
 #include <stdio.h>
+#include <ppapi/c/pp_instance.h>
+#include <ppapi/c/pp_bool.h>
+#include <ppapi/c/ppb_graphics_2d.h>
+#include <ppapi/c/pp_size.h>
+#include <ppapi/c/pp_resource.h>
+#include <ppapi/c/ppb_instance.h>
+#include <ppapi/c/ppb_image_data.h>
+#include <ppapi/c/ppb_input_event.h>
+#include <ppapi/c/pp_point.h>
 
 #include "header/init.h"
 #include "header/objectStore.h"

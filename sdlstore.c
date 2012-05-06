@@ -1,3 +1,6 @@
+#include <ppapi/c/pp_instance.h>
+#include <ppapi/c/pp_resource.h>
+#include <ppapi/c/pp_rect.h>
 
 #include "header/main.h"
 #include "header/sdlstore.h"

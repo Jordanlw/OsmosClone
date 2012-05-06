@@ -1,3 +1,5 @@
+#include <ppapi/c/pp_point.h>
+#include <ppapi/c/pp_rect.h>
 
 #include "header/playermovement.h"
 #include "header/objectStore.h"

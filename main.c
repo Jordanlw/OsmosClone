@@ -1,4 +1,8 @@
 #include <stdio.h>
+#include <ppapi/c/ppb_core.h>
+#include <ppapi/c/pp_time.h>
+#include <ppapi/c/pp_completion_callback.h>
+#include <ppapi/c/ppb_graphics_2d.h>
 
 #include "header/main.h"
 #include "header/init.h"
@@ -13,21 +17,24 @@
 #include "header/aimovement.h"
 #include "header/debug.h"
 #include "header/blit.h"
+#include "header/nullCallbacks.h"
 
-int main(int argc,char **args)
+int gameMain(int argc,char **args)
 {
 	//Initiate SDL
-	if(initSDL())
+	if(initGame())
 	{
 		puts("DEBUG: main() 1");
 		return 1;
 	}
 	//Initiate SDL_TTF
+	/*
 	if(TTF_Init())
 	{
 		puts("DEBUG: main() 6");
 		return 1;
 	}
+	*/
 	//used for multiplayer and also ease of passing data
 	int player = 0;
 	sdlStore((void *)&player,GET_PLAYER);

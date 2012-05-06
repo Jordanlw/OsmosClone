@@ -1,4 +1,6 @@
 #include <math.h>
+#include <ppapi/c/pp_resource.h>
+#include <ppapi/c/ppb_image_data.h>
 
 #include "header/blitCircle.h"
 #include "header/main.h"

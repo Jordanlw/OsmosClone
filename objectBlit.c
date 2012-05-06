@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <math.h>
+#include <ppapi/c/pp_size.h>
+#include <ppapi/c/pp_resource.h>
 
 #include "header/objectBlit.h"
 #include "header/objectStore.h"
