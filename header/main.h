@@ -15,8 +15,8 @@
 #define MIN_OBJECT_SIZE 50
 #define STARTING_PLAYER_OBJECT_SIZE 100
 
-#define SETPIXEL32(surface,x,y,pixel) if(x >= 0 && y >= 0 && x < ((surface)->w) && y < ((surface)->h)) \
-										 { ((Uint32 *)(surface->pixels))[((y) * ((surface)->w)) + (x)] = (pixel); }
+#define SETPIXEL32(surface,size,x,y,pixel) if(x >= 0 && y >= 0 && x < ((size).width) && y < ((size).height)) \
+										 { ((uint32_t *)(surface))[((y) * ((size).width)) + (x)] = (pixel); }
 										 
 #define FIXED_MULT_NORMAL(fixed,normal,ratio) (((fixed) * (normal) * (ratio)) / ((ratio) * (ratio)))
 
