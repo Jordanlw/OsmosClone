@@ -182,7 +182,7 @@ void initObjectPosAndSize()
 
 int initSDL()
 {
-	if(SDL_Init(SDL_INIT_TIMER | SDL_INIT_VIDEO))
+	*camera = (struct PP_Rect){{0,0},{DEFAULT_WIDTH,DEFAULT_HEIGHT}};
 	{
 		puts("DEBUG: initSDL() 1");
 		return 1;

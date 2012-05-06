@@ -18,7 +18,7 @@ int blitObject()
 		puts("DEBUG: blitObject() 2");
 		return 1;
 	}
-	SDL_Rect *camera = (SDL_Rect *)sdlStore(NULL,GET_CAMERA);
+	struct PP_Rect *camera = (struct PP_Rect *)sdlStore(NULL,GET_CAMERA);
 	if(camera == 0)
 	{
 		puts("DEBUG: blitObject() 3");
@@ -45,7 +45,7 @@ int blitObject()
 		{
 			color = (SDL_Color){255,135,102};
 		}
-		if(blitCircle(obj[i].radius,screen,(SDL_Rect){obj[i].pos.x - camera->x,obj[i].pos.y - camera->y,0,0},color))
+		if(blitCircle(obj[i].radius,(struct PP_Point){obj[i].pos.x - camera->point.x,obj[i].pos.y - camera->point.y},color))
 		{
 			puts("DEBUG: blitObject() 1");
 			return 1;

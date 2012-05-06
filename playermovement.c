@@ -44,6 +44,7 @@ void movePlayerFromData(int player,SDL_Event event)
 		SDL_Rect *camera = (SDL_Rect *)sdlStore(NULL,GET_CAMERA);
 		mousePos.x += (double)camera->x;
 		mousePos.y += (double)camera->y;
+		struct PP_Rect *camera = (struct PP_Rect *)sdlStore(NULL,GET_CAMERA);
 		//Convert object data to vector
 		vector objPos;
 		objPos.x = obj[player].pos.x;
@@ -66,17 +67,17 @@ void movePlayerFromData(int player,SDL_Event event)
 void moveCamera()
 {
 	//Get data
-	SDL_Rect *camera = (SDL_Rect *)sdlStore(NULL,GET_CAMERA);
+	struct PP_Rect *camera = (struct PP_Rect *)sdlStore(NULL,GET_CAMERA);
 	object *objects = (object *)objectStore(NULL,GET_OBJECT);
 	int selObj = *(int *)sdlStore(NULL,GET_SELECTED_OBJECT);
 	//Set camera position to center of player object
-	camera->x = (int)objects[selObj].pos.x - (camera->w / 2);
-	camera->y = (int)objects[selObj].pos.y - (camera->h / 2);
+	camera->point.x = (int)objects[selObj].pos.x - (camera->size.width / 2);
+	camera->point.y = (int)objects[selObj].pos.y - (camera->size.height / 2);
 	//Adjust camera position so it isn't displaying anything outside of bounds
-	if(camera->x < 0) camera->x = 0;
-	if(camera->y < 0) camera->y = 0;
-	if(camera->x + camera->w > LEVEL_WIDTH) camera->x = LEVEL_WIDTH - camera->w;
-	if(camera->y + camera->h > LEVEL_HEIGHT) camera->y = LEVEL_HEIGHT - camera->h;
+	if(camera->point.x < 0) camera->point.x = 0;
+	if(camera->point.y < 0) camera->point.y = 0;
+	if(camera->point.x + camera->size.width > LEVEL_WIDTH) camera->point.x = LEVEL_WIDTH - camera->size.width;
+	if(camera->point.y + camera->size.height > LEVEL_HEIGHT) camera->point.y = LEVEL_HEIGHT - camera->size.height;
 }
 
 void updateSelectedObj(int keyboard)

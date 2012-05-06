@@ -12,7 +12,7 @@
 
 int backgroundBlit(void)
 {
-	SDL_Rect *camera = (SDL_Rect *)sdlStore(NULL,GET_CAMERA);
+	struct PP_Rect *camera = (struct PP_Rect *)sdlStore(NULL,GET_CAMERA);
 	if(camera == 0)
 	{
 		puts("DEBUG: backgroundBlit() 1");
@@ -40,8 +40,8 @@ int backgroundBlit(void)
 	int i;
 	for(i = 0;i < BG_AMOUNT;i++)
 	{
-		bgOffset[i][0] = ((camera->x * BG_MULT) / bgSizes[i]) % camera->w;
-		bgOffset[i][1] = ((camera->y * BG_MULT) / bgSizes[i]) % camera->h;
+		bgOffset[i][0] = ((camera->point.x * BG_MULT) / bgSizes[i]) % camera->size.width;
+		bgOffset[i][1] = ((camera->point.y * BG_MULT) / bgSizes[i]) % camera->size.height;
 	}
 	//DEBUG
 	//printf("bg0: x %d y %d cam: x %d y %d\n",bgOffset[0][0],bgOffset[0][1],camera->x,camera->y);
@@ -51,13 +51,13 @@ int backgroundBlit(void)
 	{
 		//For tiling
 		int mw;
-		for(mw = 0;mw < (camera->w * 2);mw += BG_INIT_W_SIZE)
+		for(mw = 0;mw < (camera->size.width * 2);mw += BG_INIT_W_SIZE)
 		{
 			int mh;
-			for(mh = 0;mh < (camera->h * 2);mh += BG_INIT_H_SIZE)
+			for(mh = 0;mh < (camera->size.height * 2);mh += BG_INIT_H_SIZE)
 			{
 				int k;
-				for(k = 0;k < (MIN_INT(BG_INIT_W_SIZE,camera->w) * MIN_INT(BG_INIT_H_SIZE,camera->h)) / 
+				for(k = 0;k < (MIN_INT(BG_INIT_W_SIZE,camera->size.width) * MIN_INT(BG_INIT_H_SIZE,camera->size.height)) / 
 				(BG_INIT_MAX_SPACING * BG_INIT_MAX_SPACING);k++)
 				{
 					int index = k * (i + 1);
