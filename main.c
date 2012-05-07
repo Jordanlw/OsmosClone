@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 #include <ppapi/c/ppb_core.h>
 #include <ppapi/c/pp_time.h>
 #include <ppapi/c/pp_completion_callback.h>
@@ -50,34 +51,38 @@ int gameMain(int argc,char **args)
 		return 1;
 	}
 	//game loop
-	int quit = 0;
+	//int quit = 0;
 	//if set, run through game changing functions only when n is pressed
-	int pauseStep = INIT_PAUSE;
-	while(!quit)
+	int pauseStep = 0;//INIT_PAUSE;
+	//Make available the GetTimeTicks function
+	PPB_Core *coreInterface = sdlStore(NULL,GET_CORE_INTERFACE);
+	while(1/*!quit*/)
 	{
 		//For FPS limit
-		Uint32 ticks = SDL_GetTicks();
+		PP_TimeTicks ticks = coreInterface->GetTimeTicks() * 1000;
 		//event loop
-		SDL_Event event;
+		//SDL_Event event;
 		//if set, allow a game changing frame to happen
 		int nextStep = 0;
 		//Store left arrow or right arrow pressed state
 		int keyboardArrow = 0;
+		/*
 		while(SDL_PollEvent(&event))
 		{
 			//DEBUG
-			/*
 			if(event.type == SDL_VIDEORESIZE)
 			{
 				puts("RESIZE");
 			}
-			*/
 			
 			switch(event.type)
 			{
 				//Respond to user exiting the game
+				/*
 				case SDL_QUIT: quit = 1; break;
+				*/
 				//Respond to window being resized by user
+				/*
 				case SDL_VIDEORESIZE:
 				{
 					SDL_Surface *screen = (SDL_Surface *)sdlStore(NULL,GET_SCREEN);
@@ -127,10 +132,11 @@ int gameMain(int argc,char **args)
 					break;
 			}
 		}
+		*/
 		if(!pauseStep || nextStep)
 		{
 			//move player from already gathered data
-			movePlayerFromData(player,event);
+			movePlayerFromData(player);
 			//find target, apply force towards target
 			moveAiObjects();
 			//move force into velocity, velocity into position
@@ -159,6 +165,7 @@ int gameMain(int argc,char **args)
 			return 1;
 		}
 		//blit inital unpause screen
+		/*
 		if(pauseStep == INIT_PAUSE)
 		{
 			if(blitPause())
@@ -169,17 +176,18 @@ int gameMain(int argc,char **args)
 		}
 		*/
 		//flip and erase screen
-		SDL_Surface *screen = (SDL_Surface *)sdlStore(NULL,GET_SCREEN);
-		SDL_Flip(screen);
-		SDL_FillRect(screen,NULL,0);
+		PP_Resource screen = (PP_Resource)sdlStore(NULL,GET_SCREEN);
+		PPB_Graphics2D *g2DInterface = (PPB_Graphics2D *)sdlStore(NULL,GET_2D_INTERFACE);
+		struct PP_CompletionCallback callback = {nullCallback,NULL,0};
+		g2DInterface->Flush(screen,callback);
+		//SDL_FillRect(screen,NULL,0);
 		
 		//For FPS limit
-		long delay = (1000 / FPS) - (int)(SDL_GetTicks() - ticks);
-		if(delay > 0) SDL_Delay(delay);
+		long delay = (1000 / FPS) - ((coreInterface->GetTimeTicks() * 1000) - ticks);
+		if(delay > 0) usleep(delay * 1000);
 		//store frame time
-		unsigned int frameTime = SDL_GetTicks() - ticks;
+		unsigned int frameTime = (coreInterface->GetTimeTicks() * 1000) - ticks;
 		sdlStore((void *)&frameTime,SET_FRAMETIME);
 	}
-	SDL_Quit();
 	return 0;
 }
