@@ -8,6 +8,7 @@
 #include "header/vectorMath.h"
 #include "header/main.h"
 
+/*
 void movePlayer(SDL_Event event)
 {
 	int mouseDown = movePlayerStore(0,GET_PLAYER_STORE_MOUSE_DOWN);
@@ -15,7 +16,7 @@ void movePlayer(SDL_Event event)
 	else if(event.button.state == SDL_RELEASED && event.button.button == SDL_BUTTON_LEFT) mouseDown = 0;
 	movePlayerStore(mouseDown,SET_PLAYER_STORE_MOUSE_DOWN);
 }
-
+*/
 int movePlayerStore(int data,int option)
 {
 	static int mouseDown = 0;
@@ -28,7 +29,7 @@ int movePlayerStore(int data,int option)
 	return 0;
 }
 
-void movePlayerFromData(int player,SDL_Event event)
+void movePlayerFromData(int player)
 {
 	//only run if the mouse is being pressed down
 	int mouseDown = movePlayerStore(0,GET_PLAYER_STORE_MOUSE_DOWN);
@@ -37,14 +38,14 @@ void movePlayerFromData(int player,SDL_Event event)
 		//retrieve data
 		object *obj = (object *)objectStore(NULL,GET_OBJECT);	
 		//retrieve mouse position
+		struct PP_Point *mousePosInt = (struct PP_Point *)sdlStore(NULL,GET_MOUSE_POS);
 		vector mousePos;
-		mousePos.x = (double)event.motion.x;
-		mousePos.y = (double)event.motion.y;
+		mousePos.x = (double)mousePosInt->x;
+		mousePos.y = (double)mousePosInt->y;
 		//convert mousepos from relative to absolute
-		SDL_Rect *camera = (SDL_Rect *)sdlStore(NULL,GET_CAMERA);
-		mousePos.x += (double)camera->x;
-		mousePos.y += (double)camera->y;
 		struct PP_Rect *camera = (struct PP_Rect *)sdlStore(NULL,GET_CAMERA);
+		mousePos.x += (double)camera->point.x;
+		mousePos.y += (double)camera->point.y;
 		//Convert object data to vector
 		vector objPos;
 		objPos.x = obj[player].pos.x;
