@@ -8,6 +8,7 @@
 #include <ppapi/c/ppb_image_data.h>
 #include <ppapi/c/ppb_input_event.h>
 #include <ppapi/c/pp_point.h>
+#include <ppapi/c/pp_rect.h>
 
 #include "header/init.h"
 #include "header/objectStore.h"
@@ -180,27 +181,36 @@ void initObjectPosAndSize()
 	}
 }
 
-int initSDL()
+int initGame()
 {
+	PP_Instance instance = (PP_Instance)sdlStore(NULL,GET_NACL_INSTANCE);
+	PPB_Graphics2D *g2DInterface = (PPB_Graphics2D *)sdlStore(NULL,GET_2D_INTERFACE);
+	PPB_Instance *instanceInterface = (PPB_Instance *)sdlStore(NULL,GET_INSTANCE_INTERFACE);
+	PPB_ImageData *imageInterface = (PPB_ImageData *)sdlStore(NULL,GET_IMAGE_INTERFACE);
+	PPB_InputEvent *inputInterface = (PPB_InputEvent *)sdlStore(NULL,GET_INPUT_INTERFACE);
+	
+	inputInterface->RequestInputEvents(instance,PP_INPUTEVENT_CLASS_MOUSE);
+	struct PP_Rect *camera = (struct PP_Rect *)malloc(sizeof(struct PP_Rect));
 	*camera = (struct PP_Rect){{0,0},{DEFAULT_WIDTH,DEFAULT_HEIGHT}};
+	PP_Resource screen = g2DInterface->Create(instance,&(struct PP_Size){camera->size.width,camera->size.height},PP_TRUE);
+	if(instanceInterface->BindGraphics(instance,screen))
 	{
-		puts("DEBUG: initSDL() 1");
+		puts("DEBUG: initGame() 2");
 		return 1;
 	}
-	SDL_Rect *camera = (SDL_Rect *)malloc(sizeof(SDL_Rect));
-	camera->x = 0;
-	camera->y = 0;
-	camera->w = DEFAULT_WIDTH;
-	camera->h = DEFAULT_HEIGHT;
-	SDL_Surface *screen = SDL_SetVideoMode(camera->w,camera->h,32,SDL_SWSURFACE | SDL_RESIZABLE);
 	if(!screen)
 	{
-		puts("DEBUG: initSDL() 2");
+		puts("DEBUG: initGame() 1");
 		return 1;
 	}
+	void *pixels = imageInterface->Map(screen);
+	
+	struct PP_Point *mousePos = malloc(sizeof(struct PP_Point));
+	sdlStore((void *)mousePos,SET_MOUSE_POS);
 	int player = *(int *)sdlStore(NULL,GET_PLAYER);
 	sdlStore((void *)&player,SET_SELECTED_OBJECT);
 	sdlStore(camera,SET_CAMERA);
-	sdlStore(screen,SET_SCREEN);
+	sdlStore((void *)&screen,SET_SCREEN);
+	sdlStore(pixels,SET_PIXELS);
 	return 0;
 }
