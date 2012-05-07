@@ -10,7 +10,7 @@ void velIntoPos()
 {
 	int objCount = *(int *)objectStore(NULL,GET_OBJ_COUNT);
 	object *objects = (object *)objectStore(NULL,GET_OBJECT);
-	Uint32 frameTime = *(Uint32 *)sdlStore(NULL,GET_FRAMETIME);
+	double frameTime = *(double *)sdlStore(NULL,GET_FRAMETIME);
 	int i;
 	for(i = 0;i < objCount;i++)
 	{
