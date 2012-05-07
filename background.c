@@ -1,4 +1,4 @@
-#include <SDL/SDL.h>
+#include <ppapi/c/pp_rect.h>
 
 #include "header/background.h"
 #include "header/sdlstore.h"
@@ -6,6 +6,7 @@
 #include "header/random.h"
 #include "header/object.h"
 #include "header/objectStore.h"
+#include "header/colorRect.h"
 
 #define COORDS 2
 #define BG_MULT 3
@@ -18,7 +19,7 @@ int backgroundBlit(void)
 		puts("DEBUG: backgroundBlit() 1");
 		return -1;
 	}
-	SDL_Surface *screen = (SDL_Surface *)sdlStore(NULL,GET_SCREEN);
+	PP_Resource screen = *(PP_Resource *)sdlStore(NULL,GET_SCREEN);
 	if(screen == 0)
 	{
 		puts("DEBUG: backgroundBlit() 2");
@@ -61,13 +62,13 @@ int backgroundBlit(void)
 				(BG_INIT_MAX_SPACING * BG_INIT_MAX_SPACING);k++)
 				{
 					int index = k * (i + 1);
-					SDL_Rect tmpRect;
+					struct PP_Point tmpRect;
 					tmpRect.x = initData[index].pos.x + mw - bgOffset[i][0];
 					tmpRect.y = initData[index].pos.y + mh - bgOffset[i][1];
 					//DEBUG
 					//printf("x %5d y %5d w %5d h %5d\n",tmpRect.x,tmpRect.y,tmpRect.w,tmpRect.h);
 					
-					blitCircle(bgSizes[i],screen,tmpRect,(SDL_Color){255,255,255});
+					blitCircle(bgSizes[i],tmpRect,(struct colorRect){255,255,255});
 				}
 			}
 		}
