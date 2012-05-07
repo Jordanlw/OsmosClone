@@ -2,6 +2,7 @@
 #include <math.h>
 #include <ppapi/c/pp_size.h>
 #include <ppapi/c/pp_resource.h>
+#include <ppapi/c/pp_rect.h>
 
 #include "header/objectBlit.h"
 #include "header/objectStore.h"
@@ -9,6 +10,7 @@
 #include "header/object.h"
 #include "header/main.h"
 #include "header/blitCircle.h"
+#include "header/colorRect.h"
 
 int blitObject()
 {
@@ -24,7 +26,7 @@ int blitObject()
 		puts("DEBUG: blitObject() 3");
 		return 1;
 	}
-	SDL_Surface *screen = (SDL_Surface *)sdlStore(NULL,GET_SCREEN);
+	PP_Resource screen = *(PP_Resource *)sdlStore(NULL,GET_SCREEN);
 	if(screen == 0)
 	{
 		puts("DEBUG: blitObject() 4");
@@ -36,14 +38,14 @@ int blitObject()
 	for(i = 0;i < objCount;i++)
 	{
 		if(obj[i].radius <= 0) continue;
-		SDL_Color color = {179,0,21};
+		struct colorRect color = {179,0,21};
 		if(i == player)
 		{
-			color = (SDL_Color){179,95,71};
+			color = (struct colorRect){179,95,71};
 	 	}
 		if(obj[i].radius < obj[player].radius)
 		{
-			color = (SDL_Color){255,135,102};
+			color = (struct colorRect){255,135,102};
 		}
 		if(blitCircle(obj[i].radius,(struct PP_Point){obj[i].pos.x - camera->point.x,obj[i].pos.y - camera->point.y},color))
 		{
