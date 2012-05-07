@@ -1,6 +1,8 @@
 #ifndef BG_INCLUDE
 #define BG_INCLUDE
 
+#include <ppapi/c/pp_point.h>
+
 #include "vector.h"
 
 #define BG_INIT_MAX_SPACING 40
@@ -11,7 +13,7 @@
 
 struct bgData
 {
-	SDL_Rect pos;
+	struct PP_Point pos;
 };
 
 int backgroundBlit(void);
