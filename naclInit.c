@@ -29,6 +29,7 @@ void didChangeView(PP_Instance instance, PP_Resource viewResource)
 
 PP_Bool didCreate(PP_Instance instance, uint32_t argc, const char **argn, const char **argv)
 {
+	sdlStore((void *)PP_TRUE,SET_PAST_DID_CREATE);
 	sdlStore((void *)&instance,SET_NACL_INSTANCE);
 	return PP_TRUE;
 }
