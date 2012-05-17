@@ -23,6 +23,7 @@ void *sdlStore(void *data,int option)
 	static void *mouseInterface = 0;
 	static void *pixels = 0;
 	static void *mousePos = 0;
+	static void *didCreate = 0;
 	//DEBUG
 	//printf("store: %p\n",bgSizes);
 	
@@ -47,7 +48,7 @@ void *sdlStore(void *data,int option)
 			case GET_CORE_INTERFACE: return coreInterface;break;
 			case SET_CORE_INTERFACE: coreInterface = data;break;
 			case SET_NACL_INSTANCE: naclInstance = *(PP_Instance *)data;break;
-			case GET_NACL_INSTANCE: return (void *)naclInstance;break;
+			case GET_NACL_INSTANCE: return (void *)&naclInstance;break;
 			case SET_2D_INTERFACE: g2DInterface = data;break;
 			case GET_2D_INTERFACE: return g2DInterface;break; 
 			case SET_INSTANCE_INTERFACE: instanceInterface = data;break;
@@ -62,6 +63,8 @@ void *sdlStore(void *data,int option)
 			case SET_MOUSE_INTERFACE: mouseInterface = data;break;
 			case SET_MOUSE_POS: mousePos = data;break;
 			case GET_MOUSE_POS: return mousePos;break;
+			case SET_PAST_DID_CREATE: didCreate = data;break;
+			case GET_PAST_DID_CREATE: return didCreate;break;
 			default: puts("DEBUG: sdlStore() 1"); return (void *)0;break;
 		}
 	}
