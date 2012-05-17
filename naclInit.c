@@ -1,4 +1,7 @@
 #include <stddef.h>
+#include <pthread.h>
+#include <unistd.h>
+#include <stdio.h>
 #include <ppapi/c/ppp.h>
 #include <ppapi/c/ppb.h>
 #include <ppapi/c/pp_errors.h>
@@ -59,6 +62,10 @@ const void *PPP_GetInterface(const char *interfaceName)
 
 int32_t PPP_InitializeModule(PP_Module moduleId, PPB_GetInterface getBrowser)
 {
+	//DEBUG
+	puts("DEBUG: entered PPP_InitializeModule().");
+	//sleep(15);
+	
 	PPB_Core *coreInterface = (PPB_Core *)getBrowser(PPB_CORE_INTERFACE);
 	sdlStore((void *)coreInterface,SET_CORE_INTERFACE);
 	
@@ -73,9 +80,17 @@ int32_t PPP_InitializeModule(PP_Module moduleId, PPB_GetInterface getBrowser)
 	
 	PPB_InputEvent *inputInterface = (PPB_InputEvent *)getBrowser(PPB_INPUT_EVENT_INTERFACE);
 	sdlStore((void *)inputInterface,SET_INPUT_INTERFACE);
+	//DEBUG
+	printf("DEBUG: value inputInterface is %p in PPP_InitializeModule()\n",inputInterface);
 	
 	PPB_MouseInputEvent *mouseInterface = (PPB_MouseInputEvent *)getBrowser(PPB_MOUSE_INPUT_EVENT_INTERFACE);
 	sdlStore((void *)mouseInterface,SET_MOUSE_INTERFACE);
+	
+	pthread_t *thread = (pthread_t *)malloc(sizeof(pthread_t));
+	pthread_create(thread,NULL,gameMain,NULL);
+	//DEBUG
+	puts("DEBUG: left PPP_InitializeModule().");
+	
 	return PP_OK;
 }
 
