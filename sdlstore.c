@@ -57,8 +57,8 @@ void *sdlStore(void *data,int option)
 			case SET_PIXELS: pixels = data;break;
 			case GET_PIXELS: return pixels;break;
 			case SET_INPUT_INTERFACE: inputInterface = data;break;
-			case GET_INPUT_INTERFACE: return data;break;
-			case GET_MOUSE_INTERFACE: return data;break;
+			case GET_INPUT_INTERFACE: return inputInterface;break;
+			case GET_MOUSE_INTERFACE: return mouseInterface;break;
 			case SET_MOUSE_INTERFACE: mouseInterface = data;break;
 			case SET_MOUSE_POS: mousePos = data;break;
 			case GET_MOUSE_POS: return mousePos;break;
