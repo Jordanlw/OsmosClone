@@ -9,6 +9,9 @@
 #include <ppapi/c/ppb_input_event.h>
 #include <ppapi/c/pp_point.h>
 #include <ppapi/c/pp_rect.h>
+#include <ppapi/c/pp_errors.h>
+#include <ppapi/c/ppb_core.h>
+#include <ppapi/c/pp_completion_callback.h>
 
 #include "header/init.h"
 #include "header/objectStore.h"
@@ -16,6 +19,7 @@
 #include "header/collisionDetection.h"
 #include "header/random.h"
 #include "header/background.h"
+#include "header/callbacks.h"
 
 #define SIDES_TO_CHECK 4
 #define STARTING_OBJECT_SPACING 100
@@ -188,11 +192,15 @@ int initGame()
 	PPB_Instance *instanceInterface = (PPB_Instance *)sdlStore(NULL,GET_INSTANCE_INTERFACE);
 	PPB_ImageData *imageInterface = (PPB_ImageData *)sdlStore(NULL,GET_IMAGE_INTERFACE);
 	PPB_InputEvent *inputInterface = (PPB_InputEvent *)sdlStore(NULL,GET_INPUT_INTERFACE);
+	PPB_Core *coreInterface = (PPB_Core *)sdlStore(NULL,GET_CORE_INTERFACE);
 	
-	inputInterface->RequestInputEvents(instance,PP_INPUTEVENT_CLASS_MOUSE);
+	struct inputCallbackData callbackInputData = {instance,PP_INPUTEVENT_CLASS_MOUSE};
+	coreInterface->CallOnMainThread(0,PP_MakeOptionalCompletionCallback(inputCallback,(void *)&callbackInputData),0);
 	struct PP_Rect *camera = (struct PP_Rect *)malloc(sizeof(struct PP_Rect));
 	*camera = (struct PP_Rect){{0,0},{DEFAULT_WIDTH,DEFAULT_HEIGHT}};
-	PP_Resource screen = g2DInterface->Create(instance,&(struct PP_Size){camera->size.width,camera->size.height},PP_TRUE);
+	struct g2DCallbackData callbackg2DData = {instance,&(struct PP_Size){camera->size.width,camera->size.height},PP_TRUE);
+	coreInterface->CallOnMainThread(0,PP_MakeOptionalCompletionCallback(g2DCallback,(void *)&callback2DData),0);
+	PP_Resource screen = *(PP_Resource *)sdlStore(NULL,GET_SCREEN);
 	if(instanceInterface->BindGraphics(instance,screen))
 	{
 		puts("DEBUG: initGame() 2");
@@ -210,7 +218,6 @@ int initGame()
 	int player = *(int *)sdlStore(NULL,GET_PLAYER);
 	sdlStore((void *)&player,SET_SELECTED_OBJECT);
 	sdlStore(camera,SET_CAMERA);
-	sdlStore((void *)&screen,SET_SCREEN);
 	sdlStore(pixels,SET_PIXELS);
 	return 0;
 }
