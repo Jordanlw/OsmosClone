@@ -22,12 +22,18 @@
 
 void *gameMain(void *data)
 {
+	//DEBUG
+	puts("DEBUG: entered gameMain().");
+	
 	//Initiate SDL
 	if(initGame())
 	{
 		puts("DEBUG: main() 1");
 		return (void *)1;
 	}
+	//DEBUG
+	puts("DEBUG: past initGame().");
+	
 	//Initiate SDL_TTF
 	/*
 	if(TTF_Init())
@@ -44,12 +50,18 @@ void *gameMain(void *data)
 		puts("DEBUG: main() 2");
 		return 1;
 	}
+	//DEBUG
+	puts("DEBUG: past initObjects().");
+	
 	initObjectPosAndSize();
 	if(initBackground())
 	{
 		puts("DEBUG: main() 4");
 		return 1;
 	}
+	//DEBUG
+	puts("DEBUG: past initBackground().");
+	
 	//game loop
 	//int quit = 0;
 	//if set, run through game changing functions only when n is pressed
