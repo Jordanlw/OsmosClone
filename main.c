@@ -48,7 +48,7 @@ void *gameMain(void *data)
 	if(initObjects())
 	{
 		puts("DEBUG: main() 2");
-		return 1;
+		return (void *)1;
 	}
 	//DEBUG
 	puts("DEBUG: past initObjects().");
@@ -57,7 +57,7 @@ void *gameMain(void *data)
 	if(initBackground())
 	{
 		puts("DEBUG: main() 4");
-		return 1;
+		return (void *)1;
 	}
 	//DEBUG
 	puts("DEBUG: past initBackground().");
