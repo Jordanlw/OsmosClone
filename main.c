@@ -20,13 +20,13 @@
 #include "header/blit.h"
 #include "header/nullCallbacks.h"
 
-int gameMain(int argc,char **args)
+void *gameMain(void *data)
 {
 	//Initiate SDL
 	if(initGame())
 	{
 		puts("DEBUG: main() 1");
-		return 1;
+		return (void *)1;
 	}
 	//Initiate SDL_TTF
 	/*
@@ -156,13 +156,13 @@ int gameMain(int argc,char **args)
 		if(backgroundBlit())
 		{
 			puts("DEBUG: main() 5");
-			return 1;
+			return (void *)1;
 		}
 		//blit objects
 		if(blitObject())
 		{
 			puts("DEBUG: main() 3");
-			return 1;
+			return (void *)1;
 		}
 		//blit inital unpause screen
 		/*
@@ -189,5 +189,5 @@ int gameMain(int argc,char **args)
 		unsigned int frameTime = (coreInterface->GetTimeTicks() * 1000) - ticks;
 		sdlStore((void *)&frameTime,SET_FRAMETIME);
 	}
-	return 0;
+	return (void *)0;
 }

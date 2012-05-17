@@ -72,4 +72,6 @@ enum
 	KEYBOARD_RIGHT
 };
 
+void *gameMain(void *);
+
 #endif //ifndef INCLUDE_MAIN 
