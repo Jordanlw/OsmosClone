@@ -235,8 +235,19 @@ int initGame()
 	sem_wait(sem);
 	free(callbackBindData);
 	callbackBindData = 0;
+	//DEBUG
+	puts("DEBUG: initGame() - checkpoint 5");
 	
-	void *pixels = imageInterface->Map(screen);
+	struct mapCallbackData *callbackMapData = malloc(sizeof(struct mapCallbackData));
+	*callbackMapData = (struct mapCallbackData){screen,sem};
+	coreInterface->CallOnMainThread(0,PP_MakeCompletionCallback(mapCallback,(void *)callbackMapData),0);
+	sem_wait(sem);
+	sem_destroy(sem);
+	free(callbackMapData);
+	callbackMapData = 0;
+	//DEBUG
+	puts("DEBUG: initGame() - checkpoint 6");
+	
 	struct PP_Point *mousePos = malloc(sizeof(struct PP_Point));
 	
 	sdlStore((void *)mousePos,SET_MOUSE_POS);
