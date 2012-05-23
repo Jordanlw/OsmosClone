@@ -152,6 +152,7 @@ void *gameMain(void *data)
 			}
 		}
 		*/
+		/*
 		if(!pauseStep || nextStep)
 		{
 			//move player from already gathered data
@@ -167,7 +168,10 @@ void *gameMain(void *data)
 			//if object is outside of boundary, move it inside
 			movementBoundCheck();
 		}
+		*/
+		/*
 		updateSelectedObj(keyboardArrow);
+		*/
 		//move camera to safe position for blit
 		moveCamera();
 		//debugCall(DEBUG_CALL_BEFORE_BLIT);
