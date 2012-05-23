@@ -187,16 +187,24 @@ void initObjectPosAndSize()
 
 int initGame()
 {
+	//DEBUG
+	puts("DEBUG: initGame() - entered");
+	
 	while(sdlStore(NULL,GET_PAST_DID_CREATE) == 0)
 	{
 		usleep(1);
 	}
+	//DEBUG
+	puts("DEBUG: initGame() - checkpoint 1");
+	
 	PP_Instance instance = *(PP_Instance *)sdlStore(NULL,GET_NACL_INSTANCE);
 	PPB_Graphics2D *g2DInterface = (PPB_Graphics2D *)sdlStore(NULL,GET_2D_INTERFACE);
 	PPB_Instance *instanceInterface = (PPB_Instance *)sdlStore(NULL,GET_INSTANCE_INTERFACE);
 	PPB_ImageData *imageInterface = (PPB_ImageData *)sdlStore(NULL,GET_IMAGE_INTERFACE);
 	PPB_InputEvent *inputInterface = (PPB_InputEvent *)sdlStore(NULL,GET_INPUT_INTERFACE);
 	PPB_Core *coreInterface = (PPB_Core *)sdlStore(NULL,GET_CORE_INTERFACE);
+	//DEBUG
+	puts("DEBUG: initGame() - checkpoint 2");
 	
 	sem_t *sem = malloc(sizeof(sem_t));
 	sem_init(sem,0,0);
@@ -206,6 +214,8 @@ int initGame()
 	sem_wait(sem);
 	free(callbackInputData);
 	callbackInputData = 0;
+	//DEBUG
+	puts("DEBUG: initGame() - checkpoint 3");
 	
 	struct PP_Rect *camera = (struct PP_Rect *)malloc(sizeof(struct PP_Rect));
 	*camera = (struct PP_Rect){{0,0},{DEFAULT_WIDTH,DEFAULT_HEIGHT}};
@@ -215,6 +225,8 @@ int initGame()
 	sem_wait(sem);
 	free(callbackg2DData);
 	callbackg2DData = 0;
+	//DEBUG
+	puts("DEBUG: initGame() - checkpoint 4");
 	
 	PP_Resource screen = *(PP_Resource *)sdlStore(NULL,GET_SCREEN);
 	struct bindCallbackData *callbackBindData = malloc(sizeof(struct bindCallbackData));
@@ -231,6 +243,8 @@ int initGame()
 	int player = *(int *)sdlStore(NULL,GET_PLAYER);
 	sdlStore((void *)&player,SET_SELECTED_OBJECT);
 	sdlStore(camera,SET_CAMERA);
-	sdlStore(pixels,SET_PIXELS);
+	//DEBUG
+	puts("DEBUG: initGame() - left");
+	
 	return 0;
 }

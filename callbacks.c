@@ -35,6 +35,16 @@ void g2DCallback(void *data,int32_t result)
 	PPB_Graphics2D *g2DInterface = (PPB_Graphics2D *)sdlStore(NULL,GET_2D_INTERFACE);
 	struct g2DCallbackData *readyData = (struct g2DCallbackData *)data;
 	PP_Resource screen = g2DInterface->Create(readyData->instance,readyData->size,readyData->flag);
+	//DEBUG
+	printf("DEBUG: g2DCallback() - instance = %d, size[w = %d, h = %d], flag = %d\n", \
+		readyData->instance,readyData->size->width,readyData->size->height,readyData->flag);
+	printf("DEBUG: g2DCallback() - screen = %d\n",screen);
+	
+	if(screen == 0)
+	{
+		puts("DEBUG: g2DCallback() 1");
+		exit(1);
+	}
 	sdlStore((void *)&screen,SET_SCREEN);
 	sem_post(readyData->sem);
 	return;

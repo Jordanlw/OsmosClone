@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <ppapi/c/pp_rect.h>
 
 #include "header/background.h"
@@ -67,6 +68,7 @@ int backgroundBlit(void)
 					tmpRect.y = initData[index].pos.y + mh - bgOffset[i][1];
 					//DEBUG
 					//printf("x %5d y %5d w %5d h %5d\n",tmpRect.x,tmpRect.y,tmpRect.w,tmpRect.h);
+					//printf("DEBUG: backgoundBlit() - tmpRect[x = %d, y = %d]\n",tmpRect.x,tmpRect.y);
 					
 					blitCircle(bgSizes[i],tmpRect,(struct colorRect){255,255,255});
 				}

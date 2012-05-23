@@ -11,6 +11,11 @@
 int blitCircle(unsigned int radius,struct PP_Point offset,struct colorRect color)
 {
 	uint32_t *pixels = (uint32_t *)sdlStore(NULL,GET_PIXELS);
+	if(pixels == 0)
+	{
+		puts("DEBUG: blitCircle() 1");
+		return 1;
+	}
 	uint32_t pixelColor = color.r << 24;
 	pixelColor += color.g << 16;
 	pixelColor += color.b;

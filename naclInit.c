@@ -29,6 +29,8 @@ void didChangeView(PP_Instance instance, PP_Resource viewResource)
 
 PP_Bool didCreate(PP_Instance instance, uint32_t argc, const char **argn, const char **argv)
 {
+	//DEBUG
+	printf("DEBUG: didCreate() - value of instance is %d\n",instance);
 	sdlStore((void *)PP_TRUE,SET_PAST_DID_CREATE);
 	sdlStore((void *)&instance,SET_NACL_INSTANCE);
 	return PP_TRUE;
@@ -81,8 +83,6 @@ int32_t PPP_InitializeModule(PP_Module moduleId, PPB_GetInterface getBrowser)
 	
 	PPB_InputEvent *inputInterface = (PPB_InputEvent *)getBrowser(PPB_INPUT_EVENT_INTERFACE);
 	sdlStore((void *)inputInterface,SET_INPUT_INTERFACE);
-	//DEBUG
-	printf("DEBUG: value inputInterface is %p in PPP_InitializeModule()\n",inputInterface);
 	
 	PPB_MouseInputEvent *mouseInterface = (PPB_MouseInputEvent *)getBrowser(PPB_MOUSE_INPUT_EVENT_INTERFACE);
 	sdlStore((void *)mouseInterface,SET_MOUSE_INTERFACE);
