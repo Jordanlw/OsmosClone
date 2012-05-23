@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <semaphore.h>
 #include <ppapi/c/ppb_core.h>
 #include <ppapi/c/pp_time.h>
 #include <ppapi/c/pp_completion_callback.h>
@@ -19,6 +20,7 @@
 #include "header/debug.h"
 #include "header/blit.h"
 #include "header/nullCallbacks.h"
+#include "header/callbacks.h"
 
 void *gameMain(void *data)
 {
@@ -71,9 +73,14 @@ void *gameMain(void *data)
 	while(1/*!quit*/)
 	{
 		//For FPS limit
-		PP_TimeTicks ticks = coreInterface->GetTimeTicks() * 1000;
-		//event loop
-		//SDL_Event event;
+		sem_t *sem = malloc(sizeof(sem_t));
+		sem_init(sem,0,0);
+		PPB_Core *coreInterface = (PPB_Core *)sdlStore(NULL,GET_CORE_INTERFACE);
+		struct timeCallbackData *callbackTimeData;
+		NACL_TIME(sem,callbackTimeData,coreInterface);
+		PP_TimeTicks ticks = callbackTimeData->ticks;
+		free(callbackTimeData);
+		callbackTimeData = 0;
 		//if set, allow a game changing frame to happen
 		int nextStep = 0;
 		//Store left arrow or right arrow pressed state
@@ -188,17 +195,26 @@ void *gameMain(void *data)
 		}
 		*/
 		//flip and erase screen
-		PP_Resource screen = (PP_Resource)sdlStore(NULL,GET_SCREEN);
-		PPB_Graphics2D *g2DInterface = (PPB_Graphics2D *)sdlStore(NULL,GET_2D_INTERFACE);
-		struct PP_CompletionCallback callback = {nullCallback,NULL,0};
-		g2DInterface->Flush(screen,callback);
+		struct flushCallbackData *callbackFlushData = malloc(sizeof(struct flushCallbackData));
+		PP_Resource screen = *(PP_Resource *)sdlStore(NULL,GET_SCREEN);
+		*callbackFlushData = (struct flushCallbackData){screen,sem};
+		coreInterface->CallOnMainThread(0,PP_MakeCompletionCallback(flushCallback,callbackFlushData),0);
+		sem_wait(sem);
+		free(callbackFlushData);
+		callbackFlushData = 0;
 		//SDL_FillRect(screen,NULL,0);
 		
 		//For FPS limit
-		long delay = (1000 / FPS) - ((coreInterface->GetTimeTicks() * 1000) - ticks);
-		if(delay > 0) usleep(delay * 1000);
+		NACL_TIME(sem,callbackTimeData,coreInterface);
+		long delay = ((1000 / FPS) * 1000) - (callbackTimeData->ticks - ticks);
+		//DEBUG
+		//printf("DEBUG: gameMain() - value of delay is %ld\n",delay);
+		
+		if(delay > 0) usleep(delay);
 		//store frame time
-		unsigned int frameTime = (coreInterface->GetTimeTicks() * 1000) - ticks;
+		NACL_TIME(sem,callbackTimeData,coreInterface);
+		sem_destroy(sem);
+		unsigned int frameTime = callbackTimeData->ticks - ticks;
 		sdlStore((void *)&frameTime,SET_FRAMETIME);
 	}
 	return (void *)0;
