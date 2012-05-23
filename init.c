@@ -210,7 +210,7 @@ int initGame()
 	sem_init(sem,0,0);
 	struct inputCallbackData *callbackInputData = malloc(sizeof(struct inputCallbackData));
 	*callbackInputData = (struct inputCallbackData){instance,PP_INPUTEVENT_CLASS_MOUSE,sem};
-	coreInterface->CallOnMainThread(0,PP_MakeOptionalCompletionCallback(inputCallback,(void *)callbackInputData),0);
+	coreInterface->CallOnMainThread(0,PP_MakeCompletionCallback(inputCallback,(void *)callbackInputData),0);
 	sem_wait(sem);
 	free(callbackInputData);
 	callbackInputData = 0;
@@ -221,7 +221,7 @@ int initGame()
 	*camera = (struct PP_Rect){{0,0},{DEFAULT_WIDTH,DEFAULT_HEIGHT}};
 	struct g2DCallbackData *callbackg2DData = malloc(sizeof(struct g2DCallbackData));
 	*callbackg2DData = (struct g2DCallbackData){instance,&(struct PP_Size){camera->size.width,camera->size.height},PP_TRUE,sem};
-	coreInterface->CallOnMainThread(0,PP_MakeOptionalCompletionCallback(g2DCallback,(void *)callbackg2DData),0);
+	coreInterface->CallOnMainThread(0,PP_MakeCompletionCallback(g2DCallback,(void *)callbackg2DData),0);
 	sem_wait(sem);
 	free(callbackg2DData);
 	callbackg2DData = 0;
@@ -231,7 +231,7 @@ int initGame()
 	PP_Resource screen = *(PP_Resource *)sdlStore(NULL,GET_SCREEN);
 	struct bindCallbackData *callbackBindData = malloc(sizeof(struct bindCallbackData));
 	*callbackBindData = (struct bindCallbackData){instance,screen,sem};
-	coreInterface->CallOnMainThread(0,PP_MakeOptionalCompletionCallback(bindCallback,(void *)callbackBindData),0);
+	coreInterface->CallOnMainThread(0,PP_MakeCompletionCallback(bindCallback,(void *)callbackBindData),0);
 	sem_wait(sem);
 	free(callbackBindData);
 	callbackBindData = 0;
