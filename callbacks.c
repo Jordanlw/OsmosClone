@@ -6,6 +6,7 @@
 #include <ppapi/c/pp_resource.h>
 #include <ppapi/c/ppb_instance.h>
 #include <ppapi/c/ppb_core.h>
+#include <ppapi/c/ppb_image_data.h>
 
 #include "header/sdlstore.h"
 #include "header/main.h"
@@ -67,7 +68,39 @@ void timeCallback(void *data,int32_t result)
 {
 	PPB_Core *coreInterface = sdlStore(NULL,GET_CORE_INTERFACE);
 	struct timeCallbackData *readyData = (struct timeCallbackData *)data;
-	readyData->ticks = coreInterface->GetTimeTicks() * 1000;
+	readyData->ticks = coreInterface->GetTimeTicks();
+	sem_post(readyData->sem);
+	return;
+}
+
+void mapCallback(void *data,int32_t result)
+{
+	PPB_ImageData *imageInterface = (PPB_ImageData *)sdlStore(NULL,GET_IMAGE_INTERFACE);
+	struct mapCallbackData *readyData = (struct mapCallbackData *)data;
+	if(readyData->screen == 0)
+	{
+		puts("DEBUG: mapCallback() 1");
+		exit(1);
+	}
+	//DEBUG
+	printf("DEBUG: mapCallback() - screen = %d\n",readyData->screen);
+	
+	void *pixels = imageInterface->Map(readyData->screen);
+	if(pixels == 0)
+	{
+		puts("DEBUG: mapCallback() 2");
+		exit(1);
+	}
+	sdlStore(pixels,SET_PIXELS);
+	sem_post(readyData->sem);
+	return;
+}
+
+void flushCallback(void *data,int32_t result)
+{
+	PPB_Graphics2D *g2DInterface = (PPB_Graphics2D *)sdlStore(NULL,GET_2D_INTERFACE);
+	struct flushCallbackData *readyData = (struct flushCallbackData *)data;
+	g2DInterface->Flush(readyData->screen,PP_BlockUntilComplete());
 	sem_post(readyData->sem);
 	return;
 }
