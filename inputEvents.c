@@ -4,7 +4,7 @@
 #include <ppapi/c/pp_resource.h>
 #include <ppapi/c/ppb_input_event.h>
 
-#include "header/sdlstore.h"
+#include "header/store.h"
 #include "header/main.h"
 
 PP_Bool HandleInputEvent(PP_Instance instance,PP_Resource inputEvent)

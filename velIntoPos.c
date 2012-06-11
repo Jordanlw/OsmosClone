@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
 #include "header/velIntoPos.h"
-#include "header/sdlstore.h"
+#include "header/store.h"
 #include "header/objectStore.h"
 #include "header/object.h"
 #include "header/main.h"

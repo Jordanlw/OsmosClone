@@ -2,7 +2,7 @@
 #include <ppapi/c/pp_rect.h>
 
 #include "header/background.h"
-#include "header/sdlstore.h"
+#include "header/store.h"
 #include "header/blitCircle.h"
 #include "header/random.h"
 #include "header/object.h"

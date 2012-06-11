@@ -3,7 +3,7 @@
 
 #include "header/playermovement.h"
 #include "header/objectStore.h"
-#include "header/sdlstore.h"
+#include "header/store.h"
 #include "header/object.h"
 #include "header/vectorMath.h"
 #include "header/main.h"

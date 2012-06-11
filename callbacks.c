@@ -8,7 +8,7 @@
 #include <ppapi/c/ppb_core.h>
 #include <ppapi/c/ppb_image_data.h>
 
-#include "header/sdlstore.h"
+#include "header/store.h"
 #include "header/main.h"
 #include "header/callbacks.h"
 

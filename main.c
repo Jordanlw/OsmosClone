@@ -8,7 +8,7 @@
 
 #include "header/main.h"
 #include "header/init.h"
-#include "header/sdlstore.h"
+#include "header/store.h"
 #include "header/playermovement.h"
 #include "header/velIntoPos.h"
 #include "header/movementBoundCheck.h"

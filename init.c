@@ -15,7 +15,7 @@
 
 #include "header/init.h"
 #include "header/objectStore.h"
-#include "header/sdlstore.h"
+#include "header/store.h"
 #include "header/collisionDetection.h"
 #include "header/random.h"
 #include "header/background.h"
