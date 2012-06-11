@@ -6,7 +6,6 @@ CCFLAGS = -Wall -I $(NACL_SDK_ROOT)/toolchain/linux_x86_newlib/x86_64-nacl/usr/i
 -lm -lppapi
 
 SOURCES = $(wildcard *.c)
-SOURCES := $(filter-out varArray.c undoOverlap.c blit.c debug.c, $(SOURCES))
 OBJSDIR = objs
 OBJECTS = $(addprefix $(OBJSDIR)/, $(SOURCES:.c=.o))
 OUTEXE = xOsmosClone.nexe
