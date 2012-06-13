@@ -8,10 +8,7 @@
 #include "header/debug.h"
 
 void moveAiObjects()
-{
-	//DEBUG
-	//if(SDL_GetTicks() < 5000) return;
-	
+{	
 	struct store *stored = GET_STORE();
 	int objCount = *(int *)objectStore(NULL,GET_OBJ_COUNT);
 	object *obj = (object *)objectStore(NULL,GET_OBJECT);
