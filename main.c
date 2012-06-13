@@ -65,23 +65,20 @@ void *gameMain(void *data)
 	//DEBUG
 	puts("DEBUG: past initBackground().");
 	
-	//game loop
-	//int quit = 0;
 	//if set, run through game changing functions only when n is pressed
 	int pauseStep = 0;//INIT_PAUSE;
-	//Make available the GetTimeTicks function
-	PPB_Core *coreInterface = sdlStore(NULL,GET_CORE_INTERFACE);
+	
+	//For timeCallback()
+	PP_TimeTicks *ticks = malloc(sizeof(PP_TimeTicks));
+	sem_t *sem = malloc(sizeof(sem_t));
+	sem_init(sem,0,0);
+	//For use at end of file
+	PP_TimeTicks *endTicks = malloc(sizeof(PP_TimeTicks));
 	while(1/*!quit*/)
 	{
 		//For FPS limit
-		sem_t *sem = malloc(sizeof(sem_t));
-		sem_init(sem,0,0);
-		PPB_Core *coreInterface = (PPB_Core *)sdlStore(NULL,GET_CORE_INTERFACE);
-		struct timeCallbackData *callbackTimeData;
-		NACL_TIME(sem,callbackTimeData,coreInterface);
-		PP_TimeTicks ticks = callbackTimeData->ticks;
-		free(callbackTimeData);
-		callbackTimeData = 0;
+		CALL_ON_MAIN_THREAD(timeCallback,stored->coreInterface,struct timeCallbackData,ticks,sem);
+		sem_wait(sem);
 		//if set, allow a game changing frame to happen
 		int nextStep = 0;
 		//Store left arrow or right arrow pressed state
@@ -200,27 +197,17 @@ void *gameMain(void *data)
 		}
 		*/
 		//flip and erase screen
-		struct flushCallbackData *callbackFlushData = malloc(sizeof(struct flushCallbackData));
-		PP_Resource screen = *(PP_Resource *)sdlStore(NULL,GET_SCREEN);
-		*callbackFlushData = (struct flushCallbackData){screen,sem};
-		coreInterface->CallOnMainThread(0,PP_MakeCompletionCallback(flushCallback,callbackFlushData),0);
-		sem_wait(sem);
-		free(callbackFlushData);
-		callbackFlushData = 0;
-		//SDL_FillRect(screen,NULL,0);
+		CALL_ON_MAIN_THREAD(flushCallback,stored->coreInterface,struct flushCallbackData,stored->screen);
 		
 		//For FPS limit
-		NACL_TIME(sem,callbackTimeData,coreInterface);
-		long delay = ((1000 / FPS) * 1000) - (callbackTimeData->ticks - ticks);
-		//DEBUG
-		//printf("DEBUG: gameMain() - value of delay is %ld\n",delay);
-		
+		CALL_ON_MAIN_THREAD(timeCallback,stored->coreInterface,struct timeCallbackData,endTicks,sem);
+		sem_wait(sem);
+		long delay = ((1000 / FPS) * 1000) - (*endTicks - *ticks);
 		if(delay > 0) usleep(delay);
 		//store frame time
-		NACL_TIME(sem,callbackTimeData,coreInterface);
-		sem_destroy(sem);
-		unsigned int frameTime = callbackTimeData->ticks - ticks;
-		sdlStore((void *)&frameTime,SET_FRAMETIME);
+		CALL_ON_MAIN_THREAD(timeCallback,stored->coreInterface,struct timeCallbackData,endTicks,sem);
+		sem_wait(sem);
+		stored->frameTime = *endTicks - *ticks;
 	}
 	return (void *)0;
 }

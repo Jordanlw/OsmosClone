@@ -199,54 +199,21 @@ int initGame()
 	//DEBUG
 	puts("DEBUG: initGame() - checkpoint 1");
 	
-	PP_Instance instance = *(PP_Instance *)sdlStore(NULL,GET_NACL_INSTANCE);
-	PPB_Graphics2D *g2DInterface = (PPB_Graphics2D *)sdlStore(NULL,GET_2D_INTERFACE);
-	PPB_Instance *instanceInterface = (PPB_Instance *)sdlStore(NULL,GET_INSTANCE_INTERFACE);
-	PPB_ImageData *imageInterface = (PPB_ImageData *)sdlStore(NULL,GET_IMAGE_INTERFACE);
-	PPB_InputEvent *inputInterface = (PPB_InputEvent *)sdlStore(NULL,GET_INPUT_INTERFACE);
-	PPB_Core *coreInterface = (PPB_Core *)sdlStore(NULL,GET_CORE_INTERFACE);
-	//DEBUG
-	puts("DEBUG: initGame() - checkpoint 2");
-	
-	sem_t *sem = malloc(sizeof(sem_t));
-	sem_init(sem,0,0);
-	struct inputCallbackData *callbackInputData = malloc(sizeof(struct inputCallbackData));
-	*callbackInputData = (struct inputCallbackData){instance,PP_INPUTEVENT_CLASS_MOUSE,sem};
-	coreInterface->CallOnMainThread(0,PP_MakeCompletionCallback(inputCallback,(void *)callbackInputData),0);
-	sem_wait(sem);
-	free(callbackInputData);
-	callbackInputData = 0;
+	CALL_ON_MAIN_THREAD(inputCallback,stored->coreInterface,struct inputCallbackData,stored->instance,PP_INPUTEVENT_CLASS_MOUSE);
 	//DEBUG
 	puts("DEBUG: initGame() - checkpoint 3");
-	
-	struct PP_Rect *camera = (struct PP_Rect *)malloc(sizeof(struct PP_Rect));
-	*camera = (struct PP_Rect){{0,0},{DEFAULT_WIDTH,DEFAULT_HEIGHT}};
-	struct g2DCallbackData *callbackg2DData = malloc(sizeof(struct g2DCallbackData));
-	*callbackg2DData = (struct g2DCallbackData){instance,&(struct PP_Size){camera->size.width,camera->size.height},PP_TRUE,sem};
-	coreInterface->CallOnMainThread(0,PP_MakeCompletionCallback(g2DCallback,(void *)callbackg2DData),0);
-	sem_wait(sem);
-	free(callbackg2DData);
-	callbackg2DData = 0;
+
+	CALL_ON_MAIN_THREAD(g2DCallback,stored->coreInterface,struct g2DCallbackData,stored->instance,DEFAULT_WIDTH,DEFAULT_HEIGHT,PP_TRUE);
 	//DEBUG
 	puts("DEBUG: initGame() - checkpoint 4");
 	
-	PP_Resource screen = *(PP_Resource *)sdlStore(NULL,GET_SCREEN);
-	struct bindCallbackData *callbackBindData = malloc(sizeof(struct bindCallbackData));
-	*callbackBindData = (struct bindCallbackData){instance,screen,sem};
-	coreInterface->CallOnMainThread(0,PP_MakeCompletionCallback(bindCallback,(void *)callbackBindData),0);
-	sem_wait(sem);
-	free(callbackBindData);
-	callbackBindData = 0;
+	CALL_ON_MAIN_THREAD(bindCallback,stored->coreInterface,struct bindCallbackData,stored->instance,stored->screen);
 	//DEBUG
 	puts("DEBUG: initGame() - checkpoint 5");
 	
-	struct mapCallbackData *callbackMapData = malloc(sizeof(struct mapCallbackData));
-	*callbackMapData = (struct mapCallbackData){screen,sem};
-	coreInterface->CallOnMainThread(0,PP_MakeCompletionCallback(mapCallback,(void *)callbackMapData),0);
-	sem_wait(sem);
-	sem_destroy(sem);
-	free(callbackMapData);
-	callbackMapData = 0;
+	CALL_ON_MAIN_THREAD(imageCallback,stored->coreInterface,struct imageCallbackData,stored->instance,(struct PP_Size){DEFAULT_WIDTH,DEFAULT_HEIGHT},0);
+	
+	CALL_ON_MAIN_THREAD(mapCallback,stored->coreInterface,struct mapCallbackData,stored->image);
 	//DEBUG
 	puts("DEBUG: initGame() - checkpoint 6");
 	

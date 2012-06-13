@@ -1,51 +1,51 @@
 #include <semaphore.h>
 #include <ppapi/c/pp_instance.h>
 #include <ppapi/c/pp_bool.h>
+#include <ppapi/c/pp_size.h>
 
-#define NACL_TIME(sem,data,coreInterface) \
-	data = malloc(sizeof(struct timeCallbackData)); \
-	*data = (struct timeCallbackData){0,sem}; \
-	coreInterface->CallOnMainThread(0,PP_MakeCompletionCallback(timeCallback,(void *)data),0); \
-	sem_wait(sem);
-		
+#define CALL_ON_MAIN_THREAD(FUNC,CORE,TYPE,...) (CORE)->CallOnMainThread(0,PP_MakeCompletionCallback((FUNC),(void *)&(TYPE){__VA_ARGS__}),0)
+
 struct inputCallbackData
 {
 	PP_Instance instance;
 	uint32_t flags;
-	sem_t *sem;
 };
 
 struct g2DCallbackData
 {
 	PP_Instance instance;
-	struct PP_Size *size;
+	int32_t width;
+	int32_t height;
 	PP_Bool flag;
-	sem_t *sem;
 };
 
 struct bindCallbackData
 {
 	PP_Instance instance;
 	PP_Resource screen;
-	sem_t *sem;
 };
 
 struct timeCallbackData
 {
-	PP_TimeTicks ticks;
+	PP_TimeTicks *ticks;
 	sem_t *sem;
 };
 
 struct mapCallbackData
 {
-	PP_Resource screen;
-	sem_t *sem;
+	PP_Resource image;
 };
 
 struct flushCallbackData
 {
 	PP_Resource screen;
-	sem_t *sem;
+};
+
+struct imageCallbackData
+{
+	PP_Instance instance;
+	struct PP_Size size;
+	PP_Bool flag;
 };
 
 void inputCallback(void *,int32_t);
@@ -54,3 +54,4 @@ void bindCallback(void *,int32_t);
 void timeCallback(void *,int32_t);
 void flushCallback(void *,int32_t);
 void mapCallback(void *,int32_t);
+void imageCallback(void *,int32_t);
