@@ -46,7 +46,8 @@ void *gameMain(void *data)
 	*/
 	//used for multiplayer and also ease of passing data
 	int player = 0;
-	sdlStore((void *)&player,GET_PLAYER);
+	struct store *stored = GET_STORE();
+	player = stored->player;
 	if(initObjects())
 	{
 		puts("DEBUG: main() 2");

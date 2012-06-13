@@ -14,9 +14,9 @@
 
 void inputCallback(void *data,int32_t result)
 {
-	PPB_InputEvent *inputInterface = (PPB_InputEvent *)sdlStore(NULL,GET_INPUT_INTERFACE);
+	struct store *stored = GET_STORE();
 	struct inputCallbackData *readyData = (struct inputCallbackData *)data;
-	int32_t returnValue = inputInterface->RequestInputEvents(readyData->instance,readyData->flags);
+	int32_t returnValue = stored->inputInterface->RequestInputEvents(readyData->instance,readyData->flags);
 	if(returnValue == PP_ERROR_BADARGUMENT)
 	{
 		puts("DEBUG: inputCallback() 1");
@@ -27,80 +27,83 @@ void inputCallback(void *data,int32_t result)
 		puts("DEBUG: inputCallback() 2");
 		exit(1);
 	}
-	sem_post(readyData->sem);
 	return;
 }
 
 void g2DCallback(void *data,int32_t result)
 {
-	PPB_Graphics2D *g2DInterface = (PPB_Graphics2D *)sdlStore(NULL,GET_2D_INTERFACE);
+	struct store *stored = GET_STORE();
 	struct g2DCallbackData *readyData = (struct g2DCallbackData *)data;
-	PP_Resource screen = g2DInterface->Create(readyData->instance,readyData->size,readyData->flag);
+	stored->screen = stored->g2DInterface->Create(readyData->instance,&(struct PP_Size){readyData->width,readyData->height},readyData->flag);
 	//DEBUG
-	printf("DEBUG: g2DCallback() - instance = %d, size[w = %d, h = %d], flag = %d\n", \
-		readyData->instance,readyData->size->width,readyData->size->height,readyData->flag);
-	printf("DEBUG: g2DCallback() - screen = %d\n",screen);
+	printf("DEBUG: g2DCallback() - screen = %d\n",stored->screen);
 	
-	if(screen == 0)
+	if(stored->screen == 0)
 	{
 		puts("DEBUG: g2DCallback() 1");
 		exit(1);
 	}
-	sdlStore((void *)&screen,SET_SCREEN);
-	sem_post(readyData->sem);
 	return;
 }
 
 void bindCallback(void *data,int32_t result)
 {
-	PPB_Instance *instanceInterface = (PPB_Instance *)sdlStore(NULL,GET_INSTANCE_INTERFACE);
+	struct store *stored = GET_STORE();
 	struct bindCallbackData *readyData = (struct bindCallbackData *)data;
-	if(instanceInterface->BindGraphics(readyData->instance,readyData->screen) == PP_FALSE)
+	if(stored->g2DInterface->IsGraphics2D(readyData->screen) != PP_TRUE)
+	{
+		puts("DEBUG: bindCallback() 2");
+		exit(1);
+	}
+	if(stored->instanceInterface->BindGraphics(readyData->instance,readyData->screen) == PP_FALSE)
 	{
 		puts("DEBUG: bindCallback() 1");
 		exit(1);
 	}
-	sem_post(readyData->sem);
 	return;
 }
 
 void timeCallback(void *data,int32_t result)
 {
-	PPB_Core *coreInterface = sdlStore(NULL,GET_CORE_INTERFACE);
 	struct timeCallbackData *readyData = (struct timeCallbackData *)data;
-	readyData->ticks = coreInterface->GetTimeTicks();
+	struct store *stored = GET_STORE();
+	*(readyData->ticks) = stored->coreInterface->GetTimeTicks();
 	sem_post(readyData->sem);
 	return;
 }
 
 void mapCallback(void *data,int32_t result)
 {
-	PPB_ImageData *imageInterface = (PPB_ImageData *)sdlStore(NULL,GET_IMAGE_INTERFACE);
+	struct store *stored = GET_STORE();
 	struct mapCallbackData *readyData = (struct mapCallbackData *)data;
-	if(readyData->screen == 0)
+	//DEBUG
+	printf("DEBUG: mapCallback() - image = %d\n",readyData->image);
+	if(stored->imageInterface->IsImageData(readyData->image) != PP_TRUE)
 	{
 		puts("DEBUG: mapCallback() 1");
 		exit(1);
 	}
-	//DEBUG
-	printf("DEBUG: mapCallback() - screen = %d\n",readyData->screen);
-	
-	void *pixels = imageInterface->Map(readyData->screen);
-	if(pixels == 0)
+	stored->pixels = stored->imageInterface->Map(readyData->image);
+	if(stored->pixels == 0)
 	{
 		puts("DEBUG: mapCallback() 2");
 		exit(1);
 	}
-	sdlStore(pixels,SET_PIXELS);
-	sem_post(readyData->sem);
 	return;
 }
 
 void flushCallback(void *data,int32_t result)
 {
-	PPB_Graphics2D *g2DInterface = (PPB_Graphics2D *)sdlStore(NULL,GET_2D_INTERFACE);
+	struct store *stored = GET_STORE();
 	struct flushCallbackData *readyData = (struct flushCallbackData *)data;
-	g2DInterface->Flush(readyData->screen,PP_BlockUntilComplete());
-	sem_post(readyData->sem);
+	stored->g2DInterface->Flush(readyData->screen,PP_BlockUntilComplete());
+	return;
+}
+
+void imageCallback(void *data,int32_t result)
+{
+	struct store *stored = GET_STORE();
+	struct imageCallbackData *readyData = (struct imageCallbackData *)data;
+	stored->image = stored->imageInterface->Create(readyData->instance,stored->imageInterface->GetNativeImageDataFormat(),&(readyData->size),readyData->flag);
 	return;
 }

@@ -12,14 +12,14 @@ void moveAiObjects()
 	//DEBUG
 	//if(SDL_GetTicks() < 5000) return;
 	
+	struct store *stored = GET_STORE();
 	int objCount = *(int *)objectStore(NULL,GET_OBJ_COUNT);
 	object *obj = (object *)objectStore(NULL,GET_OBJECT);
-	int player = *(int *)sdlStore(NULL,GET_PLAYER);
 	//Loop through predators objects
 	int i;
 	for(i = 0;i < objCount;i++)
 	{
-		if(i == player || obj[i].radius <= 0) continue;
+		if(i == stored->player || obj[i].radius <= 0) continue;
 		//Loop for objects to find target
 		int selectedObj = -1, imPred = -1;
 		double prevDist = -1;

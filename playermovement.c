@@ -35,17 +35,16 @@ void movePlayerFromData(int player)
 	int mouseDown = movePlayerStore(0,GET_PLAYER_STORE_MOUSE_DOWN);
 	if(mouseDown)
 	{
+		struct store *stored = GET_STORE();
 		//retrieve data
 		object *obj = (object *)objectStore(NULL,GET_OBJECT);	
 		//retrieve mouse position
-		struct PP_Point *mousePosInt = (struct PP_Point *)sdlStore(NULL,GET_MOUSE_POS);
 		vector mousePos;
-		mousePos.x = (double)mousePosInt->x;
-		mousePos.y = (double)mousePosInt->y;
+		mousePos.x = stored->mousePos.x;
+		mousePos.y = stored->mousePos.y;
 		//convert mousepos from relative to absolute
-		struct PP_Rect *camera = (struct PP_Rect *)sdlStore(NULL,GET_CAMERA);
-		mousePos.x += (double)camera->point.x;
-		mousePos.y += (double)camera->point.y;
+		mousePos.x += stored->camera.point.x;
+		mousePos.y += stored->camera.point.y;
 		//Convert object data to vector
 		vector objPos;
 		objPos.x = obj[player].pos.x;
@@ -68,56 +67,54 @@ void movePlayerFromData(int player)
 void moveCamera()
 {
 	//Get data
-	struct PP_Rect *camera = (struct PP_Rect *)sdlStore(NULL,GET_CAMERA);
+	struct store *stored = GET_STORE();
 	object *objects = (object *)objectStore(NULL,GET_OBJECT);
-	int selObj = *(int *)sdlStore(NULL,GET_SELECTED_OBJECT);
 	//Set camera position to center of player object
-	camera->point.x = (int)objects[selObj].pos.x - (camera->size.width / 2);
-	camera->point.y = (int)objects[selObj].pos.y - (camera->size.height / 2);
+	stored->camera.point.x = (int)objects[stored->selObj].pos.x - (stored->camera.size.width / 2);
+	stored->camera.point.y = (int)objects[stored->selObj].pos.y - (stored->camera.size.height / 2);
 	//Adjust camera position so it isn't displaying anything outside of bounds
-	if(camera->point.x < 0) camera->point.x = 0;
-	if(camera->point.y < 0) camera->point.y = 0;
-	if(camera->point.x + camera->size.width > LEVEL_WIDTH) camera->point.x = LEVEL_WIDTH - camera->size.width;
-	if(camera->point.y + camera->size.height > LEVEL_HEIGHT) camera->point.y = LEVEL_HEIGHT - camera->size.height;
+	if(stored->camera.point.x < 0) stored->camera.point.x = 0;
+	if(stored->camera.point.y < 0) stored->camera.point.y = 0;
+	if(stored->camera.point.x + stored->camera.size.width > LEVEL_WIDTH) stored->camera.point.x = LEVEL_WIDTH - stored->camera.size.width;
+	if(stored->camera.point.y + stored->camera.size.height > LEVEL_HEIGHT) stored->camera.point.y = LEVEL_HEIGHT - stored->camera.size.height;
 }
 
 void updateSelectedObj(int keyboard)
 {
+	struct store *stored = GET_STORE();
 	object *obj = (object *)objectStore(NULL,GET_OBJECT);
-	int player = *(int *)sdlStore(NULL,GET_PLAYER);
-	if(obj[player].radius != 0)
+	if(obj[stored->player].radius != 0)
 	{
 		return;
 	}
-	int selObj = *(int *)sdlStore(NULL,GET_SELECTED_OBJECT);
 	int down = 0;
 	int up = 0;
 	switch(keyboard)
 	{
 		case KEYBOARD_LEFT:
-			selObj--;
+			stored->selObj--;
 			down = 1;
 			break;
 		case KEYBOARD_RIGHT:
-			selObj++;
+			stored->selObj++;
 			up = 1;
 			break;
 	}
 	int objCount = *(int *)objectStore(NULL,GET_OBJ_COUNT);
-	if(selObj >= objCount)
+	if(stored->selObj >= objCount)
 	{
-		selObj = 0;
+		stored->selObj = 0;
 	}
-	if(selObj < 0)
+	if(stored->selObj < 0)
 	{
-		selObj = objCount - 1;
+		stored->selObj = objCount - 1;
 	}
-	if(obj[selObj].radius == 0)
+	if(obj[stored->selObj].radius == 0)
 	{
 		if(up)
 		{
 			int i;
-			for(i = selObj;;i++)
+			for(i = stored->selObj;;i++)
 			{
 				if(i >= objCount)
 				{
@@ -125,7 +122,7 @@ void updateSelectedObj(int keyboard)
 				}	
 				if(obj[i].radius > 0)
 				{
-					selObj = i;
+					stored->selObj = i;
 					break;
 				}
 			}
@@ -133,7 +130,7 @@ void updateSelectedObj(int keyboard)
 		if(down)
 		{
 			int i;
-			for(i = selObj;;i--)
+			for(i = stored->selObj;;i--)
 			{
 				if(i < 0)
 				{
@@ -141,14 +138,10 @@ void updateSelectedObj(int keyboard)
 				}
 				if(obj[i].radius > 0)
 				{
-					selObj = i;
+					stored->selObj = i;
 					break;
 				}
 			}
 		}
 	}
-	//DEBUG
-	//printf("selObj: %d selObj-radius: %lu\n\n",selObj,obj[selObj].radius);
-	
-	sdlStore((void *)&selObj,SET_SELECTED_OBJECT);
 }

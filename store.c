@@ -7,10 +7,10 @@
 
 struct store *storeFunc(struct store *storeInput)
 {
-	static struct store *store = 0;
+	static struct store *stored = 0;
 	if(storeInput != 0)
 	{
-		store = storeInput;
+		stored = storeInput;
 	}
-	return store;
+	return stored;
 }

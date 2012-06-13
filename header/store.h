@@ -17,13 +17,14 @@
 struct store
 {
 	PP_Resource screen;
+	PP_Resource image;
 	struct PP_Rect camera;
 	int player;
 	double frameTime;
 	struct bgData *background;
 	int *bgSizes;
 	int selObj;
-	PP_Instance naclInstance;
+	PP_Instance instance;
 	PPB_Core *coreInterface;
 	PPB_Graphics2D *g2DInterface;
 	PPB_Instance *instanceInterface;

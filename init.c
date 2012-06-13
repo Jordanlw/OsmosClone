@@ -41,7 +41,8 @@ int initBackground()
 		puts("DEBUG: initBackground() 1");
 		return 1;
 	}
-	sdlStore((void *)initStorage,SET_BACKGROUND);
+	struct store *stored = GET_STORE();
+	stored->background = initStorage;
 	int *bgSizes = (int *)malloc(sizeof(int) * BG_AMOUNT);
 	if(bgSizes == 0)
 	{
@@ -51,7 +52,7 @@ int initBackground()
 	bgSizes[0] = 3;
 	bgSizes[1] = 5;
 	bgSizes[2] = 7;
-	sdlStore((void *)bgSizes,SET_BG_SIZE);
+	stored->bgSizes = bgSizes;
 	
 	int i;
 	for(i = 1;i <= BG_AMOUNT;i++)
@@ -76,16 +77,16 @@ int initBackground()
 
 void initObjectPosAndSize()
 {
+	struct store *stored = GET_STORE();
 	object *obj = (object *)objectStore(NULL,GET_OBJECT);
-	int player = *(int *)sdlStore(NULL,GET_PLAYER);
 	int objCount = *(int *)objectStore(NULL,GET_OBJ_COUNT);
 	int i;
-	obj[player].radius = STARTING_PLAYER_OBJECT_SIZE;
-	obj[player].pos = (vector){LEVEL_WIDTH / 2,LEVEL_HEIGHT / 2};
+	obj[stored->player].radius = STARTING_PLAYER_OBJECT_SIZE;
+	obj[stored->player].pos = (vector){LEVEL_WIDTH / 2,LEVEL_HEIGHT / 2};
 	//Object being moved
 	for(i = 0;i < objCount;i++)
 	{
-		if(i == player) continue;
+		if(i == stored->player) continue;
 		obj[i].radius = randomResult(MAX_OBJECT_SIZE,MIN_OBJECT_SIZE);
 		unsigned int run = 0, found = 0;
 		vector newPos;
@@ -190,7 +191,8 @@ int initGame()
 	//DEBUG
 	puts("DEBUG: initGame() - entered");
 	
-	while(sdlStore(NULL,GET_PAST_DID_CREATE) == 0)
+	struct store *stored = GET_STORE();
+	while(stored->didCreate == 0)
 	{
 		usleep(1);
 	}
@@ -248,12 +250,8 @@ int initGame()
 	//DEBUG
 	puts("DEBUG: initGame() - checkpoint 6");
 	
-	struct PP_Point *mousePos = malloc(sizeof(struct PP_Point));
-	
-	sdlStore((void *)mousePos,SET_MOUSE_POS);
-	int player = *(int *)sdlStore(NULL,GET_PLAYER);
-	sdlStore((void *)&player,SET_SELECTED_OBJECT);
-	sdlStore(camera,SET_CAMERA);
+	stored->selObj = stored->player;
+	stored->camera = (struct PP_Rect){{0,0},{DEFAULT_WIDTH,DEFAULT_HEIGHT}};
 	//DEBUG
 	puts("DEBUG: initGame() - left");
 	

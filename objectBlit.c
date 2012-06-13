@@ -14,40 +14,28 @@
 
 int blitObject()
 {
+	struct store *stored = GET_STORE();
 	object *obj = (object *)objectStore(NULL,GET_OBJECT);
 	if(obj == 0)
 	{
 		puts("DEBUG: blitObject() 2");
 		return 1;
 	}
-	struct PP_Rect *camera = (struct PP_Rect *)sdlStore(NULL,GET_CAMERA);
-	if(camera == 0)
-	{
-		puts("DEBUG: blitObject() 3");
-		return 1;
-	}
-	PP_Resource screen = *(PP_Resource *)sdlStore(NULL,GET_SCREEN);
-	if(screen == 0)
-	{
-		puts("DEBUG: blitObject() 4");
-		return 1;
-	}
-	int player = *(int *)sdlStore(NULL,GET_PLAYER);
 	int objCount = *(int *)objectStore(NULL,GET_OBJ_COUNT);
 	int i;
 	for(i = 0;i < objCount;i++)
 	{
 		if(obj[i].radius <= 0) continue;
 		struct colorRect color = {179,0,21};
-		if(i == player)
+		if(i == stored->player)
 		{
 			color = (struct colorRect){179,95,71};
 	 	}
-		if(obj[i].radius < obj[player].radius)
+		if(obj[i].radius < obj[stored->player].radius)
 		{
 			color = (struct colorRect){255,135,102};
 		}
-		if(blitCircle(obj[i].radius,(struct PP_Point){obj[i].pos.x - camera->point.x,obj[i].pos.y - camera->point.y},color))
+		if(blitCircle(obj[i].radius,(struct PP_Point){obj[i].pos.x - stored->camera.point.x,obj[i].pos.y - stored->camera.point.y},color))
 		{
 			puts("DEBUG: blitObject() 1");
 			return 1;

@@ -16,6 +16,7 @@
 #include <ppapi/c/ppb_input_event.h>
 
 #include "header/main.h"
+#include "header/store.h"
 
 void didChangeFocus(PP_Instance instance, PP_Bool hasFocus)
 {
@@ -31,8 +32,15 @@ PP_Bool didCreate(PP_Instance instance, uint32_t argc, const char **argn, const 
 {
 	//DEBUG
 	printf("DEBUG: didCreate() - value of instance is %d\n",instance);
-	sdlStore((void *)PP_TRUE,SET_PAST_DID_CREATE);
-	sdlStore((void *)&instance,SET_NACL_INSTANCE);
+	struct store *stored = malloc(sizeof(struct store));
+	if(stored == 0)
+	{
+		puts("DEBUG: didCreate() - 1");
+		exit(1);
+	}
+	storeFunc(stored);
+	stored->didCreate = 1;
+	stored->instance = instance;
 	return PP_TRUE;
 }
 
@@ -66,26 +74,32 @@ const void *PPP_GetInterface(const char *interfaceName)
 int32_t PPP_InitializeModule(PP_Module moduleId, PPB_GetInterface getBrowser)
 {
 	//DEBUG
+	sleep(30);
+	
+	//DEBUG
 	puts("DEBUG: entered PPP_InitializeModule().");
-	//sleep(15);
 	
-	PPB_Core *coreInterface = (PPB_Core *)getBrowser(PPB_CORE_INTERFACE);
-	sdlStore((void *)coreInterface,SET_CORE_INTERFACE);
+	struct store *stored = GET_STORE();
+	//DEBUG
+	puts("DEBUG: PPP_InitializeModule() - checkpoint 1");
 	
-	PPB_Graphics2D *g2DInterface = (PPB_Graphics2D *)getBrowser(PPB_GRAPHICS_2D_INTERFACE);
-	sdlStore((void *)g2DInterface,SET_2D_INTERFACE);
+	stored->coreInterface = (PPB_Core *)getBrowser(PPB_CORE_INTERFACE);
+	//DEBUG
+	puts("DEBUG: PPP_InitializeModule() - checkpoint 2");
 	
-	PPB_Instance *instanceInterface = (PPB_Instance *)getBrowser(PPB_INSTANCE_INTERFACE);
-	sdlStore((void *)instanceInterface,SET_INSTANCE_INTERFACE);
+	stored->g2DInterface = (PPB_Graphics2D *)getBrowser(PPB_GRAPHICS_2D_INTERFACE);
 	
-	PPB_ImageData *imageInterface = (PPB_ImageData *)getBrowser(PPB_IMAGEDATA_INTERFACE);
-	sdlStore((void *)imageInterface,SET_IMAGE_INTERFACE);
+	stored->instanceInterface = (PPB_Instance *)getBrowser(PPB_INSTANCE_INTERFACE);
+	//DEBUG
+	puts("DEBUG: PPP_InitializeModule() - checkpoint 3");
 	
-	PPB_InputEvent *inputInterface = (PPB_InputEvent *)getBrowser(PPB_INPUT_EVENT_INTERFACE);
-	sdlStore((void *)inputInterface,SET_INPUT_INTERFACE);
+	stored->imageInterface = (PPB_ImageData *)getBrowser(PPB_IMAGEDATA_INTERFACE);
 	
-	PPB_MouseInputEvent *mouseInterface = (PPB_MouseInputEvent *)getBrowser(PPB_MOUSE_INPUT_EVENT_INTERFACE);
-	sdlStore((void *)mouseInterface,SET_MOUSE_INTERFACE);
+	stored->inputInterface = (PPB_InputEvent *)getBrowser(PPB_INPUT_EVENT_INTERFACE);
+	
+	stored->mouseInterface = (PPB_MouseInputEvent *)getBrowser(PPB_MOUSE_INPUT_EVENT_INTERFACE);
+	//DEBUG
+	puts("DEBUG: PPP_InitializeModule() - checkpoint 4");
 	
 	pthread_t *thread = (pthread_t *)malloc(sizeof(pthread_t));
 	pthread_create(thread,NULL,gameMain,NULL);
