@@ -199,19 +199,19 @@ int initGame()
 	//DEBUG
 	puts("DEBUG: initGame() - checkpoint 1");
 	
-	CALL_ON_MAIN_THREAD(inputCallback,stored->coreInterface,struct inputCallbackData,stored->instance,PP_INPUTEVENT_CLASS_MOUSE);
+	CALL_ON_MAIN_THREAD(inputCallback,stored->coreInterface,struct inputCallbackData,PP_INPUTEVENT_CLASS_MOUSE);
 	//DEBUG
 	puts("DEBUG: initGame() - checkpoint 3");
 
-	CALL_ON_MAIN_THREAD(g2DCallback,stored->coreInterface,struct g2DCallbackData,stored->instance,DEFAULT_WIDTH,DEFAULT_HEIGHT,PP_TRUE);
+	CALL_ON_MAIN_THREAD(g2DCallback,stored->coreInterface,struct g2DCallbackData,DEFAULT_WIDTH,DEFAULT_HEIGHT,PP_TRUE);
 	//DEBUG
 	puts("DEBUG: initGame() - checkpoint 4");
 	
-	CALL_ON_MAIN_THREAD(bindCallback,stored->coreInterface,struct bindCallbackData,stored->instance,stored->screen);
+	CALL_ON_MAIN_THREAD(bindCallback,stored->coreInterface,struct bindCallbackData,stored->screen);
 	//DEBUG
 	puts("DEBUG: initGame() - checkpoint 5");
 	
-	CALL_ON_MAIN_THREAD(imageCallback,stored->coreInterface,struct imageCallbackData,stored->instance,(struct PP_Size){DEFAULT_WIDTH,DEFAULT_HEIGHT},0);
+	CALL_ON_MAIN_THREAD(imageCallback,stored->coreInterface,struct imageCallbackData,(struct PP_Size){DEFAULT_WIDTH,DEFAULT_HEIGHT},0);
 	
 	CALL_ON_MAIN_THREAD(mapCallback,stored->coreInterface,struct mapCallbackData,stored->image);
 	//DEBUG
