@@ -7,13 +7,11 @@
 
 struct inputCallbackData
 {
-	PP_Instance instance;
 	uint32_t flags;
 };
 
 struct g2DCallbackData
 {
-	PP_Instance instance;
 	int32_t width;
 	int32_t height;
 	PP_Bool flag;
@@ -21,7 +19,6 @@ struct g2DCallbackData
 
 struct bindCallbackData
 {
-	PP_Instance instance;
 	PP_Resource screen;
 };
 
@@ -43,7 +40,6 @@ struct flushCallbackData
 
 struct imageCallbackData
 {
-	PP_Instance instance;
 	struct PP_Size size;
 	PP_Bool flag;
 };

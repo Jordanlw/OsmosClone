@@ -16,7 +16,12 @@ void inputCallback(void *data,int32_t result)
 {
 	struct store *stored = GET_STORE();
 	struct inputCallbackData *readyData = (struct inputCallbackData *)data;
-	int32_t returnValue = stored->inputInterface->RequestInputEvents(readyData->instance,readyData->flags);
+	if(stored->instance == 0)
+	{
+		puts("DEBUG: inputCallback() 3");
+		exit(1);
+	}
+	int32_t returnValue = stored->inputInterface->RequestInputEvents(stored->instance,readyData->flags);
 	if(returnValue == PP_ERROR_BADARGUMENT)
 	{
 		puts("DEBUG: inputCallback() 1");
@@ -34,7 +39,12 @@ void g2DCallback(void *data,int32_t result)
 {
 	struct store *stored = GET_STORE();
 	struct g2DCallbackData *readyData = (struct g2DCallbackData *)data;
-	stored->screen = stored->g2DInterface->Create(readyData->instance,&(struct PP_Size){readyData->width,readyData->height},readyData->flag);
+	if(stored->instance == 0)
+	{
+		puts("DEBUG: g2DCallback() 2");
+		exit(1);
+	}
+	stored->screen = stored->g2DInterface->Create(stored->instance,&(struct PP_Size){readyData->width,readyData->height},readyData->flag);
 	//DEBUG
 	printf("DEBUG: g2DCallback() - screen = %d\n",stored->screen);
 	
@@ -55,7 +65,12 @@ void bindCallback(void *data,int32_t result)
 		puts("DEBUG: bindCallback() 2");
 		exit(1);
 	}
-	if(stored->instanceInterface->BindGraphics(readyData->instance,readyData->screen) == PP_FALSE)
+	if(stored->instance == 0)
+	{
+		puts("DEBUG: bindCallback() 3");
+		exit(1);
+	}
+	if(stored->instanceInterface->BindGraphics(stored->instance,readyData->screen) == PP_FALSE)
 	{
 		puts("DEBUG: bindCallback() 1");
 		exit(1);
@@ -103,7 +118,12 @@ void flushCallback(void *data,int32_t result)
 void imageCallback(void *data,int32_t result)
 {
 	struct store *stored = GET_STORE();
+	if(stored->instance == 0)
+	{
+		puts("DEBUG: imageCallback() 1");
+		exit(1);
+	}
 	struct imageCallbackData *readyData = (struct imageCallbackData *)data;
-	stored->image = stored->imageInterface->Create(readyData->instance,stored->imageInterface->GetNativeImageDataFormat(),&(readyData->size),readyData->flag);
+	stored->image = stored->imageInterface->Create(stored->instance,stored->imageInterface->GetNativeImageDataFormat(),&(readyData->size),readyData->flag);
 	return;
 }
