@@ -25,4 +25,4 @@ $(OBJSDIR)/%.o : %.c
 .PHONY : clean
 
 clean :
-	-rm $(OUTEXE) $(OBJECTS) $(addprefix $(DEPSDIR)/, $(SOURCES:.c=.d))
+	-rm $(OUTEXE) $(OBJECTS) $(DEPS) $(addsuffix .tmp, $(DEPS))
