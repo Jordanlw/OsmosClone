@@ -32,13 +32,7 @@ PP_Bool didCreate(PP_Instance instance, uint32_t argc, const char **argn, const 
 {
 	//DEBUG
 	printf("DEBUG: didCreate() - value of instance is %d\n",instance);
-	struct store *stored = malloc(sizeof(struct store));
-	if(stored == 0)
-	{
-		puts("DEBUG: didCreate() - 1");
-		exit(1);
-	}
-	storeFunc(stored);
+	struct store *stored = GET_STORE();
 	stored->didCreate = 1;
 	stored->instance = instance;
 	return PP_TRUE;
@@ -74,17 +68,22 @@ const void *PPP_GetInterface(const char *interfaceName)
 int32_t PPP_InitializeModule(PP_Module moduleId, PPB_GetInterface getBrowser)
 {
 	//DEBUG
-	sleep(30);
-	
-	//DEBUG
 	puts("DEBUG: entered PPP_InitializeModule().");
-	
-	struct store *stored = GET_STORE();
+
+	struct store *stored = malloc(sizeof(struct store));
+	if(stored == 0)
+	{
+		puts("DEBUG: PPP_InitializeModule() - 1");
+		exit(1);
+	}
+	storeFunc(stored);
 	//DEBUG
 	puts("DEBUG: PPP_InitializeModule() - checkpoint 1");
+	printf("DEBUG: PPP_InitializeModule() - value of stored = %p\n",stored);
 	
 	stored->coreInterface = (PPB_Core *)getBrowser(PPB_CORE_INTERFACE);
 	//DEBUG
+	printf("DEBUG: PPP_InitializeModule() - value of stored->coreInterface = %p\n",stored->coreInterface);
 	puts("DEBUG: PPP_InitializeModule() - checkpoint 2");
 	
 	stored->g2DInterface = (PPB_Graphics2D *)getBrowser(PPB_GRAPHICS_2D_INTERFACE);
