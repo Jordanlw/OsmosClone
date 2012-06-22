@@ -4,12 +4,12 @@
 #include "header/collisionDetection.h"
 #include "header/vectorMath.h"
 
-inline unsigned int isCollidedObject(object *obj,unsigned int a,unsigned int b)
+unsigned int isCollidedObject(object *obj,unsigned int a,unsigned int b)
 {
 	return isCollidedVectorAndRadius(obj[a].pos,obj[b].pos,obj[a].radius + obj[b].radius);
 }
 
-inline unsigned int isCollidedVectorAndRadius(vector a,vector b,unsigned long radius)
+unsigned int isCollidedVectorAndRadius(vector a,vector b,unsigned long radius)
 {
 	vector relPos;
 	FIND_REL_POS(a,b,relPos);
