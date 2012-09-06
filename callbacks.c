@@ -44,6 +44,9 @@ void g2DCallback(void *data,int32_t result)
 		puts("DEBUG: g2DCallback() 2");
 		exit(1);
 	}
+	//DEBUG
+	printf("DEBUG: g2DCallback() - width = %d - height = %d - instance = %d\n",readyData->width,readyData->height,stored->instance);
+	
 	stored->screen = stored->g2DInterface->Create(stored->instance,&(struct PP_Size){readyData->width,readyData->height},readyData->flag);
 	//DEBUG
 	printf("DEBUG: g2DCallback() - screen = %d\n",stored->screen);
