@@ -65,17 +65,17 @@ void bindCallback(void *data,int32_t result)
 	struct bindCallbackData *readyData = (struct bindCallbackData *)data;
 	if(stored->g2DInterface->IsGraphics2D(readyData->screen) != PP_TRUE)
 	{
-		puts("DEBUG: bindCallback() 2");
+		puts("DEBUG: bindCallback() 1");
 		exit(1);
 	}
 	if(stored->instance == 0)
 	{
-		puts("DEBUG: bindCallback() 3");
+		puts("DEBUG: bindCallback() 2");
 		exit(1);
 	}
 	if(stored->instanceInterface->BindGraphics(stored->instance,readyData->screen) == PP_FALSE)
 	{
-		puts("DEBUG: bindCallback() 1");
+		puts("DEBUG: bindCallback() 3");
 		exit(1);
 	}
 	return;
